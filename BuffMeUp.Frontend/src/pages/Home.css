@@ -1,0 +1,40 @@
+.About-section,
+.Main-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+    padding: 3em 15em;
+}
+
+.About-section:not(:last-child) {
+    border-bottom: 1px solid var(--gray);
+}
+
+.Main-header {
+    padding: 10em;
+    position: relative;
+    overflow: hidden;
+}
+
+.Main-header::before {
+    position: absolute;
+    content: "";
+    background-color: var(--white);
+    inset: 0;
+    z-index: -1;
+    opacity: 50%;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.Main-header:hover::before {
+    opacity: 60%;
+}
+
+.Main-header img {
+    position: absolute;
+    top: 0;
+    z-index: -2;
+    object-fit: cover;
+    width: 100%;
+}

@@ -1,0 +1,40 @@
+.SignUp {
+    position: relative;
+}
+
+.SignUp-form {
+    width: 25%;
+    margin: auto;
+    background-color: var(--white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    padding: 5em;
+}
+
+.SignUp-form label:not(.validation-error) {
+    display: block;
+}
+
+.SignUp-form img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    z-index: -2;
+    object-fit: cover;
+}
+
+.SignUp-form::before {
+    position: absolute;
+    content: "";
+    background-color: var(--black);
+    inset: 0;
+    z-index: -1;
+    opacity: 50%;
+    height: 100vh;
+}
+
+.validation-error {
+    display: none;
+}

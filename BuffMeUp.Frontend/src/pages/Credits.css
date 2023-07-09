@@ -1,0 +1,14 @@
+.contributors {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    align-items: center;
+}
+
+.contributor {
+    padding: 3em 15em;
+}
+
+.contributor:not(:last-child) {
+    border-bottom: 1px solid var(--gray);
+}

@@ -1,0 +1,24 @@
+﻿using System.ComponentModel.DataAnnotations;
+using static BuffMeUp.Backend.Common.ValidationConstants.ForUser;
+
+namespace BuffMeUp.Backend.ViewModels;
+
+public class UserSignUpViewModel
+{
+    [Required]
+    [StringLength(UsernameMaxLength, MinimumLength = UsernameMinLength)]
+    [RegularExpression(UsernameRegex, ErrorMessage = "Username can only contain letters, numbers, underscores and must contain at least 1 letter!")]
+    public string Username { get; set; } = null!;
+
+    [Required]
+    [EmailAddress]
+    public string Email { get; set; } = null!;
+
+    [Required]
+    [StringLength(PasswordMaxLength, MinimumLength = PasswordMinLength)]
+    public string Password { get; set; } = null!;
+
+    [Required]
+    [StringLength(FirstNameMaxLength, MinimumLength = FirstNameMinLength)]
+    public string FirstName { get; set; } = null!;
+}

@@ -1,0 +1,17 @@
+.App-footer {
+    background-color: #111;
+    color: #fff;
+    padding: 2em;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.App-footer nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.App-footer nav a:hover {
+    color: var(--gray);
+}
