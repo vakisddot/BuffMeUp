@@ -47,7 +47,7 @@ public class Program
         //}
 
         app.UseCors(builder => builder
-            .WithOrigins(Endpoints.Endpoint)
+            .WithOrigins(Endpoints.FrontendEndpoints)
             .AllowAnyHeader()
             .AllowAnyMethod()
         );

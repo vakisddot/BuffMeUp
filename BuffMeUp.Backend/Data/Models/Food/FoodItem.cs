@@ -27,8 +27,8 @@ public class FoodItem
     public int Protein { get; set; }
 
     [Required]
-    [Range(CarbohydratesMinValue, CarbohydratesMaxValue)]
-    public int Carbohydrates { get; set; }
+    [Range(CarbsMinValue, CarbsMaxValue)]
+    public int Carbs { get; set; }
 
     [Required]
     [Range(FatsMinValue, FatsMaxValue)]

@@ -104,8 +104,8 @@ public static class ValidationConstants
         public const int ProteinMinValue = 0;
         public const int ProteinMaxValue = 1000;
 
-        public const int CarbohydratesMinValue = 0;
-        public const int CarbohydratesMaxValue = 1000;
+        public const int CarbsMinValue = 0;
+        public const int CarbsMaxValue = 1000;
 
         public const int FatsMinValue = 0;
         public const int FatsMaxValue = 1000;
@@ -116,8 +116,8 @@ public static class ValidationConstants
             NameMaxLength = NameMaxLength,
             ProteinMinValue = ProteinMinValue,
             ProteinMaxValue = ProteinMaxValue,
-            CarbohydratesMinValue = CarbohydratesMinValue,
-            CarbohydratesMaxValue = CarbohydratesMaxValue,
+            CarbsMinValue = CarbsMinValue,
+            CarbsMaxValue = CarbsMaxValue,
             FatsMinValue = FatsMinValue,
             FatsMaxValue = FatsMaxValue
         };

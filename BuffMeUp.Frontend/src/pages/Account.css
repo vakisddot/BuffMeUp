@@ -1,0 +1,135 @@
+.user-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1em;
+    padding: 3em 5em;
+    border-bottom: 2px solid var(--gray);
+}
+
+.acc-info {
+    display: flex;
+    align-items: center;
+}
+
+.profile-info {
+    text-align: left;
+}
+
+.profile-pic {
+    width: 15em;
+    height: 15em;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.profile-pic img {
+    border-radius: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.profile-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1em;
+    gap: 1em;
+}
+
+.firstname-and-username {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 0.1em;
+}
+
+.so-far {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.update-weight-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    padding: 0 3em;
+}
+
+.calories-goal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2em;
+}
+
+.nutrients {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2em;
+}
+
+.nutrient {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nutrient-icon {
+    display: block;
+    position: relative;
+    width: 4em;
+    height: 4em;
+}
+
+.nutrient-icon-svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.user-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.footer-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 8em 15em;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    overflow: hidden;
+}
+
+.footer-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    transition: all 0.1s ease-in-out;
+}
+
+.footer-card:hover::before {
+    background-color: var(--lightgray);
+}
+
+.footer-card svg {
+    position: absolute;
+    opacity: 15%;
+    z-index: -1;
+    top: 25%;
+}
+
+.footer-card:nth-child(odd) svg {
+    left: 0;
+}
+
+.footer-card:nth-child(even) svg {
+    right: 0;
+}

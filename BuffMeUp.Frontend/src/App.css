@@ -7,18 +7,28 @@
     align-items: stretch;
 }
 
-.Auth-btn {
-    background-color: var(--black);
-    color: var(--white);
+.Auth-btn,
+.Auth-btn-outline {
     padding: 0.3em 1em;
     border-radius: 1em;
     transition: all 0.2s ease-in-out;
     border: 1px solid var(--black);
 }
 
+.Auth-btn,
+.Auth-btn-outline:hover {
+    background-color: var(--black);
+    color: var(--white);
+}
+
+.Auth-btn-outline,
 .Auth-btn:hover {
+    background-color: rgba(0, 0, 0, 0);
     color: var(--black);
-    background-color: var(--white);
+}
+
+.Auth-btn:hover,
+.Auth-btn-outline:hover {
     transform: translateY(-5%);
 }
 

@@ -4,6 +4,10 @@
 :root {
     --black: #111;
     --white: #fff;
-    --red: #f42525;
+    --lightgray: #ddd;
     --gray: #bbb;
+    --red: #f42525;
+    --green: #9ee493;
+    --blue: #1a659e;
+    --yellow: #f0cf65;
 }
