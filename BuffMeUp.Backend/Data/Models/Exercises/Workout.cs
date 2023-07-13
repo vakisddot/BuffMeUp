@@ -9,7 +9,7 @@ public class Workout
     public Workout()
     {
         Id = Guid.NewGuid();
-        Exercises = new HashSet<ExerciseSet>();
+        ExerciseSets = new HashSet<ExerciseSet>();
     }
 
 
@@ -24,5 +24,5 @@ public class Workout
     public Guid UserId { get; set; }
     public User User { get; set; } = null!;
 
-    public virtual ICollection<ExerciseSet> Exercises { get; set; }
+    public virtual ICollection<ExerciseSet> ExerciseSets { get; set; }
 }

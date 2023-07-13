@@ -9,6 +9,7 @@ public static class ValidationConstants
         public const int UsernameMinLength = 5;
         public const int UsernameMaxLength = 12;
         public const string UsernameRegex = @"^[a-zA-Z0-9_]*[a-zA-Z]+[a-zA-Z0-9_]*$";
+        public const string UsernameRegexErrorMessage = "Username can only contain letters, numbers, underscores and must contain at least 1 letter!";
 
         public const int PasswordMinLength = 6;
         public const int PasswordMaxLength = 64;
@@ -68,7 +69,7 @@ public static class ValidationConstants
         public const int NameMaxLength = 16;
 
         public const int DescriptionMinLength = 0;
-        public const int DescriptionMaxLength = 64;
+        public const int DescriptionMaxLength = 256;
 
         public static object Serialized = new
         {

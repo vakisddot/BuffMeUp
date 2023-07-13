@@ -103,7 +103,6 @@
     flex-direction: column;
     gap: 1em;
     padding: 8em 15em;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     overflow: hidden;
 }
 

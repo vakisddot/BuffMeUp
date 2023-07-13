@@ -27,7 +27,7 @@ public class Meal
 
 
     [ForeignKey(nameof(FoodItem))]
-    public Guid? FoodItemId { get; set; }
+    public int? FoodItemId { get; set; }
     public FoodItem? FoodItem { get; set; }    
     
     [ForeignKey(nameof(MealTemplate))]

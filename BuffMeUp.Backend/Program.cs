@@ -2,7 +2,10 @@ using BuffMeUp.Backend.Common;
 using BuffMeUp.Backend.Data;
 using BuffMeUp.Backend.Services;
 using BuffMeUp.Backend.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace BuffMeUp.Backend;
 
@@ -20,12 +23,13 @@ public class Program
             options.UseSqlServer(connectionString));
 
         // Add services to the container.
-        builder.Services.AddScoped<ISignUpService, MockSignUpService>();
+        builder.Services.AddScoped<IAccountService, AccountService>();
+        builder.Services.AddScoped<IPersonalStatsService, PersonalStatsService>();
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
-        //builder.Services.AddSwaggerGen();
+        builder.Services.AddSwaggerGen();
         //builder.Services.Configure<ApiBehaviorOptions>(options =>
         //{
         //    options.InvalidModelStateResponseFactory = context => {
@@ -37,23 +41,46 @@ public class Program
         //    };
         //});
 
+        builder.Services.AddAuthentication(x =>
+        {
+            x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(x =>
+        {
+            x.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+                ValidateIssuer = true,
+                ValidAudience = builder.Configuration["JwtSettings:Audience"],
+                ValidateAudience = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                    builder.Configuration["JwtSettings:Key"])),
+                ValidateIssuerSigningKey = true,
+                ValidateLifetime = true
+            };
+        });
+
+        builder.Services.AddAuthorization();
+
         var app = builder.Build();
 
-        // Configure the HTTP request pipeline.
-        //if (app.Environment.IsDevelopment())
-        //{
-        //    app.UseSwagger();
-        //    app.UseSwaggerUI();
-        //}
+        //Configure the HTTP request pipeline.
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
 
         app.UseCors(builder => builder
-            .WithOrigins(Endpoints.FrontendEndpoints)
+            .WithOrigins(Endpoints.FrontendEndpoints.Select(e => $"{e}:{Endpoints.FrontendPort}").ToArray())
             .AllowAnyHeader()
             .AllowAnyMethod()
         );
 
         app.UseHttpsRedirection();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
 

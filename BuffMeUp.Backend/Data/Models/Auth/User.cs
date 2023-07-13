@@ -1,6 +1,8 @@
 ﻿using static BuffMeUp.Backend.Common.ValidationConstants.ForUser;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using BuffMeUp.Backend.Data.Models.Exercises;
+using BuffMeUp.Backend.Data.Models.Food;
 
 namespace BuffMeUp.Backend.Data.Models.Auth;
 
@@ -9,7 +11,11 @@ public class User
     public User()
     {
         Id = Guid.NewGuid();
+        Workouts = new HashSet<Workout>();
+        Meals = new HashSet<Meal>();
         User_Role = new HashSet<JT_User_Role>();
+        ExerciseTemplates = new HashSet<ExerciseTemplate>();
+        MealTemplates = new HashSet<MealTemplate>();
     }
 
 
@@ -32,11 +38,17 @@ public class User
     public string FirstName { get; set; } = null!;
 
 
-    #region Foreign Keys
     [ForeignKey(nameof(PersonalStats))]
-    public Guid PersonalStatsId { get; set; }
-    public virtual PersonalStats PersonalStats { get; set; } = null!;
+    public Guid? PersonalStatsId { get; set; }
+    public PersonalStats? PersonalStats { get; set; }
+
+    public virtual ICollection<Workout> Workouts { get; set; }
+
+    public virtual ICollection<Meal> Meals { get; set; }
 
     public virtual ICollection<JT_User_Role> User_Role { get; set; }
-    #endregion
+
+    public virtual ICollection<ExerciseTemplate> ExerciseTemplates { get; set; }
+
+    public virtual ICollection<MealTemplate> MealTemplates { get; set; }
 }

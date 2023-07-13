@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
-import { endpoint } from "../endpoints";
 
 const About = () => {
-    const url = `${endpoint}/WeatherForecast`;
+    const url = `/api/WeatherForecast`;
 
     const [values, setValues] = useState([]);
 

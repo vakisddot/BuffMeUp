@@ -1,7 +1,30 @@
 import "./Account.css";
+import { useState, useEffect } from "react";
 import { CircularProgress } from "@mui/material";
+import jwt_decode from "jwt-decode";
 
-const Account = ({ user, personalStats, nutrients }) => {
+const Account = ({ nutrients }) => {
+    const token = localStorage.getItem("token");
+    const claims = jwt_decode(token);
+
+    const [personalStats, setPersonalStats] = useState({});
+
+    useEffect(() => {
+        fetch("/api/PersonalStats", {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + token,
+            },
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                setPersonalStats(res);
+
+                console.log(res);
+            })
+            .catch((err) => console.log(err));
+    }, []);
+
     const cmToInches = (cm) => cm / 2.54;
 
     const getBmiType = (bmi) => {
@@ -19,17 +42,17 @@ const Account = ({ user, personalStats, nutrients }) => {
     const getAgeString = (age) => `${age} years old`;
 
     const getWeightString = (weightKg) =>
-        `${weightKg} kg / ${weightKg * 2.205} lbs`;
+        `${weightKg} kg / ${Math.round(weightKg * 2.205)} lbs`;
 
     const getHeightString = (heightCm) =>
         `${(heightCm / 100).toFixed(2)} m / ${Math.floor(
             cmToInches(heightCm) / 12
         )}'${Math.round(cmToInches(heightCm) % 12)}"`;
 
-    const getBmiString = (bmi) => `${bmi} kg/m2 (${getBmiType(bmi)})`;
+    const getBmiString = (bmi) => `${bmi.toFixed(1)} (${getBmiType(bmi)})`;
 
     const bmi =
-        personalStats?.currentWeight * (personalStats?.height / 100) ** 2;
+        personalStats?.currentWeight / (personalStats?.height / 100) ** 2;
 
     const accStats = {
         Age: getAgeString(personalStats?.age || 0),
@@ -37,6 +60,12 @@ const Account = ({ user, personalStats, nutrients }) => {
         Weight: getWeightString(personalStats?.currentWeight || 0),
         BMI: getBmiString(bmi || 0),
     };
+
+    const weightChange =
+        personalStats?.currentWeight - personalStats?.startingWeight || 0;
+
+    const weightChangeRemaining =
+        personalStats?.currentWeight - personalStats?.goalWeight || 0;
 
     const nutrientGoals = {
         Calories: [
@@ -69,12 +98,6 @@ const Account = ({ user, personalStats, nutrients }) => {
         ],
     };
 
-    const weightChange =
-        personalStats?.currentWeight - personalStats?.startingWegiht || 0;
-
-    const weightChangeRemaining =
-        personalStats?.currentWeight - personalStats?.goalWeight || 0;
-
     return (
         <>
             <header className="user-stats">
@@ -88,11 +111,11 @@ const Account = ({ user, personalStats, nutrients }) => {
                             <div className="firstname-and-username">
                                 <h2>
                                     {(
-                                        user?.firstName || "Unnamed"
+                                        claims?.firstName || "Unnamed"
                                     ).toUpperCase()}
                                 </h2>
                                 <p className="username">
-                                    @{user?.username || "invalid"}
+                                    @{claims?.username || "invalid"}
                                 </p>
 
                                 <a href="#" className="Auth-btn">

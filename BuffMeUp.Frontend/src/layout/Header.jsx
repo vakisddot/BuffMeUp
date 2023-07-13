@@ -1,7 +1,11 @@
 import React from "react";
 import "./Header.css";
+import hasJWT from "../utils";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+    const navigate = useNavigate();
+
     return (
         <header className="App-header">
             <a href="/" className="App-logo">
@@ -18,19 +22,40 @@ const Header = () => {
             </a>
 
             <nav>
+                {hasJWT() && (
+                    <>
+                        <a href="about">MEALS</a>
+                        <a href="credits">WORKOUT</a>
+                    </>
+                )}
                 <a href="about">ABOUT</a>
                 <a href="credits">CREDITS</a>
             </nav>
 
             <div className="Auth-btns">
-                <a href="#" className="Auth-btn">
-                    Log in
-                </a>
-                <a href="signup" className="Auth-btn">
-                    Sign up
-                </a>
-                <a href="account">My Account</a>
-                <a href="signup">Log out</a>
+                {!hasJWT() ? (
+                    <>
+                        <a href="login" className="Auth-btn">
+                            Log in
+                        </a>
+                        <a href="signup" className="Auth-btn">
+                            Sign up
+                        </a>
+                    </>
+                ) : (
+                    <>
+                        <a href="account">My Account</a>
+                        <a
+                            onClick={() => {
+                                localStorage.removeItem("token");
+                                navigate("/");
+                            }}
+                            href="#"
+                        >
+                            Log out
+                        </a>
+                    </>
+                )}
             </div>
         </header>
     );

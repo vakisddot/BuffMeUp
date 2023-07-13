@@ -27,13 +27,13 @@ public class PersonalStats
     public int Height { get; set; }
 
     [Required]
-    public float StartingWeight { get; set; }
+    public int StartingWeight { get; set; }
 
     [Required]
-    public float CurrentWeight { get; set; }
+    public int CurrentWeight { get; set; }
 
     [Required]
-    public float GoalWeight { get; set; }
+    public int GoalWeight { get; set; }
 
 
     [ForeignKey(nameof(User))]

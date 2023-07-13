@@ -6,33 +6,31 @@ using System.Net;
 namespace BuffMeUp.Backend.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class SignUpController : ControllerBase
 {
-    readonly ISignUpService _signUpService;
+    readonly IAccountService _accountService;
 
-    public SignUpController(ISignUpService signUpService)
+    public SignUpController(IAccountService accountService)
     {
-        _signUpService = signUpService;
+        _accountService = accountService;
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody]UserSignUpViewModel newUser)
+    public async Task<IActionResult> Post([FromBody]UserSignUpViewModel newUser)
     {
-        if (!_signUpService.IsEmailAvailable(newUser.Email))
+        if (!await _accountService.IsEmailAvailableAsync(newUser.Email))
         {
             ModelState.AddModelError("Email", "Email is already taken!");
         }        
 
-        if (!_signUpService.IsUsernameAvailable(newUser.Username))
+        if (!await _accountService.IsUsernameAvailableAsync(newUser.Username))
         {
             ModelState.AddModelError("Username", "Username is already taken!");
         }
 
         if (!ModelState.IsValid)
         {
-            Console.WriteLine("Invalid model state!");
-
             return new JsonResult(new { Errors = ModelState
                 .ToDictionary(
                     kvp => kvp.Key, 
@@ -42,8 +40,9 @@ public class SignUpController : ControllerBase
             };
         }
 
-        _signUpService.RegisterUser(newUser);
+        var token = await _accountService.RegisterUserAsync(newUser);
+        Console.WriteLine($"User '{newUser.Username}' registered successfully!");
 
-        return Ok();
+        return Ok(new { Token = token });
     }
 }

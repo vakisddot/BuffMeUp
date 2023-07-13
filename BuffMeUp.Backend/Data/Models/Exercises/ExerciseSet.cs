@@ -25,7 +25,7 @@ public class ExerciseSet
 
     [Required]
     [Range(WeightMinValue, WeightMaxValue)]
-    public float Weight { get; set; }
+    public int Weight { get; set; }
 
 
     [ForeignKey(nameof(ExerciseTemplate))]

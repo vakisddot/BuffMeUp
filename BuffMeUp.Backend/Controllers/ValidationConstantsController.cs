@@ -3,7 +3,7 @@
 namespace BuffMeUp.Backend.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class ValidationConstantsController : ControllerBase
 {
     [HttpGet]

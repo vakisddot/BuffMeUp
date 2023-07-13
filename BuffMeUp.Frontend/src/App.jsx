@@ -6,6 +6,8 @@ import Credits from "./pages/Credits";
 import About from "./pages/About";
 import SignUp from "./pages/auth/SignUp";
 import Account from "./pages/Account";
+import RouteGuard from "./components/RouteGuard";
+import LogIn from "./pages/auth/LogIn";
 
 function App() {
     return (
@@ -16,7 +18,15 @@ function App() {
                     <Route path="/credits" Component={Credits}></Route>
                     <Route path="/about" Component={About}></Route>
                     <Route path="/signup" Component={SignUp}></Route>
-                    <Route path="/account" Component={Account}></Route>
+                    <Route path="/login" Component={LogIn}></Route>
+                    <Route
+                        path="/account"
+                        element={
+                            <RouteGuard>
+                                <Account></Account>
+                            </RouteGuard>
+                        }
+                    ></Route>
                 </Routes>
             </Layout>
         </div>

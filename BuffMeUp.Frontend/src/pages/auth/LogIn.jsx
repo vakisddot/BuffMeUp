@@ -2,26 +2,16 @@ import "./SignUp.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const SignUp = () => {
+const LogIn = () => {
     const navigate = useNavigate();
     const constantsUrl = "/api/ValidationConstants?modelName=User";
-    const signUpEndpoint = "/api/SignUp";
+    const logInEndpoint = "/api/LogIn";
 
-    const [firstName, setFirstName] = useState("");
-    const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
     const [validationConstants, setValidationConstants] = useState({});
     const [fieldErrors, setFieldErrors] = useState(
-        () =>
-            new Set([
-                "firstName",
-                "email",
-                "username",
-                "password",
-                "confirmPassword",
-            ])
+        () => new Set(["username", "password"])
     );
 
     const errorLabels = Array.from(
@@ -94,7 +84,7 @@ const SignUp = () => {
             return;
         }
 
-        fetch(signUpEndpoint, {
+        fetch(logInEndpoint, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -102,34 +92,23 @@ const SignUp = () => {
             body: JSON.stringify({
                 username: username,
                 password: password,
-                email: email,
-                firstName: firstName,
             }),
         })
             .then((response) => response.json())
             .then((response) => {
-                if (response.errors) {
-                    const errors = [];
-
-                    console.log(response);
-                    console.log(response.errors);
-
-                    for (const prop in response.errors) {
-                        errors.push(...response.errors[prop]);
-                    }
-
+                if (response.status === 401) {
                     generalErrorLabel.setHTML(
-                        errors.map((e) => `<p>${e}</p>`).join("")
+                        "Invalid username and/or password!"
                     );
 
                     return;
                 }
 
-                console.log("Successfuly signed up!");
+                console.log("Successfuly logged in!");
                 localStorage.setItem("token", response.token);
                 navigate("/account");
             })
-            .catch((err) => console.log("Error while trying to sign up!", err));
+            .catch((err) => console.log("Error while trying to log in!", err));
     };
 
     useEffect(() => {
@@ -147,44 +126,9 @@ const SignUp = () => {
     return (
         <div className="SignUp">
             <div className="SignUp-form">
-                <h1>Sign up</h1>
+                <h1>Log in</h1>
 
                 <label className="red general-error"></label>
-
-                <div>
-                    <label htmlFor="firstName" className="red validation-error">
-                        Invalid first name!
-                    </label>
-                    <label htmlFor="firstName">FIRST NAME</label>
-                    <input
-                        type="text"
-                        onChange={(e) => {
-                            setFirstName(e.target.value);
-
-                            tryUpdateField("firstName", e.target.value);
-                        }}
-                        placeholder="First name"
-                        id="firstName"
-                        required
-                    />
-                </div>
-
-                <div>
-                    <label htmlFor="email" className="red validation-error">
-                        Invalid e-mail!
-                    </label>
-                    <label htmlFor="email">E-MAIL</label>
-                    <input
-                        type="email"
-                        onChange={(e) => {
-                            setEmail(e.target.value);
-
-                            tryUpdateField("email", e.target.value);
-                        }}
-                        placeholder="E-mail"
-                        id="email"
-                    />
-                </div>
 
                 <div>
                     <label htmlFor="username" className="red validation-error">
@@ -214,11 +158,7 @@ const SignUp = () => {
                         onChange={(e) => {
                             setPassword(e.target.value);
 
-                            tryUpdateField(
-                                "password",
-                                e.target.value,
-                                confirmPassword
-                            );
+                            tryUpdateField("password", e.target.value);
                         }}
                         placeholder="Password"
                         id="password"
@@ -227,35 +167,10 @@ const SignUp = () => {
                 </div>
 
                 <div>
-                    <label
-                        htmlFor="confirmPassword"
-                        className="red validation-error"
-                    >
-                        Passwords don't match!
-                    </label>
-                    <label htmlFor="confirmPassword">CONFIRM PASSWORD</label>
-                    <input
-                        type="password"
-                        onChange={(e) => {
-                            setConfirmPassword(e.target.value);
-
-                            tryUpdateField(
-                                "confirmPassword",
-                                e.target.value,
-                                password
-                            );
-                        }}
-                        placeholder="Confirm password"
-                        id="confirmPassword"
-                        required
-                    />
-                </div>
-
-                <div>
                     <input
                         className="Auth-btn"
                         type="button"
-                        value="Sign up"
+                        value="Log in"
                         onClick={() => trySignUp()}
                     />
                 </div>
@@ -266,4 +181,4 @@ const SignUp = () => {
     );
 };
 
-export default SignUp;
+export default LogIn;
