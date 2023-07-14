@@ -1,7 +1,6 @@
 ﻿using BuffMeUp.Backend.Common;
 using BuffMeUp.Backend.Services.Interfaces;
 using BuffMeUp.Backend.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -21,20 +20,14 @@ public class PersonalStatsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var identity = HttpContext.User.Identity as ClaimsIdentity;
-        var userId = identity?.FindFirst("userId")?.Value;
-
-        if (identity == null || userId == null)
-        {
-            ModelState.AddModelError("User", "Failed to identify user!");
-        }
+        var userId = IdentifyUser();
 
         if (!ModelState.IsValid)
         {
             return BadRequest(Utils.GetErrorsObject(ModelState));
         }
 
-        var personalStats = await _personalStatsService.GetPersonalStatsAsync(Guid.Parse(userId));
+        var personalStats = await _personalStatsService.GetPersonalStatsAsync(Guid.Parse(userId!));
 
         return Ok(personalStats);
     }
@@ -42,15 +35,9 @@ public class PersonalStatsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] PersonalStatsFormModel model)
     {
-        var identity = HttpContext.User.Identity as ClaimsIdentity;
-        var userId = identity?.FindFirst("userId")?.Value;
+        var userId = IdentifyUser();
 
-        if (identity == null || userId == null)
-        {
-            ModelState.AddModelError("User", "Failed to identify user!");
-        }
-
-        if (await _personalStatsService.PersonalStatsExistAsync(Guid.Parse(userId)))
+        if (userId != null && await _personalStatsService.PersonalStatsExistAsync(Guid.Parse(userId)))
         {
             ModelState.AddModelError("PersonalStats", "User already has personal stats!");
         }
@@ -62,6 +49,39 @@ public class PersonalStatsController : ControllerBase
 
         await _personalStatsService.CreatePersonalStatsAsync(model, Guid.Parse(userId));
 
-        return Ok();
+        return Ok(new {});
+    }
+
+    [HttpPatch]
+    public async Task<IActionResult> Patch(int newWeight)
+    {
+        var userId = IdentifyUser();
+
+        if (userId != null && !await _personalStatsService.PersonalStatsExistAsync(Guid.Parse(userId)))
+        {
+            ModelState.AddModelError("PersonalStats", "User does not have personal stats!");
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(Utils.GetErrorsObject(ModelState));
+        }
+
+        await _personalStatsService.UpdateWeightAsync(newWeight, Guid.Parse(userId!));
+
+        return Ok(new {});
+    }
+
+    string? IdentifyUser()
+    {
+        var identity = HttpContext.User.Identity as ClaimsIdentity;
+        var userId = identity?.FindFirst("userId")?.Value;
+
+        if (identity == null || userId == null)
+        {
+            ModelState.AddModelError("User", "Failed to identify user!");
+        }
+
+        return userId;
     }
 }

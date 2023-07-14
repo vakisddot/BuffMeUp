@@ -9,4 +9,6 @@ public interface IPersonalStatsService
     Task CreatePersonalStatsAsync(PersonalStatsFormModel personalStatsFormModel, Guid userId);
 
     Task<bool> PersonalStatsExistAsync(Guid userId);
+
+    Task UpdateWeightAsync(int newWeight, Guid guid);
 }

@@ -35,6 +35,7 @@ const SignUp = () => {
             fields={fields}
             endpoint="/api/SignUp"
             redirect="/personalstats"
+            submitLabel="Sign up"
             onSuccessfulSubmit={(response) =>
                 localStorage.setItem("token", response.token)
             }

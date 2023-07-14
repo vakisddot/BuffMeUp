@@ -34,3 +34,8 @@
     opacity: 50%;
     height: 100%;
 }
+
+.form-btns {
+    display: flex;
+    gap: 0.5em;
+}

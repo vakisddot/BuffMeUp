@@ -2,6 +2,7 @@ import "./Account.css";
 import { useState, useEffect } from "react";
 import { CircularProgress } from "@mui/material";
 import jwt_decode from "jwt-decode";
+import InputForm from "../components/InputForm";
 
 const Account = ({ nutrients }) => {
     const token = localStorage.getItem("token");
@@ -167,7 +168,15 @@ const Account = ({ nutrients }) => {
                             every single workout!
                         </p>
 
-                        <a href="#" className="Auth-btn-outline">
+                        <a
+                            href="#"
+                            onClick={() =>
+                                (document.querySelector(
+                                    ".popup-form"
+                                ).style.display = "block")
+                            }
+                            className="Auth-btn-outline"
+                        >
                             Update weight
                         </a>
                     </div>
@@ -221,6 +230,33 @@ const Account = ({ nutrients }) => {
                     </div>
                 </div>
             </header>
+
+            <div className="update-weight popup-form">
+                <InputForm
+                    title="Update weight"
+                    fields={{
+                        weight: {
+                            label: "New weight (kg)",
+                            type: "number",
+                        },
+                    }}
+                    onSuccessfulSubmit={() => {
+                        document.querySelector(".popup-form").style.display =
+                            "none";
+
+                        window.location.reload(false);
+                    }}
+                    onBack={() =>
+                        (document.querySelector(".popup-form").style.display =
+                            "none")
+                    }
+                    headers={{
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + token,
+                    }}
+                    endpoint="/api/WeightUpdate"
+                />
+            </div>
 
             <footer className="user-footer">
                 <div className="footer-card">

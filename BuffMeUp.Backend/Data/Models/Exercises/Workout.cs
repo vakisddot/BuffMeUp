@@ -8,13 +8,12 @@ public class Workout
 {
     public Workout()
     {
-        Id = Guid.NewGuid();
         ExerciseSets = new HashSet<ExerciseSet>();
     }
 
 
     [Key]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     [Required]
     public DateTime Date { get; set; }

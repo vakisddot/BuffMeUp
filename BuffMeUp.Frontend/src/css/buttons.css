@@ -1,0 +1,36 @@
+.Auth-btn,
+.Auth-btn-outline,
+.Auth-btn-fill {
+    padding: 0.3em 1em;
+    border-radius: 1em;
+    transition: all 0.2s ease-in-out;
+    border: 1px solid var(--black);
+}
+
+.Auth-btn,
+.Auth-btn-outline:hover,
+.Auth-btn-fill:hover {
+    background-color: var(--black);
+    color: var(--white);
+}
+
+.Auth-btn-outline,
+.Auth-btn:hover {
+    background-color: rgba(255, 255, 255, 0);
+    color: var(--black);
+}
+
+.Auth-btn-fill {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+.Auth-btn:hover,
+.Auth-btn-outline:hover,
+.Auth-btn-fill:hover {
+    transform: translateY(-5%);
+}
+
+.Auth-btn-fill:hover {
+    border-color: var(--white);
+}

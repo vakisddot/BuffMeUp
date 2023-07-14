@@ -12,6 +12,9 @@ const InputForm = ({
     onSuccessfulSubmit,
     headers,
     bgSrc,
+    backLabel,
+    onBack,
+    method,
 }) => {
     const navigate = useNavigate();
     const [errorLabels, setErrorLabels] = useState([]);
@@ -105,7 +108,7 @@ const InputForm = ({
         console.log("Submit object: ", submitObject);
 
         fetch(endpoint, {
-            method: "POST",
+            method: method || "POST",
             headers: headers || {
                 "Content-Type": "application/json",
             },
@@ -132,6 +135,7 @@ const InputForm = ({
 
                 console.log("Form has been successfully submitted!");
 
+                console.log("Fun: ", onSuccessfulSubmit);
                 if (onSuccessfulSubmit) onSuccessfulSubmit(response);
 
                 if (redirect) navigate(redirect);
@@ -235,7 +239,15 @@ const InputForm = ({
                     );
                 })}
 
-                <div>
+                <div className="form-btns">
+                    {onBack && (
+                        <input
+                            className="Auth-btn"
+                            type="button"
+                            value={backLabel || "Back"}
+                            onClick={() => onBack && onBack()}
+                        />
+                    )}
                     <input
                         className="Auth-btn"
                         type="button"

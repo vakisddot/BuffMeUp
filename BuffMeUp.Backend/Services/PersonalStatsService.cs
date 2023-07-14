@@ -56,4 +56,18 @@ public class PersonalStatsService : IPersonalStatsService
     {
         return await _dbContext.PersonalStats.AnyAsync(u => u.UserId == userId);
     }
+
+    public async Task UpdateWeightAsync(int newWeight, Guid guid)
+    {
+        var stats = await _dbContext.PersonalStats.FirstOrDefaultAsync(u => u.UserId == guid);
+
+        if (stats == null)
+        {
+            return;
+        }
+
+        stats.CurrentWeight = newWeight;
+
+        await _dbContext.SaveChangesAsync();
+    }
 }

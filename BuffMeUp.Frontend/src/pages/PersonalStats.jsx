@@ -53,7 +53,7 @@ const PersonalStats = () => {
             modelName="PersonalStats"
             fields={fields}
             endpoint="/api/PersonalStats"
-            redirect="/"
+            redirect="/account"
             headers={{
                 "Content-Type": "application/json",
                 Authorization: "Bearer " + token,

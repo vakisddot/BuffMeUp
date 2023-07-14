@@ -10,6 +10,7 @@ import LogIn from "./pages/auth/LogIn";
 import AuthorizedOnly from "./components/AuthorizedOnly";
 import UnauthorizedOnly from "./components/UnauthorizedOnly";
 import PersonalStats from "./pages/PersonalStats";
+import AllWorkouts from "./pages/workout/AllWorkouts";
 
 function App() {
     return (
@@ -32,6 +33,14 @@ function App() {
                         element={
                             <AuthorizedOnly>
                                 <PersonalStats></PersonalStats>
+                            </AuthorizedOnly>
+                        }
+                    ></Route>
+                    <Route
+                        path="/allworkouts"
+                        element={
+                            <AuthorizedOnly>
+                                <AllWorkouts></AllWorkouts>
                             </AuthorizedOnly>
                         }
                     ></Route>

@@ -19,6 +19,7 @@ const LogIn = () => {
             fields={fields}
             endpoint="/api/LogIn"
             redirect="/account"
+            submitLabel="Log in"
             onSuccessfulSubmit={(response) =>
                 localStorage.setItem("token", response.token)
             }

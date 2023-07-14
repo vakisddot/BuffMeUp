@@ -1,0 +1,98 @@
+.All-workouts-header {
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+    padding: 10em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+}
+
+.All-workouts-header img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -2;
+    object-fit: cover;
+    width: 100%;
+}
+
+.All-workouts-body {
+    color: var(--white);
+    background-color: var(--black);
+    flex: 1 0 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.workout-details {
+    background-color: var(--darkgray);
+    position: relative;
+    padding: 3em 5em;
+    margin: 1em 15em;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    transition: 0.2s ease-in-out;
+    overflow: hidden;
+    border: 1px solid var(--black);
+}
+
+.workout-details > * {
+    z-index: 1;
+}
+
+.workout-details svg {
+    position: absolute;
+    opacity: 50%;
+    top: 10%;
+}
+
+.workout-details:hover {
+    transform: scale(1.03);
+    border-color: var(--lightgray);
+}
+
+.set-circles {
+    margin-top: 0.5em;
+    display: flex;
+    gap: 0.25em;
+}
+
+.set-circle {
+    display: inline-block;
+    width: 0.5em;
+    height: 0.5em;
+    background-color: var(--white);
+    border: 1px solid var(--white);
+    border-radius: 50%;
+}
+
+.Back {
+    background-color: var(--blue);
+}
+
+.Biceps {
+    background-color: var(--green);
+}
+
+.Chest {
+    background-color: var(--red);
+}
+
+.Shoulders {
+    background-color: var(--yellow);
+}
+
+.workout-details-end {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.workout-btns {
+    display: flex;
+    align-items: end;
+    gap: 0.25em;
+}
