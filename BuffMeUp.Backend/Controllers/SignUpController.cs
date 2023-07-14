@@ -1,4 +1,5 @@
-﻿using BuffMeUp.Backend.Services.Interfaces;
+﻿using BuffMeUp.Backend.Common;
+using BuffMeUp.Backend.Services.Interfaces;
 using BuffMeUp.Backend.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -17,7 +18,7 @@ public class SignUpController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody]UserSignUpViewModel newUser)
+    public async Task<IActionResult> Post([FromBody]UserSignUpFormModel newUser)
     {
         if (!await _accountService.IsEmailAvailableAsync(newUser.Email))
         {
@@ -31,12 +32,7 @@ public class SignUpController : ControllerBase
 
         if (!ModelState.IsValid)
         {
-            return BadRequest(new
-            {
-                Errors = ModelState.ToDictionary(
-                    kvp => kvp.Key,
-                    kvp => kvp.Value?.Errors.Select(e => e.ErrorMessage).ToArray() ?? new[] { "" })
-            });
+            return BadRequest(Utils.GetErrorsObject(ModelState));
         }
 
         var token = await _accountService.RegisterUserAsync(newUser);

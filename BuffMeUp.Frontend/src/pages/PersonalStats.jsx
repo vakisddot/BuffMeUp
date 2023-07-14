@@ -41,7 +41,6 @@ const PersonalStats = () => {
         goalWeight: {
             label: "Goal Weight (kg)",
             type: "number",
-            shouldEqual: "weight",
         },
     };
 
@@ -53,8 +52,13 @@ const PersonalStats = () => {
                     about you...`}
             modelName="PersonalStats"
             fields={fields}
-            endpoint="/api/SignUp"
+            endpoint="/api/PersonalStats"
             redirect="/"
+            headers={{
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + token,
+            }}
+            bgSrc="/images/pexels-jane-doan-1099680.jpg"
         />
     );
 };

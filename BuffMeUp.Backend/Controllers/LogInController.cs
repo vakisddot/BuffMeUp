@@ -1,4 +1,5 @@
-﻿using BuffMeUp.Backend.Services.Interfaces;
+﻿using BuffMeUp.Backend.Common;
+using BuffMeUp.Backend.Services.Interfaces;
 using BuffMeUp.Backend.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ public class LogInController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody]UserLogInViewModel user)
+    public async Task<IActionResult> Post([FromBody]UserLogInFormModel user)
     {
         var token = await _accountService.LogInUserAsync(user);
 
@@ -27,12 +28,7 @@ public class LogInController : ControllerBase
 
         if (!ModelState.IsValid)
         {
-            return BadRequest(new
-            {
-                Errors = ModelState.ToDictionary(
-                    kvp => kvp.Key,
-                    kvp => kvp.Value?.Errors.Select(e => e.ErrorMessage).ToArray() ?? new[] { "" })
-            });
+            return BadRequest(Utils.GetErrorsObject(ModelState));
         }
 
         Console.WriteLine($"User '{user.Username}' logged in successfully!");

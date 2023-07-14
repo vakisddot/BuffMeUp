@@ -1,5 +1,4 @@
 import InputForm from "../../components/InputForm";
-import "./SignUp.css";
 
 const SignUp = () => {
     const fields = {
@@ -39,6 +38,7 @@ const SignUp = () => {
             onSuccessfulSubmit={(response) =>
                 localStorage.setItem("token", response.token)
             }
+            bgSrc="/images/pexels-tetyana-kovyrina-2988229.jpg"
         />
     );
 };

@@ -8,7 +8,7 @@ public interface IAccountService
 
     Task<bool> IsEmailAvailableAsync(string email);
 
-    Task<string> RegisterUserAsync(UserSignUpViewModel newUser);
+    Task<string> RegisterUserAsync(UserSignUpFormModel newUser);
 
-    Task<string?> LogInUserAsync(UserLogInViewModel user);
+    Task<string?> LogInUserAsync(UserLogInFormModel user);
 }

@@ -3,7 +3,7 @@ using static BuffMeUp.Backend.Common.ValidationConstants.ForUser;
 
 namespace BuffMeUp.Backend.ViewModels;
 
-public class UserLogInViewModel
+public class UserLogInFormModel
 {
     [Required]
     [StringLength(UsernameMaxLength, MinimumLength = UsernameMinLength)]

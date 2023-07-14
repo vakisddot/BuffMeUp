@@ -28,7 +28,7 @@ public class AccountService : IAccountService
     public async Task<bool> IsUsernameAvailableAsync(string username) 
         => !await _dbContext.Users.AnyAsync(u => u.Username == username);
 
-    public async Task<string> RegisterUserAsync(UserSignUpViewModel newUser)
+    public async Task<string> RegisterUserAsync(UserSignUpFormModel newUser)
     {
         var user = new User
         {
@@ -44,7 +44,7 @@ public class AccountService : IAccountService
         return GenerateToken(user);
     }
 
-    public async Task<string?> LogInUserAsync(UserLogInViewModel user)
+    public async Task<string?> LogInUserAsync(UserLogInFormModel user)
     {
         var userFromDb = await _dbContext.Users.FirstOrDefaultAsync(u => u.Username == user.Username);
 

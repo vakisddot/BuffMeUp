@@ -4,5 +4,9 @@ namespace BuffMeUp.Backend.Services.Interfaces;
 
 public interface IPersonalStatsService
 {
-    Task<PersonalStatsViewModel?> GetPersonalStatsAsync(Guid userId);
+    Task<PersonalStatsDisplayModel?> GetPersonalStatsAsync(Guid userId);
+
+    Task CreatePersonalStatsAsync(PersonalStatsFormModel personalStatsFormModel, Guid userId);
+
+    Task<bool> PersonalStatsExistAsync(Guid userId);
 }

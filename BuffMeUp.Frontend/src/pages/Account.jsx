@@ -20,7 +20,7 @@ const Account = ({ nutrients }) => {
             .then((res) => {
                 setPersonalStats(res);
 
-                console.log(res);
+                console.log("Personal stats:", res);
             })
             .catch((err) => console.log(err));
     }, []);
@@ -75,7 +75,7 @@ const Account = ({ nutrients }) => {
         setWeightChangeRemaining(
             personalStats?.currentWeight - personalStats?.goalWeight || 0
         );
-    }, []);
+    }, [personalStats]);
 
     const nutrientGoals = {
         Calories: [

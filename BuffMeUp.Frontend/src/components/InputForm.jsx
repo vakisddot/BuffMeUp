@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./InputForm.css";
 
 const InputForm = ({
     fields,
@@ -9,6 +10,8 @@ const InputForm = ({
     endpoint,
     redirect,
     onSuccessfulSubmit,
+    headers,
+    bgSrc,
 }) => {
     const navigate = useNavigate();
     const [errorLabels, setErrorLabels] = useState([]);
@@ -74,8 +77,6 @@ const InputForm = ({
                 ? "none"
                 : "block";
 
-        console.log(errorLabel);
-
         console.log(`${fieldName} is valid: ${fields[fieldName].isValid}`);
     };
 
@@ -101,16 +102,21 @@ const InputForm = ({
             }
         }
 
+        console.log("Submit object: ", submitObject);
+
         fetch(endpoint, {
             method: "POST",
-            headers: {
+            headers: headers || {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(submitObject),
         })
-            .then((response) => response.json())
             .then((response) => {
-                if (response.status >= 400 && response.status <= 499) {
+                console.log("Response received:", response);
+                return response.json();
+            })
+            .then((response) => {
+                if (response.errors) {
                     const errors = [];
 
                     for (const prop in response.errors) {
@@ -119,12 +125,6 @@ const InputForm = ({
 
                     generalErrorLabel.setHTML(
                         errors.map((e) => `<p>${e}</p>`).join("")
-                    );
-
-                    return;
-                } else if (response.status >= 500) {
-                    generalErrorLabel.setHTML(
-                        "Server has failed to process the request!"
                     );
 
                     return;
@@ -157,7 +157,10 @@ const InputForm = ({
 
                 Object.entries(fields).forEach(([id, data]) => {
                     data.isValid = data.type === "radio" ? true : false;
-                    data.value = null;
+                    data.value =
+                        data.type === "radio"
+                            ? data.values.find((v) => v.checked === true).value
+                            : null;
 
                     if (validationConstants[id])
                         Object.entries(validationConstants[id]).forEach(
@@ -174,61 +177,76 @@ const InputForm = ({
     }, []);
 
     return (
-        <form className="SignUp-form">
-            <h1>{title}</h1>
+        <div className="FormContainer">
+            <div className="Form">
+                <h1>{title}</h1>
 
-            <label className="red general-error"></label>
+                <label className="red general-error"></label>
 
-            {Object.entries(fields).map(([id, data]) => {
-                return data.type !== "radio" ? (
-                    <div>
-                        <label htmlFor={id} className="red validation-error">
-                            Invalid {data.label}!
-                        </label>
+                {Object.entries(fields).map(([id, data]) => {
+                    return data.type !== "radio" ? (
+                        <div>
+                            <label
+                                htmlFor={id}
+                                className="red validation-error"
+                            >
+                                Invalid {data.label}!
+                            </label>
 
-                        <label htmlFor={id}>{data.label.toUpperCase()}</label>
-                        <input
-                            type={data.type || "text"}
-                            placeholder={data.label}
-                            onChange={(e) => {
-                                updateField(id, e.target.value);
-                            }}
-                            id={id}
-                            required
-                        />
-                    </div>
-                ) : (
-                    <div>
-                        <label htmlFor={id}>{data.label.toUpperCase()}</label>
-
-                        <div className="radio">
-                            {data.values.map((v) => {
-                                return (
-                                    <div className="radio-option">
-                                        <label htmlFor={id}>{v.name}</label>
-                                        <input
-                                            type="radio"
-                                            id={v.name}
-                                            name={id}
-                                            checked={v.checked}
-                                        />
-                                    </div>
-                                );
-                            })}
+                            <label htmlFor={id}>
+                                {data.label.toUpperCase()}
+                            </label>
+                            <input
+                                type={data.type || "text"}
+                                placeholder={data.label}
+                                onChange={(e) => {
+                                    updateField(id, e.target.value);
+                                }}
+                                id={id}
+                                required
+                                min="0"
+                            />
                         </div>
-                    </div>
-                );
-            })}
+                    ) : (
+                        <div>
+                            <label htmlFor={id}>
+                                {data.label.toUpperCase()}
+                            </label>
 
-            <div>
-                <input
-                    className="Auth-btn"
-                    type="button"
-                    value={submitLabel || "Submit"}
-                    onClick={() => submitForm()}
-                />
+                            <div className="radio">
+                                {data.values.map((v) => {
+                                    return (
+                                        <div className="radio-option">
+                                            <label htmlFor={id}>{v.name}</label>
+                                            <input
+                                                type="radio"
+                                                id={v.name}
+                                                name={id}
+                                                checked={v.checked}
+                                                onChange={() =>
+                                                    (data.value = v.value)
+                                                }
+                                            />
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    );
+                })}
+
+                <div>
+                    <input
+                        className="Auth-btn"
+                        type="button"
+                        value={submitLabel || "Submit"}
+                        onClick={() => submitForm()}
+                    />
+                </div>
             </div>
-        </form>
+
+            <img src={bgSrc} />
+        </div>
     );
 };
 

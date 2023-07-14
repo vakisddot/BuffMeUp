@@ -1,8 +1,8 @@
-.SignUp {
+.FormContainer {
     position: relative;
 }
 
-.SignUp-form {
+.Form {
     width: 25vw;
     margin: auto;
     background-color: var(--white);
@@ -13,11 +13,11 @@
     padding: 5em;
 }
 
-.SignUp-form label:not(.validation-error) {
+.Form label:not(.validation-error) {
     display: block;
 }
 
-.SignUp-form img {
+.FormContainer img {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -25,16 +25,12 @@
     object-fit: cover;
 }
 
-.SignUp-form::before {
+.FormContainer::before {
     position: absolute;
     content: "";
     background-color: var(--black);
     inset: 0;
     z-index: -1;
     opacity: 50%;
-    height: 100vh;
-}
-
-.validation-error {
-    display: none;
+    height: 100%;
 }
