@@ -22,7 +22,17 @@ public class LogInController : ControllerBase
 
         if (token == null)
         {
-            return Unauthorized();
+            ModelState.AddModelError("User", "Invalid username and/or password!");
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(new
+            {
+                Errors = ModelState.ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value?.Errors.Select(e => e.ErrorMessage).ToArray() ?? new[] { "" })
+            });
         }
 
         Console.WriteLine($"User '{user.Username}' logged in successfully!");

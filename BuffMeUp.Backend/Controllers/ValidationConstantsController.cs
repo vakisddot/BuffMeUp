@@ -11,6 +11,7 @@ public class ValidationConstantsController : ControllerBase
         => modelName switch
         {
             "User" => new JsonResult(Common.ValidationConstants.ForUser.Serialized),
+            "PersonalStats" => new JsonResult(Common.ValidationConstants.ForPersonalStats.Serialized),
 
             _ => new JsonResult(new { })
         };

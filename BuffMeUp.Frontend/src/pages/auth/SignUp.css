@@ -3,7 +3,7 @@
 }
 
 .SignUp-form {
-    width: 25%;
+    width: 25vw;
     margin: auto;
     background-color: var(--white);
     display: flex;

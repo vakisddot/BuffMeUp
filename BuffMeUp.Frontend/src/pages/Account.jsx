@@ -51,21 +51,31 @@ const Account = ({ nutrients }) => {
 
     const getBmiString = (bmi) => `${bmi.toFixed(1)} (${getBmiType(bmi)})`;
 
-    const bmi =
-        personalStats?.currentWeight / (personalStats?.height / 100) ** 2;
+    const [bmi, setBmi] = useState(0);
+    const [accStats, setAccStats] = useState({});
+    const [weightChange, setWeightChange] = useState(0);
+    const [weightChangeRemaining, setWeightChangeRemaining] = useState(0);
 
-    const accStats = {
-        Age: getAgeString(personalStats?.age || 0),
-        Height: getHeightString(personalStats?.height || 0),
-        Weight: getWeightString(personalStats?.currentWeight || 0),
-        BMI: getBmiString(bmi || 0),
-    };
+    useEffect(() => {
+        setBmi(
+            personalStats?.currentWeight / (personalStats?.height / 100) ** 2
+        );
 
-    const weightChange =
-        personalStats?.currentWeight - personalStats?.startingWeight || 0;
+        setAccStats({
+            Age: getAgeString(personalStats?.age || 0),
+            Height: getHeightString(personalStats?.height || 0),
+            Weight: getWeightString(personalStats?.currentWeight || 0),
+            BMI: getBmiString(bmi || 0),
+        });
 
-    const weightChangeRemaining =
-        personalStats?.currentWeight - personalStats?.goalWeight || 0;
+        setWeightChange(
+            personalStats?.currentWeight - personalStats?.startingWeight || 0
+        );
+
+        setWeightChangeRemaining(
+            personalStats?.currentWeight - personalStats?.goalWeight || 0
+        );
+    }, []);
 
     const nutrientGoals = {
         Calories: [

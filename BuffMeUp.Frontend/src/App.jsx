@@ -6,8 +6,10 @@ import Credits from "./pages/Credits";
 import About from "./pages/About";
 import SignUp from "./pages/auth/SignUp";
 import Account from "./pages/Account";
-import RouteGuard from "./components/RouteGuard";
 import LogIn from "./pages/auth/LogIn";
+import AuthorizedOnly from "./components/AuthorizedOnly";
+import UnauthorizedOnly from "./components/UnauthorizedOnly";
+import PersonalStats from "./pages/PersonalStats";
 
 function App() {
     return (
@@ -17,14 +19,36 @@ function App() {
                     <Route path="/" Component={Home}></Route>
                     <Route path="/credits" Component={Credits}></Route>
                     <Route path="/about" Component={About}></Route>
-                    <Route path="/signup" Component={SignUp}></Route>
-                    <Route path="/login" Component={LogIn}></Route>
                     <Route
                         path="/account"
                         element={
-                            <RouteGuard>
+                            <AuthorizedOnly>
                                 <Account></Account>
-                            </RouteGuard>
+                            </AuthorizedOnly>
+                        }
+                    ></Route>
+                    <Route
+                        path="/personalstats"
+                        element={
+                            <AuthorizedOnly>
+                                <PersonalStats></PersonalStats>
+                            </AuthorizedOnly>
+                        }
+                    ></Route>
+                    <Route
+                        path="/login"
+                        element={
+                            <UnauthorizedOnly>
+                                <LogIn></LogIn>
+                            </UnauthorizedOnly>
+                        }
+                    ></Route>
+                    <Route
+                        path="/signup"
+                        element={
+                            <UnauthorizedOnly>
+                                <SignUp></SignUp>
+                            </UnauthorizedOnly>
                         }
                     ></Route>
                 </Routes>

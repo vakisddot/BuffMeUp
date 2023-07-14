@@ -31,13 +31,12 @@ public class SignUpController : ControllerBase
 
         if (!ModelState.IsValid)
         {
-            return new JsonResult(new { Errors = ModelState
-                .ToDictionary(
-                    kvp => kvp.Key, 
-                    kvp => kvp.Value?.Errors.Select(e => e.ErrorMessage).ToArray() ?? new[] { "" }) })
+            return BadRequest(new
             {
-                StatusCode = (int)HttpStatusCode.BadRequest
-            };
+                Errors = ModelState.ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value?.Errors.Select(e => e.ErrorMessage).ToArray() ?? new[] { "" })
+            });
         }
 
         var token = await _accountService.RegisterUserAsync(newUser);

@@ -19,13 +19,22 @@ public static class ValidationConstants
 
         public static object Serialized = new
         {
-            UsernameMinLength = UsernameMinLength,
-            UsernameMaxLength = UsernameMaxLength,
-            UsernameRegex = UsernameRegex,
-            PasswordMinLength = PasswordMinLength,
-            PasswordMaxLength = PasswordMaxLength,
-            FirstNameMinLength = FirstNameMinLength,
-            FirstNameMaxLength = FirstNameMaxLength
+            Username = new
+            {
+                MinLength = UsernameMinLength,
+                MaxLength = UsernameMaxLength,
+                Regex = UsernameRegex,
+            },
+            Password = new
+            {
+                MinLength = PasswordMinLength,
+                MaxLength = PasswordMaxLength,
+            },
+            FirstName = new
+            {
+                MinLength = FirstNameMinLength,
+                MaxLength = FirstNameMaxLength,
+            }
         };
     }
 
@@ -36,8 +45,11 @@ public static class ValidationConstants
 
         public static object Serialized = new
         {
-            NameMinLength = NameMinLength,
-            NameMaxLength = NameMaxLength
+            Name = new
+            {
+                MinLength = NameMinLength,
+                MaxLength = NameMaxLength,
+            }
         };
     }
 
@@ -54,12 +66,26 @@ public static class ValidationConstants
 
         public static object Serialized = new
         {
-            AgeMinValue = AgeMinValue,
-            AgeMaxValue = AgeMaxValue,
-            HeightMinValue = HeightMinValue,
-            HeightMaxValue = HeightMaxValue,
-            WeightMinValue = WeightMinValue,
-            WeightMaxValue = WeightMaxValue
+            Age = new
+            {
+                MinValue = AgeMinValue,
+                MaxValue = AgeMaxValue,
+            },
+            Height = new
+            {
+                MinValue = HeightMinValue,
+                MaxValue = HeightMaxValue,
+            },
+            Weight = new
+            {
+                MinValue = WeightMinValue,
+                MaxValue = WeightMaxValue,
+            },
+            GoalWeight = new
+            {
+                MinValue = WeightMinValue,
+                MaxValue = WeightMaxValue,
+            }
         };
     }
 
