@@ -275,8 +275,8 @@ const Account = ({ nutrients }) => {
 
                 <div className="footer-card">
                     <h3>WORKOUT</h3>
-                    <a href="#" className="Auth-btn-outline">
-                        Log new workout
+                    <a href="allworkouts" className="Auth-btn-outline">
+                        My workouts
                     </a>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

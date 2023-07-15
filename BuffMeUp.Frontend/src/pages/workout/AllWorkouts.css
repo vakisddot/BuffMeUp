@@ -9,6 +9,20 @@
     gap: 1em;
 }
 
+.All-workouts-header::after {
+    z-index: -1;
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0.05),
+        rgba(0, 0, 0, 0.2),
+        var(--black)
+    );
+}
+
 .All-workouts-header img {
     position: absolute;
     top: 0;

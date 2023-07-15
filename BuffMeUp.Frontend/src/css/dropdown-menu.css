@@ -1,0 +1,40 @@
+.Dropdown-btn {
+    position: relative;
+}
+
+.Dropdown-btn::after {
+    content: " >";
+}
+
+.Dropdown-btn:hover > .Dropdown-menu {
+    display: flex;
+}
+
+.Dropdown-menu {
+    position: absolute;
+    width: 100%;
+    top: 103%;
+    left: -1px;
+    display: none;
+    flex-direction: column;
+    border: 1px solid var(--black);
+}
+
+.Dropdown-menu .Dropdown-menu {
+    left: 101%;
+    top: -3%;
+}
+
+.Dropdown-menu a {
+    color: var(--white);
+    background-color: var(--black);
+}
+
+.Dropdown-menu a:not(:last-child) {
+    border-bottom: 1px solid var(--white);
+}
+
+.Dropdown-menu:hover a:hover {
+    color: var(--black);
+    background-color: var(--white);
+}

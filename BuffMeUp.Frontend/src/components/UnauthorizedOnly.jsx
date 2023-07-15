@@ -1,9 +1,9 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import hasJWT from "../utils";
+import isAuthenticated from "../utils";
 
 const UnauthorizedOnly = ({ children }) => {
-    if (hasJWT()) {
+    if (isAuthenticated()) {
         return <Navigate to="/account" replace />;
     }
     return children;

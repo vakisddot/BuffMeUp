@@ -2,6 +2,7 @@ import React from "react";
 import "./Header.css";
 import hasJWT from "../utils";
 import { useNavigate } from "react-router-dom";
+import isAuthenticated from "../utils";
 
 const Header = () => {
     const navigate = useNavigate();
@@ -22,10 +23,39 @@ const Header = () => {
             </a>
 
             <nav>
-                {hasJWT() && (
+                {isAuthenticated() && (
                     <>
                         <a href="about">MEALS</a>
-                        <a href="credits">WORKOUT</a>
+                        <a className="Dropdown-btn" href="allworkouts">
+                            WORKOUTS
+                            <div className="Dropdown-menu">
+                                <a href="#">View all</a>
+                                <a href="#">Start new</a>
+                                <a className="Dropdown-btn" href="#">
+                                    CCC
+                                    <div className="Dropdown-menu">
+                                        <a href="#">View all</a>
+                                        <a href="#">Start new</a>
+                                        <a href="#">Start new</a>
+                                        <a className="Dropdown-btn" href="#">
+                                            Start new
+                                            <div className="Dropdown-menu">
+                                                <a href="#">View all</a>
+                                                <a href="#">Start new</a>
+                                                <a href="#">Start new</a>
+                                                <a
+                                                    className="Dropdown-btn"
+                                                    href="#"
+                                                >
+                                                    Start new
+                                                </a>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </a>
+                                <a href="#">DDD</a>
+                            </div>
+                        </a>
                     </>
                 )}
                 <a href="about">ABOUT</a>
@@ -33,7 +63,7 @@ const Header = () => {
             </nav>
 
             <div className="Auth-btns">
-                {!hasJWT() ? (
+                {!isAuthenticated() ? (
                     <>
                         <a href="login" className="Auth-btn">
                             Log in
