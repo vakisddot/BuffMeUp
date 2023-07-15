@@ -38,6 +38,9 @@ public class AccountService : IAccountService
             PasswordHash = PasswordHasher.HashPassword(newUser.Password),
         };
 
+        var role = await _dbContext.Roles.FirstOrDefaultAsync(r => r.Id == user.RoleId);
+        user.Role = role!;
+
         await _dbContext.Users.AddAsync(user);
         await _dbContext.SaveChangesAsync();
 
@@ -46,7 +49,9 @@ public class AccountService : IAccountService
 
     public async Task<string?> LogInUserAsync(UserLogInFormModel user)
     {
-        var userFromDb = await _dbContext.Users.FirstOrDefaultAsync(u => u.Username == user.Username);
+        var userFromDb = await _dbContext.Users
+            .Include(u => u.Role)
+            .FirstOrDefaultAsync(u => u.Username == user.Username);
 
         if (userFromDb == null)
         {
@@ -65,12 +70,15 @@ public class AccountService : IAccountService
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]!));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
         var claims = new[]
         {
             new Claim("userId", user.Id.ToString()),
             new Claim("username", user.Username),
             new Claim("firstName", user.FirstName),
+            new Claim("role", user.Role.Name)
         };
+
         var token = new JwtSecurityToken(_config["JwtSettings:Issuer"],
             _config["JwtSettings:Audience"],
             claims,

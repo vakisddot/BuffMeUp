@@ -1,8 +1,7 @@
 import jwt_decode from "jwt-decode";
 
-function isAuthenticated() {
+export function isAuthenticated() {
     const token = localStorage.getItem("token");
-
     if (!token) return false;
 
     const decodedToken = jwt_decode(token);
@@ -13,4 +12,22 @@ function isAuthenticated() {
     return true;
 }
 
-export default isAuthenticated;
+export function getClaims() {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+
+    return jwt_decode(token);
+}
+
+export function isAuthorized(role) {
+    const claims = getClaims();
+
+    if (
+        claims &&
+        claims.role &&
+        claims.role.toLowerCase() === role.toLowerCase()
+    )
+        return true;
+
+    return false;
+}

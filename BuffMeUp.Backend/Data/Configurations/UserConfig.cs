@@ -15,8 +15,8 @@ public class UserConfig : IEntityTypeConfiguration<User>
             FirstName = "Admin",
             Username = "admin",
             Email = "admin@admin.admin",
-            PasswordHash = PasswordHasher.HashPassword("admin"),
-            //PersonalStatsId = Guid.Parse("36d33f78-dcba-46a7-955c-13e0cc73ec97"),
+            PasswordHash = PasswordHasher.HashPassword("123456"),
+            RoleId = 2
         });
     }
 }

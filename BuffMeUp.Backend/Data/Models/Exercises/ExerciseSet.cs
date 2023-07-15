@@ -34,6 +34,6 @@ public class ExerciseSet
 
 
     [ForeignKey(nameof(Workout))]
-    public Guid WorkoutId { get; set; }
+    public int WorkoutId { get; set; }
     public Workout Workout { get; set; } = null!;
 }

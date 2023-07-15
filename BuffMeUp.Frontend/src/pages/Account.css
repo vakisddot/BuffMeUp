@@ -44,6 +44,12 @@
     gap: 0.1em;
 }
 
+.acc-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
 .so-far {
     display: flex;
     flex-direction: column;
@@ -102,7 +108,7 @@
     display: flex;
     flex-direction: column;
     gap: 1em;
-    padding: 8em 15em;
+    padding: 8em 10em;
     overflow: hidden;
 }
 
@@ -131,4 +137,20 @@
 
 .footer-card:nth-child(even) svg {
     right: 0;
+}
+
+.footer-card a {
+    min-width: 7em;
+}
+
+@media screen and (max-width: 850px) {
+    .user-stats {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5em;
+    }
+
+    .user-footer {
+    }
 }

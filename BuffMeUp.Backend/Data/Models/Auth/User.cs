@@ -13,9 +13,9 @@ public class User
         Id = Guid.NewGuid();
         Workouts = new HashSet<Workout>();
         Meals = new HashSet<Meal>();
-        User_Role = new HashSet<JT_User_Role>();
         ExerciseTemplates = new HashSet<ExerciseTemplate>();
         MealTemplates = new HashSet<MealTemplate>();
+        RoleId = 1;
     }
 
 
@@ -42,11 +42,13 @@ public class User
     public Guid? PersonalStatsId { get; set; }
     public PersonalStats? PersonalStats { get; set; }
 
+    [ForeignKey(nameof(Role))]
+    public int RoleId { get; set; }
+    public Role Role { get; set; } = null!;
+
     public virtual ICollection<Workout> Workouts { get; set; }
 
     public virtual ICollection<Meal> Meals { get; set; }
-
-    public virtual ICollection<JT_User_Role> User_Role { get; set; }
 
     public virtual ICollection<ExerciseTemplate> ExerciseTemplates { get; set; }
 

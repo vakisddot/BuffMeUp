@@ -2,6 +2,7 @@
 @import "./css/typography.css";
 @import "./css/buttons.css";
 @import "./css/dropdown-menu.css";
+@import "./css/responsive.css";
 
 :root {
     --black: #111;

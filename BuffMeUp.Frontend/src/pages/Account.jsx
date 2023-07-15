@@ -40,6 +40,8 @@ const Account = ({ nutrients }) => {
         return "Extremely underweight!";
     };
 
+    const getGenderString = (gender) => (gender ? "Male" : "Female");
+
     const getAgeString = (age) => `${age} years old`;
 
     const getWeightString = (weightKg) =>
@@ -63,6 +65,7 @@ const Account = ({ nutrients }) => {
         );
 
         setAccStats({
+            Gender: getGenderString(personalStats?.gender),
             Age: getAgeString(personalStats?.age || 0),
             Height: getHeightString(personalStats?.height || 0),
             Weight: getWeightString(personalStats?.currentWeight || 0),
@@ -142,6 +145,10 @@ const Account = ({ nutrients }) => {
                                         </p>
                                     )
                                 )}
+
+                                <a href="#" className="Auth-btn">
+                                    Update info
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -169,7 +176,6 @@ const Account = ({ nutrients }) => {
                         </p>
 
                         <a
-                            href="#"
                             onClick={() =>
                                 (document.querySelector(
                                     ".popup-form"

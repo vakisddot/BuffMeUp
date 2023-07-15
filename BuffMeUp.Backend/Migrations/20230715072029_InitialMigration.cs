@@ -50,7 +50,7 @@ namespace BuffMeUp.Backend.Migrations
                     Reps = table.Column<int>(type: "int", nullable: false),
                     Weight = table.Column<int>(type: "int", nullable: false),
                     ExerciseTemplateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    WorkoutId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    WorkoutId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -74,6 +74,36 @@ namespace BuffMeUp.Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "JT_Meal_FoodItem",
+                columns: table => new
+                {
+                    MealId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FoodItemId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JT_Meal_FoodItem", x => new { x.MealId, x.FoodItemId });
+                    table.ForeignKey(
+                        name: "FK_JT_Meal_FoodItem_FoodItems_FoodItemId",
+                        column: x => x.FoodItemId,
+                        principalTable: "FoodItems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "JT_Meal_MealTemplate",
+                columns: table => new
+                {
+                    MealId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MealTemplateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JT_Meal_MealTemplate", x => new { x.MealId, x.MealTemplateId });
+                });
+
+            migrationBuilder.CreateTable(
                 name: "JT_MealTemplate_FoodItem",
                 columns: table => new
                 {
@@ -92,41 +122,16 @@ namespace BuffMeUp.Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "JT_User_Role",
-                columns: table => new
-                {
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_JT_User_Role", x => new { x.UserId, x.RoleId });
-                    table.ForeignKey(
-                        name: "FK_JT_User_Role_Roles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Roles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Meals",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FoodItemId = table.Column<int>(type: "int", nullable: true),
-                    MealTemplateId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Meals", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Meals_FoodItems_FoodItemId",
-                        column: x => x.FoodItemId,
-                        principalTable: "FoodItems",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -170,7 +175,8 @@ namespace BuffMeUp.Backend.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
-                    PersonalStatsId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    PersonalStatsId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    RoleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -180,13 +186,20 @@ namespace BuffMeUp.Backend.Migrations
                         column: x => x.PersonalStatsId,
                         principalTable: "PersonalStats",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Users_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Workouts",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -202,29 +215,38 @@ namespace BuffMeUp.Backend.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "User" },
+                    { 2, "Admin" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Email", "FirstName", "PasswordHash", "PersonalStatsId", "Username" },
-                values: new object[] { new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1"), "admin@admin.admin", "Admin", "0+aHb2blzweBVbO5jMNrZg==.CKghctKS/o/0h/PXFwj9jG2Vil6tBbp2iXZgSF+wmZs=", null, "admin" });
+                columns: new[] { "Id", "Email", "FirstName", "PasswordHash", "PersonalStatsId", "RoleId", "Username" },
+                values: new object[] { new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1"), "admin@admin.admin", "Admin", "sVycnDV6Lz/6AXj5bPla9w==;RMBeF4j2IPvuGOwvWi6M6HRxb3q2QR2oyoQB3DlhPtc=", null, 2, "admin" });
 
             migrationBuilder.InsertData(
                 table: "ExerciseTemplates",
                 columns: new[] { "Id", "Description", "ExerciseType", "IsGlobal", "Name", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("01764429-c0c4-4a59-bd11-bfeea1921350"), "Stand up with your torso upright while holding a dumbbell on each hand being held at arms length. The elbows should be close to the torso. This will be your starting position.", 5, true, "Dumbbell Curl", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
-                    { new Guid("204cced3-4d3c-489e-94fe-f6c44f5736ae"), "Stand with your mid-foot under the barbell. Bend over and grab the bar with a shoulder-width grip. Bend your knees until your shins touch the bar. Lift your chest up and straighten your lower back.", 0, true, "Deadlift", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
-                    { new Guid("21b21dc7-770a-4932-bc2e-a7af085e2ccd"), "Lie on your back on the floor. Bend your legs and place feet firmly on the ground to stabilize your lower body. Cross your hands to opposite shoulders or place them behind your ears, without pulling on your neck.", 6, true, "Sit-up", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
-                    { new Guid("3dc21d83-5e9a-47d2-8759-cf9ee45901dd"), "Grab the pull-up bar with your palms down (shoulder-width grip). Hang to the pull-up bar with straight arms and your legs off the floor. Pull yourself up by pulling your elbows down to the floor.", 0, true, "Pull-up", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
-                    { new Guid("60ffc373-b8e0-4273-94fd-b10e03691619"), "Stand with the bar on your front shoulders, and your hands next to your shoulders. Press the bar over your head, until it’s balanced over your shoulders and mid-foot.", 3, true, "Overhead Press", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
-                    { new Guid("6771b6a7-9c77-493f-ae94-40a426a0d84f"), "Attach a straight or angled bar to a high pulley and grab with an overhand grip at shoulder width. Standing upright with the torso straight and a very small inclination forward, bring the upper arms close to your body and perpendicular to the floor.", 4, true, "Triceps Pushdown", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
-                    { new Guid("73fda4d9-7112-408f-8340-6caef6c5bc6a"), "Stand with your mid-foot under the barbell. Bend over and grab the bar with a shoulder-width grip. Bend your knees until your shins touch the bar. Lift your chest up and straighten your lower back.", 2, true, "Squat", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
-                    { new Guid("e12ec542-6fad-41df-989d-8cecd399c40e"), "Lie on your back on a flat bench. Grip the bar with your hands slightly wider than shoulder-width apart. Lift the bar off the rack and position it above your chest with arms fully extended.", 1, true, "Bench Press", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") }
+                    { new Guid("3904d82f-ddee-4a28-8489-3b1415a5e4c7"), "Stand with your mid-foot under the barbell. Bend over and grab the bar with a shoulder-width grip. Bend your knees until your shins touch the bar. Lift your chest up and straighten your lower back.", 0, true, "Deadlift", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
+                    { new Guid("58796372-903c-4fc7-b7d5-3e49e9bb117f"), "Grab the pull-up bar with your palms down (shoulder-width grip). Hang to the pull-up bar with straight arms and your legs off the floor. Pull yourself up by pulling your elbows down to the floor.", 0, true, "Pull-up", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
+                    { new Guid("83a04f54-9a35-4343-aede-ab25c8a6383e"), "Attach a straight or angled bar to a high pulley and grab with an overhand grip at shoulder width. Standing upright with the torso straight and a very small inclination forward, bring the upper arms close to your body and perpendicular to the floor.", 4, true, "Triceps Pushdown", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
+                    { new Guid("83c7b172-417e-40fa-8083-864feb45e5b7"), "Stand with your mid-foot under the barbell. Bend over and grab the bar with a shoulder-width grip. Bend your knees until your shins touch the bar. Lift your chest up and straighten your lower back.", 2, true, "Squat", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
+                    { new Guid("a7300e71-b70b-4c52-9568-b5cf9dcf2a32"), "Lie on your back on the floor. Bend your legs and place feet firmly on the ground to stabilize your lower body. Cross your hands to opposite shoulders or place them behind your ears, without pulling on your neck.", 6, true, "Sit-up", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
+                    { new Guid("be74f872-fb6a-4ea3-b274-096974d5c4ad"), "Stand up with your torso upright while holding a dumbbell on each hand being held at arms length. The elbows should be close to the torso. This will be your starting position.", 5, true, "Dumbbell Curl", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
+                    { new Guid("d1cd0c0d-9dea-4c43-92d5-fb0f01b68e32"), "Lie on your back on a flat bench. Grip the bar with your hands slightly wider than shoulder-width apart. Lift the bar off the rack and position it above your chest with arms fully extended.", 1, true, "Bench Press", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
+                    { new Guid("eb628fe7-0d93-4c60-b116-bdd9c9d45dc5"), "Stand with the bar on your front shoulders, and your hands next to your shoulders. Press the bar over your head, until it’s balanced over your shoulders and mid-foot.", 3, true, "Overhead Press", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") }
                 });
 
             migrationBuilder.InsertData(
                 table: "PersonalStats",
                 columns: new[] { "Id", "Age", "CurrentWeight", "Gender", "GoalWeight", "Height", "StartingWeight", "UserId" },
-                values: new object[] { new Guid("36d33f78-dcba-46a7-955c-13e0cc73ec97"), 22, 0, true, 75, 175, 70, new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") });
+                values: new object[] { new Guid("36d33f78-dcba-46a7-955c-13e0cc73ec97"), 22, 70, true, 75, 175, 70, new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ExerciseSets_ExerciseTemplateId",
@@ -242,24 +264,19 @@ namespace BuffMeUp.Backend.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_JT_Meal_FoodItem_FoodItemId",
+                table: "JT_Meal_FoodItem",
+                column: "FoodItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JT_Meal_MealTemplate_MealTemplateId",
+                table: "JT_Meal_MealTemplate",
+                column: "MealTemplateId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_JT_MealTemplate_FoodItem_FoodItemId",
                 table: "JT_MealTemplate_FoodItem",
                 column: "FoodItemId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_JT_User_Role_RoleId",
-                table: "JT_User_Role",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Meals_FoodItemId",
-                table: "Meals",
-                column: "FoodItemId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Meals_MealTemplateId",
-                table: "Meals",
-                column: "MealTemplateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Meals_UserId",
@@ -280,6 +297,11 @@ namespace BuffMeUp.Backend.Migrations
                 name: "IX_Users_PersonalStatsId",
                 table: "Users",
                 column: "PersonalStatsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_RoleId",
+                table: "Users",
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Workouts_UserId",
@@ -311,27 +333,36 @@ namespace BuffMeUp.Backend.Migrations
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
+                name: "FK_JT_Meal_FoodItem_Meals_MealId",
+                table: "JT_Meal_FoodItem",
+                column: "MealId",
+                principalTable: "Meals",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_JT_Meal_MealTemplate_MealTemplates_MealTemplateId",
+                table: "JT_Meal_MealTemplate",
+                column: "MealTemplateId",
+                principalTable: "MealTemplates",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_JT_Meal_MealTemplate_Meals_MealId",
+                table: "JT_Meal_MealTemplate",
+                column: "MealId",
+                principalTable: "Meals",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
                 name: "FK_JT_MealTemplate_FoodItem_MealTemplates_MealId",
                 table: "JT_MealTemplate_FoodItem",
                 column: "MealId",
                 principalTable: "MealTemplates",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_JT_User_Role_Users_UserId",
-                table: "JT_User_Role",
-                column: "UserId",
-                principalTable: "Users",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Meals_MealTemplates_MealTemplateId",
-                table: "Meals",
-                column: "MealTemplateId",
-                principalTable: "MealTemplates",
-                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Meals_Users_UserId",
@@ -347,7 +378,7 @@ namespace BuffMeUp.Backend.Migrations
                 column: "UserId",
                 principalTable: "Users",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_PersonalStats_Users_UserId",
@@ -369,13 +400,13 @@ namespace BuffMeUp.Backend.Migrations
                 name: "ExerciseSets");
 
             migrationBuilder.DropTable(
+                name: "JT_Meal_FoodItem");
+
+            migrationBuilder.DropTable(
+                name: "JT_Meal_MealTemplate");
+
+            migrationBuilder.DropTable(
                 name: "JT_MealTemplate_FoodItem");
-
-            migrationBuilder.DropTable(
-                name: "JT_User_Role");
-
-            migrationBuilder.DropTable(
-                name: "Meals");
 
             migrationBuilder.DropTable(
                 name: "ExerciseTemplates");
@@ -384,7 +415,7 @@ namespace BuffMeUp.Backend.Migrations
                 name: "Workouts");
 
             migrationBuilder.DropTable(
-                name: "Roles");
+                name: "Meals");
 
             migrationBuilder.DropTable(
                 name: "FoodItems");
@@ -397,6 +428,9 @@ namespace BuffMeUp.Backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "PersonalStats");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
         }
     }
 }

@@ -2,7 +2,7 @@ import React from "react";
 import "./Header.css";
 import hasJWT from "../utils";
 import { useNavigate } from "react-router-dom";
-import isAuthenticated from "../utils";
+import { isAuthenticated, isAuthorized } from "../utils";
 
 const Header = () => {
     const navigate = useNavigate();
@@ -26,40 +26,22 @@ const Header = () => {
                 {isAuthenticated() && (
                     <>
                         <a href="about">MEALS</a>
-                        <a className="Dropdown-btn" href="allworkouts">
+                        <a className="Dropdown-btn">
                             WORKOUTS
                             <div className="Dropdown-menu">
-                                <a href="#">View all</a>
+                                <a href="allworkouts">View all</a>
                                 <a href="#">Start new</a>
-                                <a className="Dropdown-btn" href="#">
-                                    CCC
-                                    <div className="Dropdown-menu">
-                                        <a href="#">View all</a>
-                                        <a href="#">Start new</a>
-                                        <a href="#">Start new</a>
-                                        <a className="Dropdown-btn" href="#">
-                                            Start new
-                                            <div className="Dropdown-menu">
-                                                <a href="#">View all</a>
-                                                <a href="#">Start new</a>
-                                                <a href="#">Start new</a>
-                                                <a
-                                                    className="Dropdown-btn"
-                                                    href="#"
-                                                >
-                                                    Start new
-                                                </a>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </a>
-                                <a href="#">DDD</a>
                             </div>
                         </a>
                     </>
                 )}
                 <a href="about">ABOUT</a>
                 <a href="credits">CREDITS</a>
+                {isAuthorized("admin") && (
+                    <>
+                        <a href="admin">ADMIN</a>
+                    </>
+                )}
             </nav>
 
             <div className="Auth-btns">

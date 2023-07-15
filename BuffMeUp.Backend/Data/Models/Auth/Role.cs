@@ -7,7 +7,7 @@ public class Role
 {
     public Role()
     {
-        User_Role = new HashSet<JT_User_Role>();
+        Users = new HashSet<User>();
     }
 
     [Key]
@@ -17,5 +17,5 @@ public class Role
     [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
     public string Name { get; set; } = null!;
 
-    public virtual ICollection<JT_User_Role> User_Role { get; set; }
+    public virtual ICollection<User> Users { get; set; }
 }

@@ -12,6 +12,8 @@ public class Meal
     public Meal()
     {
         Id = Guid.NewGuid();
+        Meal_FoodItem = new HashSet<JT_Meal_FoodItem>();
+        Meal_MealTemplate = new HashSet<JT_Meal_MealTemplate>();
     }
 
     [Key]
@@ -25,12 +27,6 @@ public class Meal
     public Guid UserId { get; set; }
     public User User { get; set; } = null!;
 
-
-    [ForeignKey(nameof(FoodItem))]
-    public int? FoodItemId { get; set; }
-    public FoodItem? FoodItem { get; set; }    
-    
-    [ForeignKey(nameof(MealTemplate))]
-    public Guid? MealTemplateId { get; set; }
-    public MealTemplate? MealTemplate { get; set; }
+    public virtual ICollection<JT_Meal_FoodItem> Meal_FoodItem { get; set; }
+    public virtual ICollection<JT_Meal_MealTemplate> Meal_MealTemplate { get; set; }
 }

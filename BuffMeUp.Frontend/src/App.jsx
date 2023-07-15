@@ -11,6 +11,8 @@ import AuthorizedOnly from "./components/AuthorizedOnly";
 import UnauthorizedOnly from "./components/UnauthorizedOnly";
 import PersonalStats from "./pages/PersonalStats";
 import AllWorkouts from "./pages/workout/AllWorkouts";
+import AllMeals from "./pages/meals/AllMeals";
+import AdminPanel from "./pages/admin/AdminPanel";
 
 function App() {
     return (
@@ -36,6 +38,7 @@ function App() {
                             </AuthorizedOnly>
                         }
                     ></Route>
+
                     <Route
                         path="/allworkouts"
                         element={
@@ -44,6 +47,15 @@ function App() {
                             </AuthorizedOnly>
                         }
                     ></Route>
+                    <Route
+                        path="/allmeals"
+                        element={
+                            <AuthorizedOnly>
+                                <AllMeals></AllMeals>
+                            </AuthorizedOnly>
+                        }
+                    ></Route>
+
                     <Route
                         path="/login"
                         element={
@@ -58,6 +70,15 @@ function App() {
                             <UnauthorizedOnly>
                                 <SignUp></SignUp>
                             </UnauthorizedOnly>
+                        }
+                    ></Route>
+
+                    <Route
+                        path="/admin"
+                        element={
+                            <AuthorizedOnly role="admin">
+                                <AdminPanel></AdminPanel>
+                            </AuthorizedOnly>
                         }
                     ></Route>
                 </Routes>
