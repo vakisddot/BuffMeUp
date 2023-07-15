@@ -2,28 +2,28 @@
 using BuffMeUp.Backend.Services.Interfaces;
 using BuffMeUp.Backend.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace BuffMeUp.Backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class SignUpController : ControllerBase
+public class AccountController : ControllerBase
 {
     readonly IAccountService _accountService;
 
-    public SignUpController(IAccountService accountService)
+    public AccountController(IAccountService accountService)
     {
         _accountService = accountService;
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody]UserSignUpFormModel newUser)
+    [Route("SignUp")]
+    public async Task<IActionResult> SignUp([FromBody] UserSignUpFormModel newUser)
     {
         if (!await _accountService.IsEmailAvailableAsync(newUser.Email))
         {
             ModelState.AddModelError("Email", "Email is already taken!");
-        }        
+        }
 
         if (!await _accountService.IsUsernameAvailableAsync(newUser.Username))
         {
@@ -37,6 +37,27 @@ public class SignUpController : ControllerBase
 
         var token = await _accountService.RegisterUserAsync(newUser);
         Console.WriteLine($"User '{newUser.Username}' registered successfully!");
+
+        return Ok(new { Token = token });
+    }
+
+    [HttpPost]
+    [Route("LogIn")]
+    public async Task<IActionResult> LogIn([FromBody]UserLogInFormModel user)
+    {
+        var token = await _accountService.LogInUserAsync(user);
+
+        if (token == null)
+        {
+            ModelState.AddModelError("User", "Invalid username and/or password!");
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(Utils.GetErrorsObject(ModelState));
+        }
+
+        Console.WriteLine($"User '{user.Username}' logged in successfully!");
 
         return Ok(new { Token = token });
     }

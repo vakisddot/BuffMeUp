@@ -44,9 +44,10 @@
     background-color: var(--darkgray);
     position: relative;
     padding: 2em 3em;
-    margin: 1em 10em;
+    margin: 1em 15em;
     text-align: left;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 1em;
     justify-content: space-between;
     transition: 0.2s ease-in-out;
@@ -58,7 +59,7 @@
     z-index: 1;
 }
 
-.workout-details svg {
+.workout-details > svg {
     position: absolute;
     opacity: 50%;
     top: 10%;
@@ -72,6 +73,7 @@
 .set-circles {
     margin-top: 0.5em;
     display: flex;
+    justify-content: end;
     gap: 0.25em;
 }
 
@@ -84,26 +86,11 @@
     border-radius: 50%;
 }
 
-.Back {
-    background-color: var(--blue);
-}
-
-.Biceps {
-    background-color: var(--green);
-}
-
-.Chest {
-    background-color: var(--red);
-}
-
-.Shoulders {
-    background-color: var(--yellow);
-}
-
 .workout-details-end {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    text-align: right;
 }
 
 .workout-btns {
@@ -112,7 +99,18 @@
     gap: 0.25em;
 }
 
-@media screen and (max-width: 850px) {
+.workout-details-comment {
+    text-align: center;
+    align-self: end;
+    font-size: 0.75em;
+    max-height: 7em;
+}
+
+.comment {
+    font-style: italic;
+}
+
+@media screen and (max-width: 900px) {
     .workout-details {
         padding: 1em;
         margin: 1em;

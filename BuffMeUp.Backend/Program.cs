@@ -26,6 +26,10 @@ public class Program
         builder.Services.AddScoped<IAccountService, AccountService>();
         builder.Services.AddScoped<IPersonalStatsService, PersonalStatsService>();
 
+        builder.Services.AddScoped<IWorkoutService, WorkoutService>();
+        builder.Services.AddScoped<IExerciseTemplateService, ExerciseTemplateService>();
+        builder.Services.AddScoped<IExerciseSetService, ExerciseSetService>();
+
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();

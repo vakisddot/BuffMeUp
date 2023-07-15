@@ -66,6 +66,25 @@ public class AccountService : IAccountService
         return null;
     }
 
+    public async Task DeleteUserAsync(Guid userId)
+    {
+        var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
+        if (user == null)
+        {
+            return;
+        }
+
+        var personalStats = await _dbContext.PersonalStats.FirstOrDefaultAsync(ps => ps.UserId == userId);
+
+        if (personalStats != null)
+        {
+            _dbContext.PersonalStats.Remove(personalStats);
+        }
+
+        _dbContext.Users.Remove(user);
+        await _dbContext.SaveChangesAsync();
+    }
+
     string GenerateToken(User user)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]!));
@@ -87,5 +106,4 @@ public class AccountService : IAccountService
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
-
 }

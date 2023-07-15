@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { CircularProgress } from "@mui/material";
 import jwt_decode from "jwt-decode";
 import InputForm from "../components/InputForm";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Account = ({ nutrients }) => {
     const token = localStorage.getItem("token");
@@ -60,6 +62,14 @@ const Account = ({ nutrients }) => {
     const [weightChangeRemaining, setWeightChangeRemaining] = useState(0);
 
     useEffect(() => {
+        setWeightChange(
+            personalStats?.currentWeight - personalStats?.startingWeight || 0
+        );
+
+        setWeightChangeRemaining(
+            personalStats?.currentWeight - personalStats?.goalWeight || 0
+        );
+
         setBmi(
             personalStats?.currentWeight / (personalStats?.height / 100) ** 2
         );
@@ -71,14 +81,6 @@ const Account = ({ nutrients }) => {
             Weight: getWeightString(personalStats?.currentWeight || 0),
             BMI: getBmiString(bmi || 0),
         });
-
-        setWeightChange(
-            personalStats?.currentWeight - personalStats?.startingWeight || 0
-        );
-
-        setWeightChangeRemaining(
-            personalStats?.currentWeight - personalStats?.goalWeight || 0
-        );
     }, [personalStats]);
 
     const nutrientGoals = {
@@ -132,9 +134,9 @@ const Account = ({ nutrients }) => {
                                     @{claims?.username || "invalid"}
                                 </p>
 
-                                <a href="#" className="Auth-btn">
+                                <Link to="#" className="Auth-btn">
                                     Edit account
-                                </a>
+                                </Link>
                             </div>
 
                             <div className="acc-stats">
@@ -146,9 +148,9 @@ const Account = ({ nutrients }) => {
                                     )
                                 )}
 
-                                <a href="#" className="Auth-btn">
+                                <Link to="#" className="Auth-btn">
                                     Update info
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -260,16 +262,16 @@ const Account = ({ nutrients }) => {
                         "Content-Type": "application/json",
                         Authorization: "Bearer " + token,
                     }}
-                    endpoint="/api/WeightUpdate"
+                    endpoint="/api/PersonalStats/UpdateWeight"
                 />
             </div>
 
             <footer className="user-footer">
                 <div className="footer-card">
                     <h3>MEALS</h3>
-                    <a href="#" className="Auth-btn-outline">
+                    <Link to="#" className="Auth-btn-outline">
                         Add meals
-                    </a>
+                    </Link>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         height="25em"
@@ -281,9 +283,9 @@ const Account = ({ nutrients }) => {
 
                 <div className="footer-card">
                     <h3>WORKOUT</h3>
-                    <a href="allworkouts" className="Auth-btn-outline">
+                    <Link to="/allworkouts" className="Auth-btn-outline">
                         My workouts
-                    </a>
+                    </Link>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         height="25em"

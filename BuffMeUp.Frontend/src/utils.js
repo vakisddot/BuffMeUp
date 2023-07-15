@@ -7,7 +7,10 @@ export function isAuthenticated() {
     const decodedToken = jwt_decode(token);
     const currentDate = new Date();
 
-    if (decodedToken.exp * 1000 < currentDate.getTime()) return false;
+    if (decodedToken.exp * 1000 < currentDate.getTime()) {
+        localStorage.removeItem("token");
+        return false;
+    }
 
     return true;
 }
@@ -30,4 +33,27 @@ export function isAuthorized(role) {
         return true;
 
     return false;
+}
+
+export function fetchAuthenticated(endpoint, method) {
+    return fetch(endpoint, {
+        method: method || "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+    });
+}
+
+export function getQueryString(searchParams) {
+    const params = [];
+
+    searchParams.forEach((value, key) => {
+        params.push([key, value]);
+    });
+
+    const joinedParams = params
+        .map(([key, value]) => `${key}=${value}`)
+        .join("&");
+    return joinedParams;
 }

@@ -1,7 +1,7 @@
 ﻿using static BuffMeUp.Backend.Common.ValidationConstants.ForUser;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using BuffMeUp.Backend.Data.Models.Exercises;
+using BuffMeUp.Backend.Data.Models.Workouts;
 using BuffMeUp.Backend.Data.Models.Food;
 
 namespace BuffMeUp.Backend.Data.Models.Auth;

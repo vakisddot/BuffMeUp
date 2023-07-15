@@ -50,7 +50,7 @@ namespace BuffMeUp.Backend.Migrations
                     Reps = table.Column<int>(type: "int", nullable: false),
                     Weight = table.Column<int>(type: "int", nullable: false),
                     ExerciseTemplateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    WorkoutId = table.Column<int>(type: "int", nullable: false)
+                    WorkoutId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -198,9 +198,10 @@ namespace BuffMeUp.Backend.Migrations
                 name: "Workouts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Number = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -226,21 +227,21 @@ namespace BuffMeUp.Backend.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Email", "FirstName", "PasswordHash", "PersonalStatsId", "RoleId", "Username" },
-                values: new object[] { new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1"), "admin@admin.admin", "Admin", "sVycnDV6Lz/6AXj5bPla9w==;RMBeF4j2IPvuGOwvWi6M6HRxb3q2QR2oyoQB3DlhPtc=", null, 2, "admin" });
+                values: new object[] { new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1"), "admin@admin.admin", "Admin", "DIyfgQUqk1F8RGdvwGKYlg==;pplKG5BYL3YU3GEtkFNDAt6XPdk5H8yLjO3ZBge00ek=", null, 2, "admin" });
 
             migrationBuilder.InsertData(
                 table: "ExerciseTemplates",
                 columns: new[] { "Id", "Description", "ExerciseType", "IsGlobal", "Name", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("3904d82f-ddee-4a28-8489-3b1415a5e4c7"), "Stand with your mid-foot under the barbell. Bend over and grab the bar with a shoulder-width grip. Bend your knees until your shins touch the bar. Lift your chest up and straighten your lower back.", 0, true, "Deadlift", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
-                    { new Guid("58796372-903c-4fc7-b7d5-3e49e9bb117f"), "Grab the pull-up bar with your palms down (shoulder-width grip). Hang to the pull-up bar with straight arms and your legs off the floor. Pull yourself up by pulling your elbows down to the floor.", 0, true, "Pull-up", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
-                    { new Guid("83a04f54-9a35-4343-aede-ab25c8a6383e"), "Attach a straight or angled bar to a high pulley and grab with an overhand grip at shoulder width. Standing upright with the torso straight and a very small inclination forward, bring the upper arms close to your body and perpendicular to the floor.", 4, true, "Triceps Pushdown", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
-                    { new Guid("83c7b172-417e-40fa-8083-864feb45e5b7"), "Stand with your mid-foot under the barbell. Bend over and grab the bar with a shoulder-width grip. Bend your knees until your shins touch the bar. Lift your chest up and straighten your lower back.", 2, true, "Squat", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
-                    { new Guid("a7300e71-b70b-4c52-9568-b5cf9dcf2a32"), "Lie on your back on the floor. Bend your legs and place feet firmly on the ground to stabilize your lower body. Cross your hands to opposite shoulders or place them behind your ears, without pulling on your neck.", 6, true, "Sit-up", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
-                    { new Guid("be74f872-fb6a-4ea3-b274-096974d5c4ad"), "Stand up with your torso upright while holding a dumbbell on each hand being held at arms length. The elbows should be close to the torso. This will be your starting position.", 5, true, "Dumbbell Curl", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
-                    { new Guid("d1cd0c0d-9dea-4c43-92d5-fb0f01b68e32"), "Lie on your back on a flat bench. Grip the bar with your hands slightly wider than shoulder-width apart. Lift the bar off the rack and position it above your chest with arms fully extended.", 1, true, "Bench Press", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
-                    { new Guid("eb628fe7-0d93-4c60-b116-bdd9c9d45dc5"), "Stand with the bar on your front shoulders, and your hands next to your shoulders. Press the bar over your head, until it’s balanced over your shoulders and mid-foot.", 3, true, "Overhead Press", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") }
+                    { new Guid("2563d0c5-c76c-4980-b3bf-28778ac73f86"), "Stand with your mid-foot under the barbell. Bend over and grab the bar with a shoulder-width grip. Bend your knees until your shins touch the bar. Lift your chest up and straighten your lower back.", 2, true, "Squat", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
+                    { new Guid("56e4a8c0-69ba-47a1-9cfb-6e41ef950f6a"), "Lie on your back on the floor. Bend your legs and place feet firmly on the ground to stabilize your lower body. Cross your hands to opposite shoulders or place them behind your ears, without pulling on your neck.", 6, true, "Sit-up", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
+                    { new Guid("8163c55a-7716-4ce8-8440-54cab09ea35d"), "Lie on your back on a flat bench. Grip the bar with your hands slightly wider than shoulder-width apart. Lift the bar off the rack and position it above your chest with arms fully extended.", 1, true, "Bench Press", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
+                    { new Guid("b96bd616-1dc1-4543-891f-4fc659bfec96"), "Stand with the bar on your front shoulders, and your hands next to your shoulders. Press the bar over your head, until it’s balanced over your shoulders and mid-foot.", 3, true, "Overhead Press", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
+                    { new Guid("cb374e7c-ff29-46c7-a646-7d4a0c6ae81e"), "Stand with your mid-foot under the barbell. Bend over and grab the bar with a shoulder-width grip. Bend your knees until your shins touch the bar. Lift your chest up and straighten your lower back.", 0, true, "Deadlift", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
+                    { new Guid("da5732ea-4e64-47a6-85c1-49a9f7261e86"), "Grab the pull-up bar with your palms down (shoulder-width grip). Hang to the pull-up bar with straight arms and your legs off the floor. Pull yourself up by pulling your elbows down to the floor.", 0, true, "Pull-up", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
+                    { new Guid("e7f3286c-fa5b-499f-92bc-23ae8f58352d"), "Stand up with your torso upright while holding a dumbbell on each hand being held at arms length. The elbows should be close to the torso. This will be your starting position.", 5, true, "Dumbbell Curl", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") },
+                    { new Guid("f527757f-9c9b-49ac-89d6-de2b67f75e86"), "Attach a straight or angled bar to a high pulley and grab with an overhand grip at shoulder width. Standing upright with the torso straight and a very small inclination forward, bring the upper arms close to your body and perpendicular to the floor.", 4, true, "Triceps Pushdown", new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1") }
                 });
 
             migrationBuilder.InsertData(

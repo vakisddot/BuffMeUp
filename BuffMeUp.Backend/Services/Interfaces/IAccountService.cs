@@ -11,4 +11,6 @@ public interface IAccountService
     Task<string> RegisterUserAsync(UserSignUpFormModel newUser);
 
     Task<string?> LogInUserAsync(UserLogInFormModel user);
+
+    Task DeleteUserAsync(Guid userId);
 }

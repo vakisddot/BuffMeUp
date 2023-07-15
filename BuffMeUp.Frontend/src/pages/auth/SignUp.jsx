@@ -33,7 +33,7 @@ const SignUp = () => {
             title="Sign up"
             modelName="User"
             fields={fields}
-            endpoint="/api/SignUp"
+            endpoint="/api/Account/SignUp"
             redirect="/personalstats"
             submitLabel="Sign up"
             onSuccessfulSubmit={(response) =>

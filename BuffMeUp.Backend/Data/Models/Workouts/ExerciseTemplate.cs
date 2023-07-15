@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static BuffMeUp.Backend.Common.ValidationConstants.ForExerciseTemplate;
 
-namespace BuffMeUp.Backend.Data.Models.Exercises;
+namespace BuffMeUp.Backend.Data.Models.Workouts;
 
 public class ExerciseTemplate
 {

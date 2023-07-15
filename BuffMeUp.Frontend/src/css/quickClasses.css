@@ -1,0 +1,59 @@
+.align-left {
+    text-align: left;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.red {
+    color: var(--red);
+}
+
+.gray {
+    color: var(--gray);
+}
+
+.Back {
+    background-color: var(--blue);
+}
+.Back-fill {
+    fill: var(--blue);
+}
+.Back-col {
+    color: var(--blue);
+}
+
+.Biceps {
+    background-color: var(--green);
+}
+.Biceps-fill {
+    fill: var(--green);
+}
+.Biceps-col {
+    color: var(--green);
+}
+
+.Chest {
+    background-color: var(--red);
+}
+.Chest-fill {
+    fill: var(--red);
+}
+.Chest-col {
+    color: var(--red);
+}
+
+.Shoulders {
+    background-color: var(--yellow);
+}
+.Shoulders-fill {
+    fill: var(--yellow);
+}
+.Shoulders-col {
+    color: var(--yellow);
+}

@@ -1,6 +1,7 @@
 ﻿using BuffMeUp.Backend.Common;
 using BuffMeUp.Backend.Services.Interfaces;
 using BuffMeUp.Backend.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -8,6 +9,7 @@ namespace BuffMeUp.Backend.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class PersonalStatsController : ControllerBase
 {
     readonly IPersonalStatsService _personalStatsService;
@@ -33,7 +35,7 @@ public class PersonalStatsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] PersonalStatsFormModel model)
+    public async Task<IActionResult> SubmitStats([FromBody] PersonalStatsFormModel model)
     {
         var userId = IdentifyUser();
 
@@ -52,8 +54,9 @@ public class PersonalStatsController : ControllerBase
         return Ok(new {});
     }
 
-    [HttpPatch]
-    public async Task<IActionResult> Patch(int newWeight)
+    [HttpPost]
+    [Route("UpdateWeight")]
+    public async Task<IActionResult> UpdateWeight([FromBody] WeightUpdateFormModel model)
     {
         var userId = IdentifyUser();
 
@@ -67,9 +70,9 @@ public class PersonalStatsController : ControllerBase
             return BadRequest(Utils.GetErrorsObject(ModelState));
         }
 
-        await _personalStatsService.UpdateWeightAsync(newWeight, Guid.Parse(userId!));
+        await _personalStatsService.UpdateWeightAsync(model.Weight, Guid.Parse(userId!));
 
-        return Ok(new {});
+        return Ok(new { });
     }
 
     string? IdentifyUser()

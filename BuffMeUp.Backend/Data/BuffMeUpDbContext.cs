@@ -1,6 +1,6 @@
 ﻿using BuffMeUp.Backend.Data.Models;
 using BuffMeUp.Backend.Data.Models.Auth;
-using BuffMeUp.Backend.Data.Models.Exercises;
+using BuffMeUp.Backend.Data.Models.Workouts;
 using BuffMeUp.Backend.Data.Models.Food;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;

@@ -1,4 +1,4 @@
-﻿using BuffMeUp.Backend.Data.Models.Exercises;
+﻿using BuffMeUp.Backend.Data.Models.Workouts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuffMeUp.Backend.Migrations
 {
     [DbContext(typeof(BuffMeUpDbContext))]
-    [Migration("20230715072029_InitialMigration")]
+    [Migration("20230715130216_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -99,163 +99,10 @@ namespace BuffMeUp.Backend.Migrations
                             Id = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1"),
                             Email = "admin@admin.admin",
                             FirstName = "Admin",
-                            PasswordHash = "sVycnDV6Lz/6AXj5bPla9w==;RMBeF4j2IPvuGOwvWi6M6HRxb3q2QR2oyoQB3DlhPtc=",
+                            PasswordHash = "DIyfgQUqk1F8RGdvwGKYlg==;pplKG5BYL3YU3GEtkFNDAt6XPdk5H8yLjO3ZBge00ek=",
                             RoleId = 2,
                             Username = "admin"
                         });
-                });
-
-            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Exercises.ExerciseSet", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ExerciseTemplateId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Reps")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Weight")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WorkoutId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExerciseTemplateId");
-
-                    b.HasIndex("WorkoutId");
-
-                    b.ToTable("ExerciseSets");
-                });
-
-            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Exercises.ExerciseTemplate", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<int>("ExerciseType")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsGlobal")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ExerciseTemplates");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("d1cd0c0d-9dea-4c43-92d5-fb0f01b68e32"),
-                            Description = "Lie on your back on a flat bench. Grip the bar with your hands slightly wider than shoulder-width apart. Lift the bar off the rack and position it above your chest with arms fully extended.",
-                            ExerciseType = 1,
-                            IsGlobal = true,
-                            Name = "Bench Press",
-                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
-                        },
-                        new
-                        {
-                            Id = new Guid("3904d82f-ddee-4a28-8489-3b1415a5e4c7"),
-                            Description = "Stand with your mid-foot under the barbell. Bend over and grab the bar with a shoulder-width grip. Bend your knees until your shins touch the bar. Lift your chest up and straighten your lower back.",
-                            ExerciseType = 0,
-                            IsGlobal = true,
-                            Name = "Deadlift",
-                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
-                        },
-                        new
-                        {
-                            Id = new Guid("83c7b172-417e-40fa-8083-864feb45e5b7"),
-                            Description = "Stand with your mid-foot under the barbell. Bend over and grab the bar with a shoulder-width grip. Bend your knees until your shins touch the bar. Lift your chest up and straighten your lower back.",
-                            ExerciseType = 2,
-                            IsGlobal = true,
-                            Name = "Squat",
-                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
-                        },
-                        new
-                        {
-                            Id = new Guid("eb628fe7-0d93-4c60-b116-bdd9c9d45dc5"),
-                            Description = "Stand with the bar on your front shoulders, and your hands next to your shoulders. Press the bar over your head, until it’s balanced over your shoulders and mid-foot.",
-                            ExerciseType = 3,
-                            IsGlobal = true,
-                            Name = "Overhead Press",
-                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
-                        },
-                        new
-                        {
-                            Id = new Guid("58796372-903c-4fc7-b7d5-3e49e9bb117f"),
-                            Description = "Grab the pull-up bar with your palms down (shoulder-width grip). Hang to the pull-up bar with straight arms and your legs off the floor. Pull yourself up by pulling your elbows down to the floor.",
-                            ExerciseType = 0,
-                            IsGlobal = true,
-                            Name = "Pull-up",
-                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
-                        },
-                        new
-                        {
-                            Id = new Guid("be74f872-fb6a-4ea3-b274-096974d5c4ad"),
-                            Description = "Stand up with your torso upright while holding a dumbbell on each hand being held at arms length. The elbows should be close to the torso. This will be your starting position.",
-                            ExerciseType = 5,
-                            IsGlobal = true,
-                            Name = "Dumbbell Curl",
-                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
-                        },
-                        new
-                        {
-                            Id = new Guid("83a04f54-9a35-4343-aede-ab25c8a6383e"),
-                            Description = "Attach a straight or angled bar to a high pulley and grab with an overhand grip at shoulder width. Standing upright with the torso straight and a very small inclination forward, bring the upper arms close to your body and perpendicular to the floor.",
-                            ExerciseType = 4,
-                            IsGlobal = true,
-                            Name = "Triceps Pushdown",
-                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
-                        },
-                        new
-                        {
-                            Id = new Guid("a7300e71-b70b-4c52-9568-b5cf9dcf2a32"),
-                            Description = "Lie on your back on the floor. Bend your legs and place feet firmly on the ground to stabilize your lower body. Cross your hands to opposite shoulders or place them behind your ears, without pulling on your neck.",
-                            ExerciseType = 6,
-                            IsGlobal = true,
-                            Name = "Sit-up",
-                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
-                        });
-                });
-
-            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Exercises.Workout", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Workouts");
                 });
 
             modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Food.FoodItem", b =>
@@ -420,6 +267,163 @@ namespace BuffMeUp.Backend.Migrations
                         });
                 });
 
+            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Workouts.ExerciseSet", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ExerciseTemplateId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Reps")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Weight")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("WorkoutId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExerciseTemplateId");
+
+                    b.HasIndex("WorkoutId");
+
+                    b.ToTable("ExerciseSets");
+                });
+
+            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Workouts.ExerciseTemplate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<int>("ExerciseType")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsGlobal")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ExerciseTemplates");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("8163c55a-7716-4ce8-8440-54cab09ea35d"),
+                            Description = "Lie on your back on a flat bench. Grip the bar with your hands slightly wider than shoulder-width apart. Lift the bar off the rack and position it above your chest with arms fully extended.",
+                            ExerciseType = 1,
+                            IsGlobal = true,
+                            Name = "Bench Press",
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = new Guid("cb374e7c-ff29-46c7-a646-7d4a0c6ae81e"),
+                            Description = "Stand with your mid-foot under the barbell. Bend over and grab the bar with a shoulder-width grip. Bend your knees until your shins touch the bar. Lift your chest up and straighten your lower back.",
+                            ExerciseType = 0,
+                            IsGlobal = true,
+                            Name = "Deadlift",
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = new Guid("2563d0c5-c76c-4980-b3bf-28778ac73f86"),
+                            Description = "Stand with your mid-foot under the barbell. Bend over and grab the bar with a shoulder-width grip. Bend your knees until your shins touch the bar. Lift your chest up and straighten your lower back.",
+                            ExerciseType = 2,
+                            IsGlobal = true,
+                            Name = "Squat",
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = new Guid("b96bd616-1dc1-4543-891f-4fc659bfec96"),
+                            Description = "Stand with the bar on your front shoulders, and your hands next to your shoulders. Press the bar over your head, until it’s balanced over your shoulders and mid-foot.",
+                            ExerciseType = 3,
+                            IsGlobal = true,
+                            Name = "Overhead Press",
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = new Guid("da5732ea-4e64-47a6-85c1-49a9f7261e86"),
+                            Description = "Grab the pull-up bar with your palms down (shoulder-width grip). Hang to the pull-up bar with straight arms and your legs off the floor. Pull yourself up by pulling your elbows down to the floor.",
+                            ExerciseType = 0,
+                            IsGlobal = true,
+                            Name = "Pull-up",
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = new Guid("e7f3286c-fa5b-499f-92bc-23ae8f58352d"),
+                            Description = "Stand up with your torso upright while holding a dumbbell on each hand being held at arms length. The elbows should be close to the torso. This will be your starting position.",
+                            ExerciseType = 5,
+                            IsGlobal = true,
+                            Name = "Dumbbell Curl",
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = new Guid("f527757f-9c9b-49ac-89d6-de2b67f75e86"),
+                            Description = "Attach a straight or angled bar to a high pulley and grab with an overhand grip at shoulder width. Standing upright with the torso straight and a very small inclination forward, bring the upper arms close to your body and perpendicular to the floor.",
+                            ExerciseType = 4,
+                            IsGlobal = true,
+                            Name = "Triceps Pushdown",
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = new Guid("56e4a8c0-69ba-47a1-9cfb-6e41ef950f6a"),
+                            Description = "Lie on your back on the floor. Bend your legs and place feet firmly on the ground to stabilize your lower body. Cross your hands to opposite shoulders or place them behind your ears, without pulling on your neck.",
+                            ExerciseType = 6,
+                            IsGlobal = true,
+                            Name = "Sit-up",
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        });
+                });
+
+            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Workouts.Workout", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Workouts");
+                });
+
             modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Auth.User", b =>
                 {
                     b.HasOne("BuffMeUp.Backend.Data.Models.PersonalStats", "PersonalStats")
@@ -435,47 +439,6 @@ namespace BuffMeUp.Backend.Migrations
                     b.Navigation("PersonalStats");
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Exercises.ExerciseSet", b =>
-                {
-                    b.HasOne("BuffMeUp.Backend.Data.Models.Exercises.ExerciseTemplate", "ExerciseTemplate")
-                        .WithMany()
-                        .HasForeignKey("ExerciseTemplateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BuffMeUp.Backend.Data.Models.Exercises.Workout", "Workout")
-                        .WithMany("ExerciseSets")
-                        .HasForeignKey("WorkoutId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ExerciseTemplate");
-
-                    b.Navigation("Workout");
-                });
-
-            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Exercises.ExerciseTemplate", b =>
-                {
-                    b.HasOne("BuffMeUp.Backend.Data.Models.Auth.User", "User")
-                        .WithMany("ExerciseTemplates")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Exercises.Workout", b =>
-                {
-                    b.HasOne("BuffMeUp.Backend.Data.Models.Auth.User", "User")
-                        .WithMany("Workouts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Food.JT_MealTemplate_FoodItem", b =>
@@ -568,6 +531,47 @@ namespace BuffMeUp.Backend.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Workouts.ExerciseSet", b =>
+                {
+                    b.HasOne("BuffMeUp.Backend.Data.Models.Workouts.ExerciseTemplate", "ExerciseTemplate")
+                        .WithMany()
+                        .HasForeignKey("ExerciseTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BuffMeUp.Backend.Data.Models.Workouts.Workout", "Workout")
+                        .WithMany("ExerciseSets")
+                        .HasForeignKey("WorkoutId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ExerciseTemplate");
+
+                    b.Navigation("Workout");
+                });
+
+            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Workouts.ExerciseTemplate", b =>
+                {
+                    b.HasOne("BuffMeUp.Backend.Data.Models.Auth.User", "User")
+                        .WithMany("ExerciseTemplates")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Workouts.Workout", b =>
+                {
+                    b.HasOne("BuffMeUp.Backend.Data.Models.Auth.User", "User")
+                        .WithMany("Workouts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Auth.Role", b =>
                 {
                     b.Navigation("Users");
@@ -582,11 +586,6 @@ namespace BuffMeUp.Backend.Migrations
                     b.Navigation("Meals");
 
                     b.Navigation("Workouts");
-                });
-
-            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Exercises.Workout", b =>
-                {
-                    b.Navigation("ExerciseSets");
                 });
 
             modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Food.FoodItem", b =>
@@ -604,6 +603,11 @@ namespace BuffMeUp.Backend.Migrations
             modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Food.MealTemplate", b =>
                 {
                     b.Navigation("MealTemplate_FoodItem");
+                });
+
+            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Workouts.Workout", b =>
+                {
+                    b.Navigation("ExerciseSets");
                 });
 #pragma warning restore 612, 618
         }

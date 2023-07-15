@@ -1,7 +1,7 @@
 import React from "react";
 import "./Header.css";
 import hasJWT from "../utils";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { isAuthenticated, isAuthorized } from "../utils";
 
 const Header = () => {
@@ -9,7 +9,7 @@ const Header = () => {
 
     return (
         <header className="App-header">
-            <a href="/" className="App-logo">
+            <Link to="/" className="App-logo">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     height="1em"
@@ -20,26 +20,26 @@ const Header = () => {
                 <p>
                     <span className="red"> Buff</span>MeUp
                 </p>
-            </a>
+            </Link>
 
             <nav>
                 {isAuthenticated() && (
                     <>
-                        <a href="about">MEALS</a>
-                        <a className="Dropdown-btn">
+                        <Link to="/about">MEALS</Link>
+                        <Link className="Dropdown-btn">
                             WORKOUTS
                             <div className="Dropdown-menu">
-                                <a href="allworkouts">View all</a>
-                                <a href="#">Start new</a>
+                                <Link to="/allworkouts">View all</Link>
+                                <Link to="#">Start new</Link>
                             </div>
-                        </a>
+                        </Link>
                     </>
                 )}
-                <a href="about">ABOUT</a>
-                <a href="credits">CREDITS</a>
+                <Link to="/about">ABOUT</Link>
+                <Link to="/credits">CREDITS</Link>
                 {isAuthorized("admin") && (
                     <>
-                        <a href="admin">ADMIN</a>
+                        <Link to="/admin">ADMIN</Link>
                     </>
                 )}
             </nav>
@@ -47,25 +47,25 @@ const Header = () => {
             <div className="Auth-btns">
                 {!isAuthenticated() ? (
                     <>
-                        <a href="login" className="Auth-btn">
+                        <Link to="/login" className="Auth-btn">
                             Log in
-                        </a>
-                        <a href="signup" className="Auth-btn">
+                        </Link>
+                        <Link to="/signup" className="Auth-btn">
                             Sign up
-                        </a>
+                        </Link>
                     </>
                 ) : (
                     <>
-                        <a href="account">My Account</a>
-                        <a
+                        <Link to="account">My Account</Link>
+                        <Link
+                            to="/"
                             onClick={() => {
                                 localStorage.removeItem("token");
-                                navigate("/");
                             }}
                             href="#"
                         >
                             Log out
-                        </a>
+                        </Link>
                     </>
                 )}
             </div>

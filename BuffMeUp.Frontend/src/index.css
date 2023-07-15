@@ -3,6 +3,7 @@
 @import "./css/buttons.css";
 @import "./css/dropdown-menu.css";
 @import "./css/responsive.css";
+@import "./css/quickClasses.css";
 
 :root {
     --black: #111;

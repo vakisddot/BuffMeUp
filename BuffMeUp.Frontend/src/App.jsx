@@ -13,6 +13,9 @@ import PersonalStats from "./pages/PersonalStats";
 import AllWorkouts from "./pages/workout/AllWorkouts";
 import AllMeals from "./pages/meals/AllMeals";
 import AdminPanel from "./pages/admin/AdminPanel";
+import WorkoutDetails from "./pages/workout/WorkoutDetails";
+import OnRoute from "./components/OnRoute";
+import startNewWorkout from "./pages/workout/workoutUtils";
 
 function App() {
     return (
@@ -47,6 +50,26 @@ function App() {
                             </AuthorizedOnly>
                         }
                     ></Route>
+                    <Route
+                        path="/workoutnew"
+                        element={
+                            <AuthorizedOnly>
+                                <OnRoute
+                                    callback={startNewWorkout}
+                                    redirect="/workoutform"
+                                ></OnRoute>
+                            </AuthorizedOnly>
+                        }
+                    ></Route>
+                    <Route
+                        path="/workoutdetails/:id"
+                        element={
+                            <AuthorizedOnly>
+                                <WorkoutDetails></WorkoutDetails>
+                            </AuthorizedOnly>
+                        }
+                    ></Route>
+
                     <Route
                         path="/allmeals"
                         element={

@@ -17,7 +17,7 @@ const LogIn = () => {
             title="Log in"
             modelName="User"
             fields={fields}
-            endpoint="/api/LogIn"
+            endpoint="/api/Account/LogIn"
             redirect="/account"
             submitLabel="Log in"
             onSuccessfulSubmit={(response) =>

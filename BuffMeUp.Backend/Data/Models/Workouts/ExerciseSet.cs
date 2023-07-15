@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using static BuffMeUp.Backend.Common.ValidationConstants.ForExerciseSet;
 
-namespace BuffMeUp.Backend.Data.Models.Exercises;
+namespace BuffMeUp.Backend.Data.Models.Workouts;
 
 /// <summary>
 /// Represents a set of an exercise.
@@ -34,6 +34,6 @@ public class ExerciseSet
 
 
     [ForeignKey(nameof(Workout))]
-    public int WorkoutId { get; set; }
+    public Guid WorkoutId { get; set; }
     public Workout Workout { get; set; } = null!;
 }
