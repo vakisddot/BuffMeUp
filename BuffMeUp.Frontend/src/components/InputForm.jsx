@@ -98,9 +98,10 @@ const InputForm = ({
 
     const submitForm = () => {
         if (modelName && !allFieldsAreValid()) {
-            generalErrorLabel.setHTML(
-                "Some fields are not valid! Cannot submit form yet!"
-            );
+            generalErrorLabel &&
+                generalErrorLabel.setHTML(
+                    "Some fields are not valid! Cannot submit form yet!"
+                );
 
             return;
         }
@@ -139,9 +140,10 @@ const InputForm = ({
                         errors.push(...response.errors[prop]);
                     }
 
-                    generalErrorLabel.setHTML(
-                        errors.map((e) => `<p>${e}</p>`).join("")
-                    );
+                    generalErrorLabel &&
+                        generalErrorLabel.setHTML(
+                            errors.map((e) => `<p>${e}</p>`).join("")
+                        );
 
                     return;
                 }
@@ -286,7 +288,10 @@ const InputForm = ({
                         onClick={() => {
                             submitForm();
 
-                            generalErrorLabel.setHTML("");
+                            try {
+                                generalErrorLabel.setHTML("");
+                            } catch {}
+
                             resetOnSubmit &&
                                 document
                                     .querySelectorAll(
