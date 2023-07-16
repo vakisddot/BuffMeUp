@@ -6,17 +6,20 @@ const InputForm = ({
     fields,
     submitFields,
     title,
+    description,
     modelName,
     submitLabel,
     endpoint,
     redirect,
     onSuccessfulSubmit,
-    headers,
     bgSrc,
     backLabel,
     onBack,
     method,
+    authorize,
+    resetOnSubmit,
 }) => {
+    const token = localStorage.getItem("token");
     const navigate = useNavigate();
     const [errorLabels, setErrorLabels] = useState([]);
 
@@ -24,8 +27,11 @@ const InputForm = ({
         setErrorLabels(
             Array.from(document.querySelectorAll(".validation-error"))
         );
+
+        for (const field in fields) {
+            if (field.default) field.value = field.default;
+        }
     }, []);
-    console.log("Error labels: ", errorLabels);
 
     const generalErrorLabel = document.querySelector(".general-error");
 
@@ -91,7 +97,7 @@ const InputForm = ({
     };
 
     const submitForm = () => {
-        if (!allFieldsAreValid()) {
+        if (modelName && !allFieldsAreValid()) {
             generalErrorLabel.setHTML(
                 "Some fields are not valid! Cannot submit form yet!"
             );
@@ -107,12 +113,18 @@ const InputForm = ({
         }
 
         console.log("Submit object: ", submitObject);
+        const errorMessage = "Error while submitting form!";
 
         fetch(endpoint, {
             method: method || "POST",
-            headers: headers || {
-                "Content-Type": "application/json",
-            },
+            headers: authorize
+                ? {
+                      "Content-Type": "application/json",
+                      Authorization: "Bearer " + token,
+                  }
+                : {
+                      "Content-Type": "application/json",
+                  },
             body: JSON.stringify(submitObject),
         })
             .then((response) => {
@@ -141,13 +153,15 @@ const InputForm = ({
 
                 if (redirect) navigate(redirect);
             })
-            .catch((err) =>
-                console.log("Error while trying to submit form!", err)
-            );
+            .catch((err) => {
+                console.log(errorMessage, err);
+            });
     };
 
     // Fetches the validation constants for the current model
     useEffect(() => {
+        if (!modelName) return;
+
         const constantsUrl = `/api/ValidationConstants?modelName=${modelName}`;
         let validationConstants = {};
 
@@ -157,8 +171,10 @@ const InputForm = ({
             })
             .then((response) => {
                 validationConstants = response;
-                console.log("Received validation constants!");
-                console.log(validationConstants);
+                console.log(
+                    "Received validation constants!",
+                    validationConstants
+                );
 
                 Object.entries(fields).forEach(([id, data]) => {
                     data.isValid = data.type === "radio" ? true : false;
@@ -186,6 +202,8 @@ const InputForm = ({
             <div className="Form">
                 <h1>{title}</h1>
 
+                <p>{description}</p>
+
                 <label className="red general-error"></label>
 
                 {Object.entries(fields).map(([id, data]) => {
@@ -202,6 +220,7 @@ const InputForm = ({
                                 {data.label.toUpperCase()}
                             </label>
                             <input
+                                className="form-input-field"
                                 type={data.type || "text"}
                                 placeholder={data.label}
                                 onKeyDown={(e) => {
@@ -219,6 +238,7 @@ const InputForm = ({
                                 }}
                                 id={id}
                                 required
+                                defaultValue={data.value}
                                 min="0"
                             />
                         </div>
@@ -263,7 +283,17 @@ const InputForm = ({
                         className="Auth-btn"
                         type="button"
                         value={submitLabel || "Submit"}
-                        onClick={() => submitForm()}
+                        onClick={() => {
+                            submitForm();
+
+                            generalErrorLabel.setHTML("");
+                            resetOnSubmit &&
+                                document
+                                    .querySelectorAll(
+                                        'input[type="text"], input[type="number"]'
+                                    )
+                                    .forEach((i) => (i.value = ""));
+                        }}
                     />
                 </div>
             </div>

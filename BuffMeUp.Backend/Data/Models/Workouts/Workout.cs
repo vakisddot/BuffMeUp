@@ -1,6 +1,7 @@
 ﻿using BuffMeUp.Backend.Data.Models.Auth;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static BuffMeUp.Backend.Common.ValidationConstants.ForWorkout;
 
 namespace BuffMeUp.Backend.Data.Models.Workouts;
 
@@ -21,6 +22,7 @@ public class Workout
     [Required]
     public DateTime Date { get; set; }
 
+    [StringLength(CommentMaxLength, MinimumLength = CommentMinLength)]
     public string? Comment { get; set; }
 
 

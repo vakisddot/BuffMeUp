@@ -97,11 +97,11 @@ public class WorkoutController : ControllerBase
 
     [HttpPost]
     [Route("Delete")]
-    public async Task<IActionResult> Delete(Guid id)
+    public async Task<IActionResult> Delete(WorkoutDeleteModel model)
     {
         var userId = IdentifyUser();
 
-        var workout = await _workoutService.GetWorkoutDetailsAsync(id);
+        var workout = await _workoutService.GetWorkoutDetailsAsync(model.Id);
 
         if (workout == null || userId != null && workout.UserId != Guid.Parse(userId))
         {
@@ -113,7 +113,7 @@ public class WorkoutController : ControllerBase
             return BadRequest(Utils.GetErrorsObject(ModelState));
         }
 
-        await _workoutService.DeleteWorkoutAsync(id);
+        await _workoutService.DeleteWorkoutAsync(model.Id);
 
         return Ok(new { });
     }

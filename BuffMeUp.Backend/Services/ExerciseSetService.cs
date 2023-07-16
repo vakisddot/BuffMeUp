@@ -93,4 +93,19 @@ public class ExerciseSetService : IExerciseSetService
 
         return onlyGetFirst ? sets.Take(1) : sets;
     }
+
+    public async Task UpdateExerciseSetAsync(ExerciseSetFormModel model)
+    {
+        var exerciseSet = await _dbContext.ExerciseSets.FindAsync(model.Id);
+
+        if (exerciseSet == null)
+        {
+            return;
+        }
+
+        exerciseSet.Reps = model.Reps;
+        exerciseSet.Weight = model.Weight;
+
+        await _dbContext.SaveChangesAsync();
+    }
 }

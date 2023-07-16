@@ -131,6 +131,32 @@ public class ExerciseSetController : ControllerBase
         return Ok(new { Id = id });
     }
 
+    [HttpPost]
+    [Route("Update")]
+    public async Task<IActionResult> UpdateExerciseSet(ExerciseSetFormModel model)
+    {
+        IdentifyUser();
+
+        var set = await _exerciseSetService.GetExerciseSetByIdAsync(model.Id);
+
+        // TODO: We might need to check if the workout exists and if the user owns it
+
+
+        if (set == null)
+        {
+            ModelState.AddModelError("ExerciseSet", "Exercise set not found!");
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(Utils.GetErrorsObject(ModelState));
+        }
+
+        await _exerciseSetService.UpdateExerciseSetAsync(model);
+
+        return Ok(new { });
+    }
+
     string? IdentifyUser()
     {
         var identity = HttpContext.User.Identity as ClaimsIdentity;

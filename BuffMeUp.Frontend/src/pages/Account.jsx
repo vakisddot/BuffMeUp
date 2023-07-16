@@ -5,6 +5,8 @@ import jwt_decode from "jwt-decode";
 import InputForm from "../components/InputForm";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { fetchAuthenticated } from "../utils";
+import { displayPopup } from "../components/popupFormUtils";
 
 const Account = ({ nutrients }) => {
     const token = localStorage.getItem("token");
@@ -13,12 +15,7 @@ const Account = ({ nutrients }) => {
     const [personalStats, setPersonalStats] = useState({});
 
     useEffect(() => {
-        fetch("/api/PersonalStats", {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + token,
-            },
-        })
+        fetchAuthenticated("/api/PersonalStats")
             .then((res) => res.json())
             .then((res) => {
                 setPersonalStats(res);
@@ -178,11 +175,7 @@ const Account = ({ nutrients }) => {
                         </p>
 
                         <a
-                            onClick={() =>
-                                (document.querySelector(
-                                    ".popup-form"
-                                ).style.display = "block")
-                            }
+                            onClick={() => displayPopup("update-weight")}
                             className="Auth-btn-outline"
                         >
                             Update weight
@@ -246,6 +239,7 @@ const Account = ({ nutrients }) => {
                         weight: {
                             label: "New weight (kg)",
                             type: "number",
+                            value: personalStats.currentWeight,
                         },
                     }}
                     onSuccessfulSubmit={() => {
@@ -258,10 +252,7 @@ const Account = ({ nutrients }) => {
                         (document.querySelector(".popup-form").style.display =
                             "none")
                     }
-                    headers={{
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer " + token,
-                    }}
+                    authorize={true}
                     endpoint="/api/PersonalStats/UpdateWeight"
                 />
             </div>

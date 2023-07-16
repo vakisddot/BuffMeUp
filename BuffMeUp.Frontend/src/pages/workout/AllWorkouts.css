@@ -104,6 +104,7 @@
     align-self: end;
     font-size: 0.75em;
     max-height: 7em;
+    overflow: hidden;
 }
 
 .comment {

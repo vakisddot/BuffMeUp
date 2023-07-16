@@ -10,9 +10,10 @@ public class ValidationConstantsController : ControllerBase
     public IActionResult Get([FromQuery] string modelName)
         => modelName switch
         {
-            "User" => new JsonResult(Common.ValidationConstants.ForUser.Serialized),
-            "PersonalStats" => new JsonResult(Common.ValidationConstants.ForPersonalStats.Serialized),
+            "User" => Ok(Common.ValidationConstants.ForUser.Serialized),
+            "PersonalStats" => Ok(Common.ValidationConstants.ForPersonalStats.Serialized),
+            "ExerciseSet" => Ok(Common.ValidationConstants.ForExerciseSet.Serialized),
 
-            _ => new JsonResult(new { })
+            _ => NotFound(new { })
         };
 }

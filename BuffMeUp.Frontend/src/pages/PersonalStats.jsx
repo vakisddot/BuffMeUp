@@ -54,10 +54,7 @@ const PersonalStats = () => {
             fields={fields}
             endpoint="/api/PersonalStats"
             redirect="/account"
-            headers={{
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + token,
-            }}
+            authorize={true}
             bgSrc="/images/pexels-jane-doan-1099680.jpg"
         />
     );

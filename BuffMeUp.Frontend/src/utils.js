@@ -56,5 +56,6 @@ export function getQueryString(searchParams) {
     const joinedParams = params
         .map(([key, value]) => `${key}=${value}`)
         .join("&");
+
     return joinedParams;
 }

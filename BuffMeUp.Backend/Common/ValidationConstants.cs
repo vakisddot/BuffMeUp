@@ -89,6 +89,21 @@ public static class ValidationConstants
         };
     }
 
+    public class ForWorkout : IValidationConstants
+    {
+        public const int CommentMinLength = 0;
+        public const int CommentMaxLength = 150;
+
+        public static object Serialized = new
+        {
+            Comment = new
+            {
+                MinLength = CommentMinLength,
+                MaxLength = CommentMaxLength,
+            }
+        };
+    }
+
     public class ForExerciseTemplate : IValidationConstants
     {
         public const int NameMinLength = 2;
@@ -116,10 +131,16 @@ public static class ValidationConstants
 
         public static object Serialized = new
         {
-            RepsMinValue = RepsMinValue,
-            RepsMaxValue = RepsMaxValue,
-            WeightMinValue = WeightMinValue,
-            WeightMaxValue = WeightMaxValue
+            Reps = new
+            {
+                MinValue = RepsMinValue,
+                MaxValue = RepsMaxValue,
+            },
+            Weight = new
+            {
+                MinValue = WeightMinValue,
+                MaxValue = WeightMaxValue,
+            }
         };
     }
 

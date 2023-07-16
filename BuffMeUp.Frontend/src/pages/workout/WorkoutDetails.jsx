@@ -1,19 +1,18 @@
 import "./WorkoutDetails.css";
-import { Link } from "react-router-dom";
 import InputForm from "../../components/InputForm";
 import { useState, useEffect } from "react";
 import { fetchAuthenticated } from "../../utils";
 import SearchBar from "../../components/SearchBar";
 import { toast } from "react-toastify";
+import { displayPopup, hidePopup } from "../../components/popupFormUtils";
 
 const WorkoutDetails = () => {
-    const token = localStorage.getItem("token");
-
     const [workout, setWorkout] = useState({});
     const [sets, setSets] = useState([]);
     let setIndex = 1;
 
     const [currTemplate, setCurrTemplate] = useState("");
+    const [currSet, setCurrSet] = useState({});
 
     const getWorkoutId = () => window.location.pathname.split("/").slice(-1);
 
@@ -35,6 +34,19 @@ const WorkoutDetails = () => {
                 console.log(err);
             });
     }, []);
+
+    const onNewCreatedSet = (response, submitObject) => {
+        setSets([
+            ...sets,
+            {
+                id: response.id,
+                reps: submitObject.reps,
+                weight: submitObject.weight,
+                exerciseName: currTemplate.name,
+                exerciseType: currTemplate.exerciseType,
+            },
+        ]);
+    };
 
     const duplicateSet = (set) => {
         fetchAuthenticated(
@@ -91,24 +103,32 @@ const WorkoutDetails = () => {
                 <h1>
                     WORK<span className="red">OUT</span> #{workout.number}
                 </h1>
-                <p>{currTemplate.name}</p>
-                <div className="Workout-form-header-btns">
-                    <a className="Auth-btn-fill">Add comment</a>
+                {workout.comment && (
+                    <div className="workout-comment">{workout.comment}</div>
+                )}
+                <div className="Lower-header">
+                    <div className="Workout-form-header-btns">
+                        <a
+                            onClick={() => displayPopup("add-comment")}
+                            className="Auth-btn-fill"
+                        >
+                            Comment
+                        </a>
+                    </div>
+                    <SearchBar
+                        endpoint="/api/Workout/Templates"
+                        lookFor="name"
+                        onResultSelect={(result) => {
+                            setCurrTemplate(result);
+                            displayPopup("new-set");
+                        }}
+                    />
                 </div>
-                <SearchBar
-                    endpoint="/api/Workout/Templates"
-                    lookFor="name"
-                    onResultSelect={(result) => {
-                        setCurrTemplate(result);
-                        document.querySelector(
-                            ".new-set.popup-form"
-                        ).style.display = "block";
-                    }}
-                />
 
-                <div className="new-set popup-form">
+                <div className="popup-form new-set">
                     <InputForm
                         title={currTemplate.name}
+                        description={currTemplate.description}
                         fields={{
                             reps: {
                                 label: "Reps",
@@ -124,32 +144,73 @@ const WorkoutDetails = () => {
                             workoutId: workout.id,
                         }}
                         onSuccessfulSubmit={(response, submitObject) => {
-                            setSets([
-                                ...sets,
-                                {
-                                    id: response.id,
-                                    reps: submitObject.reps,
-                                    weight: submitObject.weight,
-                                    exerciseName: currTemplate.name,
-                                    exerciseType: currTemplate.exerciseType,
-                                },
-                            ]);
-
-                            document.querySelector(
-                                ".popup-form"
-                            ).style.display = "none";
+                            onNewCreatedSet(response, submitObject);
+                            hidePopup("new-set");
                         }}
-                        onBack={() =>
-                            (document.querySelector(
-                                ".popup-form"
-                            ).style.display = "none")
-                        }
-                        headers={{
-                            "Content-Type": "application/json",
-                            Authorization: "Bearer " + token,
-                        }}
+                        onBack={() => hidePopup("new-set")}
+                        authorize={true}
                         endpoint="/api/ExerciseSet/Add"
                         submitLabel="Add"
+                        resetOnSubmit={true}
+                    />
+                </div>
+
+                <div className="popup-form add-comment">
+                    <InputForm
+                        title="Comment"
+                        fields={{
+                            comment: {
+                                label: "Comment",
+                                value: workout.comment,
+                            },
+                        }}
+                        submitFields={{
+                            id: workout.id,
+                        }}
+                        onSuccessfulSubmit={(response, submitObject) => {
+                            setWorkout({
+                                ...workout,
+                                comment: submitObject.comment,
+                            });
+                            hidePopup("add-comment");
+                        }}
+                        onBack={() => hidePopup("add-comment")}
+                        authorize={true}
+                        endpoint="/api/Workout/Update"
+                        submitLabel="Set"
+                    />
+                </div>
+
+                <div className="popup-form edit-set">
+                    <InputForm
+                        title={currSet.exerciseName}
+                        fields={{
+                            reps: {
+                                label: "Reps",
+                                type: "number",
+                                value: currSet.reps,
+                            },
+                            weight: {
+                                label: "Weight",
+                                type: "number",
+                                value: currSet.weight,
+                            },
+                        }}
+                        submitFields={{
+                            id: currSet.id,
+                        }}
+                        onSuccessfulSubmit={(response, submitObject) => {
+                            hidePopup("edit-set");
+
+                            currSet.reps = submitObject.reps;
+                            currSet.weight = submitObject.weight;
+
+                            setCurrSet({ ...currSet });
+                        }}
+                        onBack={() => hidePopup("edit-set")}
+                        authorize={true}
+                        endpoint="/api/ExerciseSet/Update"
+                        submitLabel="Update"
                     />
                 </div>
             </header>
@@ -204,7 +265,13 @@ const WorkoutDetails = () => {
                                             <path d="M272 0H396.1c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9V336c0 26.5-21.5 48-48 48H272c-26.5 0-48-21.5-48-48V48c0-26.5 21.5-48 48-48zM48 128H192v64H64V448H256V416h64v48c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V176c0-26.5 21.5-48 48-48z" />
                                         </svg>
                                     </a>
-                                    <a className="Edit-btn">
+                                    <a
+                                        className="Edit-btn"
+                                        onClick={() => {
+                                            displayPopup("edit-set");
+                                            setCurrSet(set);
+                                        }}
+                                    >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             height="1em"

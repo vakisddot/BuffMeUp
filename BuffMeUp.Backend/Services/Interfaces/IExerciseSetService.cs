@@ -10,7 +10,7 @@ public interface IExerciseSetService
 
     Task<ExerciseSetDisplayModel?> GetExerciseSetByIdAsync(Guid id);
 
-    //Task UpdateExerciseSetAsync(ExerciseSetFormModel model);
+    Task UpdateExerciseSetAsync(ExerciseSetFormModel model);
 
     Task DeleteExerciseSetAsync(Guid id);
 }

@@ -6,6 +6,8 @@ import { getClaims, getQueryString } from "../../utils";
 import startNewWorkout from "./workoutUtils";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import InputForm from "../../components/InputForm";
+import { displayPopup, hidePopup } from "../../components/popupFormUtils";
 
 function AllWorkouts() {
     const token = localStorage.getItem("token");
@@ -23,45 +25,9 @@ function AllWorkouts() {
         searchParams.get("resultCount")
     );
 
-    // const workouts = [
-    //     {
-    //         id: 1,
-    //         date: "July 13th, 2023",
-    //         sets: [
-    //             { exerciseType: "Back" },
-    //             { exerciseType: "Back" },
-    //             { exerciseType: "Back" },
-    //             { exerciseType: "Biceps" },
-    //             { exerciseType: "Biceps" },
-    //         ],
-    //         comment: "This was my first workout. :)",
-    //     },
-    //     {
-    //         id: 2,
-    //         date: "July 13th, 2023",
-    //         sets: [
-    //             { exerciseType: "Chest" },
-    //             { exerciseType: "Chest" },
-    //             { exerciseType: "Chest" },
-    //             { exerciseType: "Shoulders" },
-    //             { exerciseType: "Chest" },
-    //             { exerciseType: "Chest" },
-    //             { exerciseType: "Shoulders" },
-    //             { exerciseType: "Triceps" },
-    //         ],
-    //         comment: "I hit a new PR today!!1 ",
-    //     },
-    //     {
-    //         id: 3,
-    //         date: "July 13th, 2023",
-    //         sets: [],
-    //         comment:
-    //             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat repudiandae, perferendis esse tempora harum odio eius cum nam, natus atque similique tenetur fugit itaque sequi reiciendis, beatae ut. Esse, adipisci!",
-    //     },
-    // ];
-
     const [workouts, setWorkouts] = useState([]);
     const [refreshWorkouts, setRefreshWorkouts] = useState(false);
+    const [currId, setCurrId] = useState("");
 
     useEffect(() => {
         fetch(`/api/Workout/All?${getQueryString(searchParams)}`, {
@@ -121,6 +87,27 @@ function AllWorkouts() {
             </header>
 
             <section className="All-workouts-body">
+                <div className="popup-form delete-workout">
+                    <InputForm
+                        title={"Are you sure?"}
+                        fields={{}}
+                        submitFields={{
+                            id: currId,
+                        }}
+                        onSuccessfulSubmit={(response, submitObject) => {
+                            hidePopup("delete-workout");
+
+                            setWorkouts(
+                                workouts.filter((w) => w.id !== currId)
+                            );
+                        }}
+                        onBack={() => hidePopup("delete-workout")}
+                        authorize={true}
+                        endpoint="/api/Workout/Delete"
+                        submitLabel="Delete"
+                    />
+                </div>
+
                 {workouts.length > 0 ? (
                     workouts.map((workout) => {
                         return (
@@ -190,7 +177,16 @@ function AllWorkouts() {
                                         </div>
 
                                         <div className="align-right ud-buttons">
-                                            <a className="Delete-btn">
+                                            <a
+                                                className="Delete-btn"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    setCurrId(workout.id);
+                                                    displayPopup(
+                                                        "delete-workout"
+                                                    );
+                                                }}
+                                            >
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     height="1em"

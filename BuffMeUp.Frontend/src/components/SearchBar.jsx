@@ -45,6 +45,7 @@ function SearchBar({ endpoint, onResultSelect, lookFor }) {
                             <div
                                 onClick={() => {
                                     onResultSelect && onResultSelect(result);
+                                    setResults([]);
                                 }}
                                 className="search-result"
                             >

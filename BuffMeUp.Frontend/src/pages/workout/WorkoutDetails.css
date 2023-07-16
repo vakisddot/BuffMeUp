@@ -18,6 +18,14 @@
     margin: 1em;
 }
 
+.workout-comment::before,
+.workout-comment::after {
+    content: '"';
+    font-size: 1.5em;
+    color: var(--gray);
+    margin: 0.25em;
+}
+
 .Workout-form-header-btns {
     display: flex;
     justify-content: center;
@@ -30,6 +38,14 @@
     align-self: stretch;
     align-items: center;
     padding: 2em;
+}
+
+.Lower-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+    margin: 1em;
 }
 
 .exercise-sets {

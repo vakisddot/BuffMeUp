@@ -62,6 +62,8 @@ public class WorkoutService : IWorkoutService
             return;
         }
 
+        workout.Comment = model.Comment;
+
         await _dbContext.SaveChangesAsync();
     }
 
