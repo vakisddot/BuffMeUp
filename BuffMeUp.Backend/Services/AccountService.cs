@@ -32,7 +32,7 @@ public class AccountService : IAccountService
     {
         var user = new User
         {
-            Username = newUser.Username,
+            Username = newUser.Username.ToLower(),
             Email = newUser.Email,
             FirstName = newUser.FirstName,
             PasswordHash = PasswordHasher.HashPassword(newUser.Password),
@@ -43,6 +43,7 @@ public class AccountService : IAccountService
 
         await _dbContext.Users.AddAsync(user);
         await _dbContext.SaveChangesAsync();
+
 
         return GenerateToken(user);
     }

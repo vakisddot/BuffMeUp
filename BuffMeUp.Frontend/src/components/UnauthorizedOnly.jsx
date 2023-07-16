@@ -6,6 +6,7 @@ const UnauthorizedOnly = ({ children }) => {
     if (isAuthenticated()) {
         return <Navigate to="/account" replace />;
     }
+
     return children;
 };
 

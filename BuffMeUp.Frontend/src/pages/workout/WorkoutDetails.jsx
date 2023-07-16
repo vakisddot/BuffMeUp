@@ -3,29 +3,33 @@ import { Link } from "react-router-dom";
 import InputForm from "../../components/InputForm";
 import { useState, useEffect } from "react";
 import { fetchAuthenticated } from "../../utils";
+import SearchBar from "../../components/SearchBar";
 
 const WorkoutDetails = () => {
     const token = localStorage.getItem("token");
 
     const [workout, setWorkout] = useState({});
-    const [templates, setTemplates] = useState([]);
+    const [sets, setSets] = useState([]);
+    let setIndex = 1;
+
+    const [currTemplate, setCurrTemplate] = useState("");
+
+    const getWorkoutId = () => window.location.pathname.split("/").slice(-1);
 
     useEffect(() => {
-        fetchAuthenticated(
-            `/api/Workout/Details?id=${window.location.pathname
-                .split("/")
-                .slice(-1)}`
-        )
+        fetchAuthenticated(`/api/Workout/Details?id=${getWorkoutId()}`)
             .then((res) => res.json())
             .then((res) => {
                 setWorkout(res);
             });
 
-        fetchAuthenticated(`/api/Workout/Templates`)
+        fetchAuthenticated(`/api/Workout/Sets?workoutId=${getWorkoutId()}`)
             .then((res) => res.json())
             .then((res) => {
-                setTemplates(res);
-                console.log("Fetched exercise templates:", templates);
+                setSets(res.reverse());
+            })
+            .catch((err) => {
+                console.log(err);
             });
     }, []);
 
@@ -48,52 +52,7 @@ const WorkoutDetails = () => {
     //             reps: 6,
     //             weight: 0,
     //         },
-    //         {
-    //             exerciseName: "Bench Press",
-    //             exerciseType: "Chest",
-    //             reps: 2,
-    //             weight: 80,
-    //         },
-    //         {
-    //             exerciseName: "Bench Press",
-    //             exerciseType: "Chest",
-    //             reps: 2,
-    //             weight: 80,
-    //         },
-    //         {
-    //             exerciseName: "Bench Press",
-    //             exerciseType: "Chest",
-    //             reps: 2,
-    //             weight: 80,
-    //         },
-    //         {
-    //             exerciseName: "Triceps Push-down",
-    //             exerciseType: "Triceps",
-    //             reps: 13,
-    //             weight: 7,
-    //         },
-    //         {
-    //             exerciseName: "Pull-up",
-    //             exerciseType: "Back",
-    //             reps: 7,
-    //             weight: 0,
-    //         },
-    //         {
-    //             exerciseName: "Pull-up",
-    //             exerciseType: "Back",
-    //             reps: 6,
-    //             weight: 0,
-    //         },
     // ];
-
-    const sets = [
-        {
-            exerciseName: "Pull-up",
-            exerciseType: "Back",
-            reps: 10,
-            weight: 0,
-        },
-    ];
 
     return (
         <div className="Workout-form">
@@ -108,23 +67,24 @@ const WorkoutDetails = () => {
                 <h1>
                     WORK<span className="red">OUT</span> #{workout.number}
                 </h1>
+                <p>{currTemplate.name}</p>
                 <div className="Workout-form-header-btns">
-                    <a
-                        onClick={() =>
-                            (document.querySelector(
-                                ".add-set.popup-form"
-                            ).style.display = "block")
-                        }
-                        className="Auth-btn-fill"
-                    >
-                        Add set
-                    </a>
                     <a className="Auth-btn-fill">Add comment</a>
                 </div>
+                <SearchBar
+                    endpoint="/api/Workout/Templates"
+                    lookFor="name"
+                    onResultSelect={(result) => {
+                        setCurrTemplate(result);
+                        document.querySelector(
+                            ".new-set.popup-form"
+                        ).style.display = "block";
+                    }}
+                />
 
-                <div className="add-set popup-form">
+                <div className="new-set popup-form">
                     <InputForm
-                        title="Add set"
+                        title={currTemplate.name}
                         fields={{
                             reps: {
                                 label: "Reps",
@@ -134,19 +94,26 @@ const WorkoutDetails = () => {
                                 label: "Weight",
                                 type: "number",
                             },
-                            template: {
-                                label: "Exercise",
-                                type: "list",
-                                list: templates,
-                                show: "name",
-                            },
                         }}
-                        onSuccessfulSubmit={() => {
+                        submitFields={{
+                            exerciseTemplateId: currTemplate.id,
+                            workoutId: workout.id,
+                        }}
+                        onSuccessfulSubmit={(response, submitObject) => {
+                            setSets([
+                                ...sets,
+                                {
+                                    id: submitObject.id,
+                                    reps: submitObject.reps,
+                                    weight: submitObject.weight,
+                                    exerciseName: currTemplate.name,
+                                    exerciseType: currTemplate.exerciseType,
+                                },
+                            ]);
+
                             document.querySelector(
                                 ".popup-form"
                             ).style.display = "none";
-
-                            window.location.reload(false);
                         }}
                         onBack={() =>
                             (document.querySelector(
@@ -157,7 +124,8 @@ const WorkoutDetails = () => {
                             "Content-Type": "application/json",
                             Authorization: "Bearer " + token,
                         }}
-                        endpoint="/api/PersonalStats/UpdateWeight"
+                        endpoint="/api/Workout/AddSet"
+                        submitLabel="Add"
                     />
                 </div>
             </header>
@@ -168,6 +136,7 @@ const WorkoutDetails = () => {
                         return (
                             <div className="exercise-set-card">
                                 <div className="align-left set-info">
+                                    <span>{setIndex++}</span>
                                     <svg
                                         className={`${set.exerciseType}-fill`}
                                         xmlns="http://www.w3.org/2000/svg"

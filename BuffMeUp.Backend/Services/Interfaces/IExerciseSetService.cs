@@ -6,7 +6,7 @@ public interface IExerciseSetService
 {
     Task CreateExerciseSetAsync(ExerciseSetFormModel model);
 
-    //Task<IEnumerable<ExerciseSetDisplayModel>> GetExerciseSetsAsync(int workoutId);
+    Task<IEnumerable<ExerciseSetDisplayModel>> GetExerciseSetsAsync(Guid workoutId, bool onlyGetFirst = false);
 
     //Task UpdateExerciseSetAsync(ExerciseSetFormModel model);
 

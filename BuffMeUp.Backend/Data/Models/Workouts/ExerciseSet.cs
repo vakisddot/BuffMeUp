@@ -18,6 +18,8 @@ public class ExerciseSet
     [Key]
     public Guid Id { get; set; }
 
+    [Required]
+    public int Number { get; set; }
 
     [Required]
     [Range(RepsMinValue, RepsMaxValue)]

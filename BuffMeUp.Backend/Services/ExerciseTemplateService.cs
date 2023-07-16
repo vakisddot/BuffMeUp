@@ -2,6 +2,7 @@
 using BuffMeUp.Backend.Data;
 using BuffMeUp.Backend.Services.Interfaces;
 using BuffMeUp.Backend.ViewModels.Workouts;
+using BuffMeUp.Backend.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace BuffMeUp.Backend.Services;
@@ -31,10 +32,13 @@ public class ExerciseTemplateService : IExerciseTemplateService
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<ExerciseTemplateDisplayModel>> GetExerciseTemplatesAsync(Guid userId)
+    public async Task<IEnumerable<ExerciseTemplateDisplayModel>> GetExerciseTemplatesAsync(Guid userId, string query)
     {
+        bool queryIsValidEnum = Enum.TryParse(query, true, out ExerciseType exerciseType);
+
         var exerciseTemplates = await _dbContext.ExerciseTemplates
             .Where(et => et.UserId == userId || et.IsGlobal)
+            .Where(et => et.Name.Contains(query) || (queryIsValidEnum && et.ExerciseType == exerciseType))
             .Select(et => new ExerciseTemplateDisplayModel
             {
                 Id = et.Id,

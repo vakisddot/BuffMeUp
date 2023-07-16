@@ -145,7 +145,7 @@ public class WorkoutController : ControllerBase
 
     [HttpGet]
     [Route("Templates")]
-    public async Task<IActionResult> GetExerciseTemplates()
+    public async Task<IActionResult> GetExerciseTemplates([FromQuery] string q)
     {
         var userId = IdentifyUser();
 
@@ -154,9 +154,32 @@ public class WorkoutController : ControllerBase
             return BadRequest(Utils.GetErrorsObject(ModelState));
         }
 
-        var templates = await _exerciseTemplateService.GetExerciseTemplatesAsync(Guid.Parse(userId!));
+        var templates = await _exerciseTemplateService.GetExerciseTemplatesAsync(Guid.Parse(userId!), q);
 
         return Ok(templates);
+    }
+
+    [HttpGet]
+    [Route("Sets")]
+    public async Task<IActionResult> GetExerciseSets([FromQuery]Guid workoutId)
+    {
+        var userId = IdentifyUser();
+
+        var workout = await _workoutService.GetWorkoutDetailsAsync(workoutId);
+
+        if (workout == null || (userId != null && workout.UserId != Guid.Parse(userId)))
+        {
+            ModelState.AddModelError("Workout", "Workout not found!");
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(Utils.GetErrorsObject(ModelState));
+        }
+
+        var sets = await _exerciseSetService.GetExerciseSetsAsync(workoutId);
+
+        return Ok(sets);
     }
 
     string? IdentifyUser()

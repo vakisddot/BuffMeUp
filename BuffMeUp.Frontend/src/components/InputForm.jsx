@@ -4,6 +4,7 @@ import "./InputForm.css";
 
 const InputForm = ({
     fields,
+    submitFields,
     title,
     modelName,
     submitLabel,
@@ -98,7 +99,7 @@ const InputForm = ({
             return;
         }
 
-        const submitObject = {};
+        const submitObject = { ...submitFields };
         for (const [key, value] of Object.entries(fields)) {
             if (!value.invisible) {
                 submitObject[key] = value.value;
@@ -135,8 +136,8 @@ const InputForm = ({
 
                 console.log("Form has been successfully submitted!");
 
-                console.log("Fun: ", onSuccessfulSubmit);
-                if (onSuccessfulSubmit) onSuccessfulSubmit(response);
+                if (onSuccessfulSubmit)
+                    onSuccessfulSubmit(response, submitObject);
 
                 if (redirect) navigate(redirect);
             })
@@ -203,6 +204,16 @@ const InputForm = ({
                             <input
                                 type={data.type || "text"}
                                 placeholder={data.label}
+                                onKeyDown={(e) => {
+                                    if (
+                                        data.type &&
+                                        data.type === "number" &&
+                                        e.key !== "Backspace" &&
+                                        !/[0-9]/.test(e.key)
+                                    ) {
+                                        e.preventDefault();
+                                    }
+                                }}
                                 onChange={(e) => {
                                     updateField(id, e.target.value);
                                 }}

@@ -6,7 +6,7 @@ public interface IExerciseTemplateService
 {
     Task CreateExerciseTemplateAsync(ExerciseTemplateFormModel model, Guid userId);
 
-    Task<IEnumerable<ExerciseTemplateDisplayModel>> GetExerciseTemplatesAsync(Guid userId);
+    Task<IEnumerable<ExerciseTemplateDisplayModel>> GetExerciseTemplatesAsync(Guid userId, string query);
 
     Task UpdateExerciseTemplateAsync(ExerciseTemplateFormModel model);
 

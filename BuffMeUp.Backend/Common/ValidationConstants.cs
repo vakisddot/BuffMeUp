@@ -109,9 +109,9 @@ public static class ValidationConstants
     public class ForExerciseSet : IValidationConstants
     {
         public const int RepsMinValue = 1;
-        public const int RepsMaxValue = 100;
+        public const int RepsMaxValue = 1000;
 
-        public const int WeightMinValue = 1;
+        public const int WeightMinValue = 0;
         public const int WeightMaxValue = 1000;
 
         public static object Serialized = new
