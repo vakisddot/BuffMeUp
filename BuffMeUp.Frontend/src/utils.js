@@ -35,13 +35,14 @@ export function isAuthorized(role) {
     return false;
 }
 
-export function fetchAuthenticated(endpoint, method) {
+export function fetchAuthenticated(endpoint, method, body) {
     return fetch(endpoint, {
         method: method || "GET",
         headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + localStorage.getItem("token"),
         },
+        body: body,
     });
 }
 

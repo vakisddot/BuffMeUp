@@ -9,7 +9,6 @@ namespace BuffMeUp.Backend.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
 public class PersonalStatsController : ControllerBase
 {
     readonly IPersonalStatsService _personalStatsService;

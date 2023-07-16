@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BuffMeUp.Backend.Data.Models.Food;
 
@@ -11,4 +12,7 @@ public class JT_Meal_FoodItem
     [ForeignKey(nameof(FoodItem))]
     public int FoodItemId { get; set; }
     public FoodItem FoodItem { get; set; } = null!;
+
+    [Required]
+    public int Grams { get; set; }
 }

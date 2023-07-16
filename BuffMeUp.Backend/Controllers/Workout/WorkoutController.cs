@@ -4,20 +4,18 @@ using BuffMeUp.Backend.ViewModels.Workouts;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace BuffMeUp.Backend.Controllers;
+namespace BuffMeUp.Backend.Controllers.Workout;
 
 [ApiController]
 [Route("api/[controller]")]
 public class WorkoutController : ControllerBase
 {
     readonly IWorkoutService _workoutService;
-    readonly IExerciseSetService _exerciseSetService;
     readonly IExerciseTemplateService _exerciseTemplateService;
 
-    public WorkoutController(IWorkoutService workoutService, IExerciseSetService exerciseSetService, IExerciseTemplateService exerciseTemplateService)
+    public WorkoutController(IWorkoutService workoutService, IExerciseTemplateService exerciseTemplateService)
     {
         _workoutService = workoutService;
-        _exerciseSetService = exerciseSetService;
         _exerciseTemplateService = exerciseTemplateService;
     }
 
@@ -50,7 +48,7 @@ public class WorkoutController : ControllerBase
 
         await _workoutService.StartNewWorkoutAsync(Guid.Parse(userId!));
 
-        return Ok(new {});
+        return Ok(new { });
     }
 
     [HttpGet]
@@ -61,7 +59,7 @@ public class WorkoutController : ControllerBase
 
         var workout = await _workoutService.GetWorkoutDetailsAsync(id);
 
-        if (workout == null || (userId != null && workout.UserId != Guid.Parse(userId)))
+        if (workout == null || userId != null && workout.UserId != Guid.Parse(userId))
         {
             ModelState.AddModelError("Workout", "Workout not found!");
         }
@@ -82,7 +80,7 @@ public class WorkoutController : ControllerBase
 
         var workout = await _workoutService.GetWorkoutDetailsAsync(model.Id);
 
-        if (workout == null || (userId != null && workout.UserId != Guid.Parse(userId)))
+        if (workout == null || userId != null && workout.UserId != Guid.Parse(userId))
         {
             ModelState.AddModelError("Workout", "Workout not found!");
         }
@@ -94,7 +92,7 @@ public class WorkoutController : ControllerBase
 
         await _workoutService.UpdateWorkoutAsync(model);
 
-        return Ok(new {});
+        return Ok(new { });
     }
 
     [HttpPost]
@@ -105,7 +103,7 @@ public class WorkoutController : ControllerBase
 
         var workout = await _workoutService.GetWorkoutDetailsAsync(id);
 
-        if (workout == null || (userId != null && workout.UserId != Guid.Parse(userId)))
+        if (workout == null || userId != null && workout.UserId != Guid.Parse(userId))
         {
             ModelState.AddModelError("Workout", "Workout not found!");
         }
@@ -117,30 +115,7 @@ public class WorkoutController : ControllerBase
 
         await _workoutService.DeleteWorkoutAsync(id);
 
-        return Ok(new {});
-    }
-
-    [HttpPost]
-    [Route("AddSet")]
-    public async Task<IActionResult> AddExerciseSet(ExerciseSetFormModel model)
-    {
-        var userId = IdentifyUser();
-
-        var workout = await _workoutService.GetWorkoutDetailsAsync(model.WorkoutId);
-
-        if (workout == null || (userId != null && workout.UserId != Guid.Parse(userId)))
-        {
-            ModelState.AddModelError("Workout", "Workout not found!");
-        }
-
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(Utils.GetErrorsObject(ModelState));
-        }
-
-        await _exerciseSetService.CreateExerciseSetAsync(model);
-
-        return Ok(new {});
+        return Ok(new { });
     }
 
     [HttpGet]
@@ -157,29 +132,6 @@ public class WorkoutController : ControllerBase
         var templates = await _exerciseTemplateService.GetExerciseTemplatesAsync(Guid.Parse(userId!), q);
 
         return Ok(templates);
-    }
-
-    [HttpGet]
-    [Route("Sets")]
-    public async Task<IActionResult> GetExerciseSets([FromQuery]Guid workoutId)
-    {
-        var userId = IdentifyUser();
-
-        var workout = await _workoutService.GetWorkoutDetailsAsync(workoutId);
-
-        if (workout == null || (userId != null && workout.UserId != Guid.Parse(userId)))
-        {
-            ModelState.AddModelError("Workout", "Workout not found!");
-        }
-
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(Utils.GetErrorsObject(ModelState));
-        }
-
-        var sets = await _exerciseSetService.GetExerciseSetsAsync(workoutId);
-
-        return Ok(sets);
     }
 
     string? IdentifyUser()

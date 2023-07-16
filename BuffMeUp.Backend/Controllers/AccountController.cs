@@ -1,6 +1,6 @@
 ﻿using BuffMeUp.Backend.Common;
 using BuffMeUp.Backend.Services.Interfaces;
-using BuffMeUp.Backend.ViewModels;
+using BuffMeUp.Backend.ViewModels.Auth;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BuffMeUp.Backend.Controllers;

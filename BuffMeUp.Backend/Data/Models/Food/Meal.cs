@@ -13,7 +13,6 @@ public class Meal
     {
         Id = Guid.NewGuid();
         Meal_FoodItem = new HashSet<JT_Meal_FoodItem>();
-        Meal_MealTemplate = new HashSet<JT_Meal_MealTemplate>();
     }
 
     [Key]
@@ -28,5 +27,4 @@ public class Meal
     public User User { get; set; } = null!;
 
     public virtual ICollection<JT_Meal_FoodItem> Meal_FoodItem { get; set; }
-    public virtual ICollection<JT_Meal_MealTemplate> Meal_MealTemplate { get; set; }
 }

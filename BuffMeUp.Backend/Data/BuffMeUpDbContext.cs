@@ -1,7 +1,7 @@
 ﻿using BuffMeUp.Backend.Data.Models;
 using BuffMeUp.Backend.Data.Models.Auth;
-using BuffMeUp.Backend.Data.Models.Workouts;
 using BuffMeUp.Backend.Data.Models.Food;
+using BuffMeUp.Backend.Data.Models.Workouts;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -24,7 +24,6 @@ public class BuffMeUpDbContext : DbContext
 
     public DbSet<FoodItem> FoodItems { get; set; } = null!;
     public DbSet<Meal> Meals { get; set; } = null!;
-    public DbSet<MealTemplate> MealTemplates { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

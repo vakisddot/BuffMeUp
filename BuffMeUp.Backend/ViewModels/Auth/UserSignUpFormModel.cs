@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using static BuffMeUp.Backend.Common.ValidationConstants.ForUser;
 
-namespace BuffMeUp.Backend.ViewModels;
+namespace BuffMeUp.Backend.ViewModels.Auth;
 
 public class UserSignUpFormModel
 {

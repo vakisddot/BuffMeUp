@@ -1,4 +1,4 @@
-﻿using BuffMeUp.Backend.ViewModels;
+﻿using BuffMeUp.Backend.ViewModels.Auth;
 
 namespace BuffMeUp.Backend.Services.Interfaces;
 

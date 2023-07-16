@@ -2,7 +2,7 @@
 using BuffMeUp.Backend.Data;
 using BuffMeUp.Backend.Data.Models.Auth;
 using BuffMeUp.Backend.Services.Interfaces;
-using BuffMeUp.Backend.ViewModels;
+using BuffMeUp.Backend.ViewModels.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

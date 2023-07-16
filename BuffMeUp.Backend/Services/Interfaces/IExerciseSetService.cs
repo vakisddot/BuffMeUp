@@ -4,11 +4,13 @@ namespace BuffMeUp.Backend.Services.Interfaces;
 
 public interface IExerciseSetService
 {
-    Task CreateExerciseSetAsync(ExerciseSetFormModel model);
+    Task<Guid> CreateExerciseSetAsync(ExerciseSetFormModel model);
 
-    Task<IEnumerable<ExerciseSetDisplayModel>> GetExerciseSetsAsync(Guid workoutId, bool onlyGetFirst = false);
+    Task<IEnumerable<ExerciseSetDisplayModel>> GetExerciseSetsByWorkoutIdAsync(Guid workoutId, bool onlyGetFirst = false);
+
+    Task<ExerciseSetDisplayModel?> GetExerciseSetByIdAsync(Guid id);
 
     //Task UpdateExerciseSetAsync(ExerciseSetFormModel model);
 
-    //Task DeleteExerciseSetAsync(Guid id);
+    Task DeleteExerciseSetAsync(Guid id);
 }

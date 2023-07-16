@@ -1,5 +1,4 @@
 ﻿using BuffMeUp.Backend.Data;
-using BuffMeUp.Backend.Data.Models.Auth;
 using BuffMeUp.Backend.Data.Models.Workouts;
 using BuffMeUp.Backend.Services.Interfaces;
 using BuffMeUp.Backend.ViewModels.Workouts;
@@ -16,9 +15,9 @@ public class ExerciseSetService : IExerciseSetService
         _dbContext = dbContext;
     }
 
-    public async Task CreateExerciseSetAsync(ExerciseSetFormModel model)
+    public async Task<Guid> CreateExerciseSetAsync(ExerciseSetFormModel model)
     {
-        var sets = await GetExerciseSetsAsync(model.WorkoutId, true);
+        var sets = await GetExerciseSetsByWorkoutIdAsync(model.WorkoutId, true);
         var latestSet = sets?.FirstOrDefault();
 
         int number = latestSet?.Number + 1 ?? 1;
@@ -34,9 +33,47 @@ public class ExerciseSetService : IExerciseSetService
 
         await _dbContext.ExerciseSets.AddAsync(exerciseSet);
         await _dbContext.SaveChangesAsync();
+
+        return exerciseSet.Id;
     }
 
-    public async Task<IEnumerable<ExerciseSetDisplayModel>> GetExerciseSetsAsync(Guid workoutId, bool onlyGetFirst = false)
+    public async Task DeleteExerciseSetAsync(Guid id)
+    {
+        var exerciseSet = await _dbContext.ExerciseSets.FindAsync(id);
+
+        if (exerciseSet == null)
+        {
+            return;
+        }
+
+        _dbContext.ExerciseSets.Remove(exerciseSet);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<ExerciseSetDisplayModel?> GetExerciseSetByIdAsync(Guid id)
+    {
+        var exerciseSet = await _dbContext.ExerciseSets
+            .Include(s => s.ExerciseTemplate)
+            .FirstOrDefaultAsync(s => s.Id == id);
+
+        if (exerciseSet == null)
+        {
+            return null;
+        }
+
+        return new ExerciseSetDisplayModel
+        {
+            Id = exerciseSet.Id,
+            Reps = exerciseSet.Reps,
+            Weight = exerciseSet.Weight,
+            Number = exerciseSet.Number,
+            ExerciseName = exerciseSet.ExerciseTemplate.Name,
+            ExerciseDescription = exerciseSet.ExerciseTemplate.Description,
+            ExerciseType = exerciseSet.ExerciseTemplate.ExerciseType.ToString(),
+        };
+    }
+
+    public async Task<IEnumerable<ExerciseSetDisplayModel>> GetExerciseSetsByWorkoutIdAsync(Guid workoutId, bool onlyGetFirst = false)
     {
         var sets = await _dbContext.ExerciseSets
             .Include(s => s.ExerciseTemplate)

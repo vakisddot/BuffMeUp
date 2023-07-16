@@ -129,24 +129,44 @@ public static class ValidationConstants
         public const int NameMaxLength = 16;
 
         public const int ProteinMinValue = 0;
-        public const int ProteinMaxValue = 1000;
+        public const int ProteinMaxValue = 2500;
 
         public const int CarbsMinValue = 0;
-        public const int CarbsMaxValue = 1000;
+        public const int CarbsMaxValue = 2500;
 
         public const int FatsMinValue = 0;
-        public const int FatsMaxValue = 1000;
+        public const int FatsMaxValue = 2500;
+
+        public const int QuantityMinValue = 0;
+        public const int QuantityMaxValue = 2500;
 
         public static object Serialized = new
         {
-            NameMinLength = NameMinLength,
-            NameMaxLength = NameMaxLength,
-            ProteinMinValue = ProteinMinValue,
-            ProteinMaxValue = ProteinMaxValue,
-            CarbsMinValue = CarbsMinValue,
-            CarbsMaxValue = CarbsMaxValue,
-            FatsMinValue = FatsMinValue,
-            FatsMaxValue = FatsMaxValue
+            Name = new
+            {
+                MinLength = NameMinLength,
+                MaxLength = NameMaxLength,
+            },
+            Protein = new
+            {
+                MinValue = ProteinMinValue,
+                MaxValue = ProteinMaxValue,
+            },
+            Carbs = new
+            {
+                MinValue = CarbsMinValue,
+                MaxValue = CarbsMaxValue,
+            },
+            Fats = new
+            {
+                MinValue = FatsMinValue,
+                MaxValue = FatsMaxValue,
+            },
+            Quantity = new
+            {
+                MinValue = QuantityMinValue,
+                MaxValue = QuantityMaxValue,
+            }
         };
     }
 
