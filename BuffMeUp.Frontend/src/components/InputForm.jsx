@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./InputForm.css";
+import { toast } from "react-toastify";
 
 const InputForm = ({
     fields,
@@ -18,6 +19,7 @@ const InputForm = ({
     method,
     authorize,
     resetOnSubmit,
+    toastOnSubmit,
 }) => {
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
@@ -106,6 +108,12 @@ const InputForm = ({
             return;
         }
 
+        const toastId =
+            toastOnSubmit &&
+            toast.loading(toastOnSubmit.pending ?? "Loading...", {
+                autoClose: 10000,
+            });
+
         const submitObject = { ...submitFields };
         for (const [key, value] of Object.entries(fields)) {
             if (!value.invisible) {
@@ -145,9 +153,24 @@ const InputForm = ({
                             errors.map((e) => `<p>${e}</p>`).join("")
                         );
 
+                    toastOnSubmit &&
+                        toast.update(toastId, {
+                            render: toastOnSubmit.success || "Error!",
+                            type: "error",
+                            isLoading: false,
+                            autoClose: 1000,
+                        });
+
                     return;
                 }
 
+                toastOnSubmit &&
+                    toast.update(toastId, {
+                        render: toastOnSubmit.success || "Success!",
+                        type: "success",
+                        isLoading: false,
+                        autoClose: 1000,
+                    });
                 console.log("Form has been successfully submitted!");
 
                 if (onSuccessfulSubmit)

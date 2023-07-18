@@ -24,6 +24,7 @@ const LogIn = () => {
                 localStorage.setItem("token", response.token)
             }
             bgSrc="/images/pexels-mali-maeder-65175.jpg"
+            toastOnSubmit={true}
         />
     );
 };

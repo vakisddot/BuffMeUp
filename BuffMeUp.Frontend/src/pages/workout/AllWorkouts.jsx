@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import InputForm from "../../components/InputForm";
 import { displayPopup, hidePopup } from "../../components/popupFormUtils";
+import PageBar from "../../components/PageBar";
 
 function AllWorkouts() {
     const token = localStorage.getItem("token");
@@ -87,6 +88,13 @@ function AllWorkouts() {
             </header>
 
             <section className="All-workouts-body">
+                <PageBar
+                    params={searchParams}
+                    isLastPage={() =>
+                        workouts.length < searchParams.get("resultCount") ||
+                        workouts.length <= 0
+                    }
+                />
                 <div className="popup-form delete-workout">
                     <InputForm
                         title={"Are you sure?"}

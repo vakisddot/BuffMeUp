@@ -1,0 +1,19 @@
+.Page-bar {
+    color: var(--white);
+    fill: var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5em;
+}
+
+.Page-bar svg {
+    cursor: pointer;
+    scale: 1.5;
+    transition: 0.2s ease-in-out;
+}
+
+.Page-bar svg:hover {
+    fill: var(--yellow);
+    transform: scale(1.25);
+}

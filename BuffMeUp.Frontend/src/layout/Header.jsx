@@ -30,7 +30,12 @@ const Header = () => {
                             WORKOUTS
                             <div className="Dropdown-menu">
                                 <Link to="/allworkouts">View all</Link>
-                                <Link to="#">Start new</Link>
+                                <a href="#" className="Dropdown-btn">
+                                    Exercises
+                                    <div className="Dropdown-menu">
+                                        <Link to="#">Create new</Link>
+                                    </div>
+                                </a>
                             </div>
                         </Link>
                     </>
