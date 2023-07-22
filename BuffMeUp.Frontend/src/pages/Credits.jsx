@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { setTitle } from "../utils";
 import "./Credits.css";
 
 const contributors = [
@@ -20,6 +22,8 @@ const contributors = [
 ];
 
 const Credits = () => {
+    useEffect(() => setTitle("Credits"), []);
+
     return (
         <div className="contributors">
             {contributors.map((c) => (

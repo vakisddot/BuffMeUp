@@ -16,6 +16,7 @@ import AdminPanel from "./pages/admin/AdminPanel";
 import WorkoutDetails from "./pages/workout/WorkoutDetails";
 import OnRoute from "./components/OnRoute";
 import startNewWorkout from "./pages/workout/workoutUtils";
+import NewExercise from "./pages/workout/NewExercise";
 
 function App() {
     return (
@@ -66,6 +67,14 @@ function App() {
                         element={
                             <AuthorizedOnly>
                                 <WorkoutDetails></WorkoutDetails>
+                            </AuthorizedOnly>
+                        }
+                    ></Route>
+                    <Route
+                        path="/newexercise"
+                        element={
+                            <AuthorizedOnly>
+                                <NewExercise></NewExercise>
                             </AuthorizedOnly>
                         }
                     ></Route>

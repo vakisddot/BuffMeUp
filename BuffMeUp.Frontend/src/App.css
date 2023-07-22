@@ -24,7 +24,10 @@ input[type="radio"] {
 
 .radio {
     display: flex;
-    gap: 2em;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
+    padding: 1em 0;
     text-align: center;
 }
 

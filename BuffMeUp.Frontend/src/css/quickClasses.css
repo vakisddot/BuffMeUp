@@ -19,7 +19,7 @@
 }
 
 .Back {
-    background-color: var(--blue);
+    background-color: var(--blue) !important;
 }
 .Back-fill {
     fill: var(--blue);
@@ -29,7 +29,7 @@
 }
 
 .Biceps {
-    background-color: var(--green);
+    background-color: var(--green) !important;
 }
 .Biceps-fill {
     fill: var(--green);
@@ -39,7 +39,7 @@
 }
 
 .Chest {
-    background-color: var(--red);
+    background-color: var(--red) !important;
 }
 .Chest-fill {
     fill: var(--red);
@@ -49,11 +49,31 @@
 }
 
 .Shoulders {
-    background-color: var(--yellow);
+    background-color: var(--yellow) !important;
 }
 .Shoulders-fill {
     fill: var(--yellow);
 }
 .Shoulders-col {
     color: var(--yellow);
+}
+
+.Core {
+    background-color: var(--pink) !important;
+}
+.Core-fill {
+    fill: var(--pink);
+}
+.Core-col {
+    color: var(--pink);
+}
+
+.Triceps {
+    background-color: var(--orange) !important;
+}
+.Triceps-fill {
+    fill: var(--orange);
+}
+.Triceps-col {
+    color: var(--orange);
 }

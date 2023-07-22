@@ -107,17 +107,21 @@ public static class ValidationConstants
     public class ForExerciseTemplate : IValidationConstants
     {
         public const int NameMinLength = 2;
-        public const int NameMaxLength = 16;
+        public const int NameMaxLength = 24;
 
-        public const int DescriptionMinLength = 0;
         public const int DescriptionMaxLength = 256;
 
         public static object Serialized = new
         {
-            NameMinLength = NameMinLength,
-            NameMaxLength = NameMaxLength,
-            DescriptionMinLength = DescriptionMinLength,
-            DescriptionMaxLength = DescriptionMaxLength,
+            Name = new
+            {
+                MinLength = NameMinLength,
+                MaxLength = NameMaxLength,
+            },
+            Description = new
+            {
+                MaxLength = DescriptionMaxLength,
+            }
         };
     }
 

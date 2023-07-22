@@ -1,8 +1,7 @@
-﻿using BuffMeUp.Backend.Data.Models.Workouts;
-using BuffMeUp.Backend.Data;
+﻿using BuffMeUp.Backend.Data;
+using BuffMeUp.Backend.Data.Models.Workouts;
 using BuffMeUp.Backend.Services.Interfaces;
 using BuffMeUp.Backend.ViewModels.Workouts;
-using BuffMeUp.Backend.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace BuffMeUp.Backend.Services;
@@ -23,7 +22,7 @@ public class ExerciseTemplateService : IExerciseTemplateService
         {
             Name = model.Name,
             Description = model.Description,
-            ExerciseType = Enum.Parse<ExerciseType>(model.ExerciseType),
+            ExerciseType = (ExerciseType)model.ExerciseType,
             IsGlobal = model.IsGlobal,
             UserId = userId,
         };
@@ -64,7 +63,7 @@ public class ExerciseTemplateService : IExerciseTemplateService
 
         exerciseTemplate.Name = model.Name;
         exerciseTemplate.Description = model.Description;
-        exerciseTemplate.ExerciseType = Enum.Parse<ExerciseType>(model.ExerciseType);
+        exerciseTemplate.ExerciseType = (ExerciseType)model.ExerciseType;
         exerciseTemplate.IsGlobal = model.IsGlobal;
 
         await _dbContext.SaveChangesAsync();
@@ -82,5 +81,10 @@ public class ExerciseTemplateService : IExerciseTemplateService
 
         _dbContext.ExerciseTemplates.Remove(exerciseTemplate);
         await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<bool> ExerciseTemplateExistsByNameAsync(string name)
+    {
+        return await _dbContext.ExerciseTemplates.AnyAsync(et => et.Name.ToLower() == name.ToLower());
     }
 }

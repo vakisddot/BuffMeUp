@@ -8,6 +8,8 @@ public interface IExerciseTemplateService
 
     Task<IEnumerable<ExerciseTemplateDisplayModel>> GetExerciseTemplatesAsync(Guid userId, string query);
 
+    Task<bool> ExerciseTemplateExistsByNameAsync(string name);
+
     Task UpdateExerciseTemplateAsync(ExerciseTemplateFormModel model);
 
     Task DeleteExerciseTemplateAsync(Guid id);

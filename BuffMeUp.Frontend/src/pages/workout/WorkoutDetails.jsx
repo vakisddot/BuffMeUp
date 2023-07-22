@@ -116,7 +116,7 @@ const WorkoutDetails = () => {
                         </a>
                     </div>
                     <SearchBar
-                        endpoint="/api/Workout/Templates"
+                        endpoint="/api/ExerciseTemplate/Query"
                         lookFor="name"
                         onResultSelect={(result) => {
                             setCurrTemplate(result);

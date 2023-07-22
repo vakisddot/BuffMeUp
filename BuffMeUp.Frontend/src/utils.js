@@ -59,3 +59,7 @@ export function getQueryString(searchParams) {
 
     return joinedParams;
 }
+
+export function setTitle(title) {
+    document.title = `${title} - BuffMeUp`;
+}

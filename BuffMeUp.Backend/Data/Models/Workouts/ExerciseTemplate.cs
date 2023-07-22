@@ -21,7 +21,7 @@ public class ExerciseTemplate
     [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
     public string Name { get; set; } = null!;
 
-    [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength)]
+    [StringLength(DescriptionMaxLength)]
     public string? Description { get; set; }
 
     [Required]

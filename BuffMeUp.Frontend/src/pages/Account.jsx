@@ -5,10 +5,12 @@ import jwt_decode from "jwt-decode";
 import InputForm from "../components/InputForm";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { fetchAuthenticated } from "../utils";
+import { fetchAuthenticated, setTitle } from "../utils";
 import { displayPopup } from "../components/popupFormUtils";
 
 const Account = ({ nutrients }) => {
+    useEffect(() => setTitle("Account"), []);
+
     const token = localStorage.getItem("token");
     const claims = jwt_decode(token);
 

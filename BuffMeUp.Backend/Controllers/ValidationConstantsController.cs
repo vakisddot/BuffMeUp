@@ -13,6 +13,7 @@ public class ValidationConstantsController : ControllerBase
             "User" => Ok(Common.ValidationConstants.ForUser.Serialized),
             "PersonalStats" => Ok(Common.ValidationConstants.ForPersonalStats.Serialized),
             "ExerciseSet" => Ok(Common.ValidationConstants.ForExerciseSet.Serialized),
+            "ExerciseTemplate" => Ok(Common.ValidationConstants.ForExerciseTemplate.Serialized),
 
             _ => NotFound(new { })
         };

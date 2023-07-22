@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import "./Home.css";
+import { setTitle } from "../utils";
 
 const aboutSections = [
     {
@@ -28,6 +30,8 @@ const aboutSections = [
 ];
 
 const Home = () => {
+    useEffect(() => setTitle("Home"), []);
+
     return (
         <>
             <header className="Main-header">

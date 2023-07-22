@@ -1,0 +1,46 @@
+.About-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3em;
+    padding: 5em;
+}
+
+.About-page .App-logo {
+    font-size: 5em;
+}
+
+.tech-stack {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2em;
+    padding: 1em;
+    justify-content: center;
+}
+
+.tech-element {
+    background-color: var(--darkgray);
+    fill: var(--white);
+    color: var(--white) !important;
+    padding: 5em 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.25em;
+    border-radius: 1em;
+    transition: ease-in-out 0.1s;
+}
+
+.tech-element:hover {
+    transform: scale(1.05);
+}
+
+.tech-element svg {
+    height: 5em;
+}
+
+@media screen and (max-width: 850px) {
+    .tech-stack {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

@@ -118,22 +118,6 @@ public class WorkoutController : ControllerBase
         return Ok(new { });
     }
 
-    [HttpGet]
-    [Route("Templates")]
-    public async Task<IActionResult> GetExerciseTemplates([FromQuery] string q)
-    {
-        var userId = IdentifyUser();
-
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(Utils.GetErrorsObject(ModelState));
-        }
-
-        var templates = await _exerciseTemplateService.GetExerciseTemplatesAsync(Guid.Parse(userId!), q);
-
-        return Ok(templates);
-    }
-
     string? IdentifyUser()
     {
         var identity = HttpContext.User.Identity as ClaimsIdentity;

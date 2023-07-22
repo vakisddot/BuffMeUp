@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./AllWorkouts.css";
+import "../../css/quickClasses.css";
 import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import { getClaims, getQueryString } from "../../utils";
@@ -50,7 +51,7 @@ function AllWorkouts() {
         const uniqueValues = new Set();
 
         sets.forEach((set) => {
-            uniqueValues.add(set.exerciseType);
+            uniqueValues.add(set);
         });
 
         return Array.from(uniqueValues).join(" / ");
@@ -177,7 +178,7 @@ function AllWorkouts() {
                                                     .map((set) => {
                                                         return (
                                                             <span
-                                                                className={`set-circle ${set.exerciseType}`}
+                                                                className={`set-circle ${set}`}
                                                             ></span>
                                                         );
                                                     })}
