@@ -34,16 +34,6 @@ public class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-        //builder.Services.Configure<ApiBehaviorOptions>(options =>
-        //{
-        //    options.InvalidModelStateResponseFactory = context => {
-        //        Console.WriteLine("Something went wrong while trying to bind to a model!");
-
-        //        Console.WriteLine(context.HttpContext.Request.Path.Value);
-
-        //        return new RedirectResult("http://localhost:3000" + context.HttpContext.Request.Path.Value?.ToLower());
-        //    };
-        //});
 
         builder.Services.AddAuthentication(x =>
         {

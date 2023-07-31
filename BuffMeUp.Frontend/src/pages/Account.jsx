@@ -255,7 +255,9 @@ const Account = ({ nutrients }) => {
                             "none")
                     }
                     authorize={true}
-                    endpoint="/api/PersonalStats/UpdateWeight"
+                    endpoint="/api/PersonalStats"
+                    method="PUT"
+                    submitLabel="Update"
                 />
             </div>
 

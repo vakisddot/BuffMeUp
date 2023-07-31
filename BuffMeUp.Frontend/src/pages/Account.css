@@ -110,6 +110,7 @@
     gap: 1em;
     padding: 8em 10em;
     overflow: hidden;
+    height: 100%;
 }
 
 .footer-card::before {
@@ -152,5 +153,22 @@
     }
 
     .user-footer {
+        grid-template-columns: 1fr;
+    }
+
+    .nutrient-icon-svg {
+        top: 55%;
+        left: 55%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .nutrient-icon-svg {
+        top: 60%;
+        left: 60%;
+    }
+
+    .nutrient p {
+        margin-top: 2em;
     }
 }

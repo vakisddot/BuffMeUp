@@ -1,6 +1,10 @@
 import InputForm from "../../components/InputForm";
+import { useEffect } from "react";
+import { setTitle } from "../../utils";
 
 const LogIn = () => {
+    useEffect(() => setTitle("Log in"), []);
+
     const fields = {
         username: {
             label: "Username",

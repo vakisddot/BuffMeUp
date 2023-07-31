@@ -8,7 +8,7 @@ namespace BuffMeUp.Backend.Controllers.Workout;
 
 [ApiController]
 [Route("api/[controller]")]
-public class WorkoutController : ControllerBase
+public class WorkoutController : BaseController
 {
     readonly IWorkoutService _workoutService;
     readonly IExerciseTemplateService _exerciseTemplateService;
@@ -36,7 +36,6 @@ public class WorkoutController : ControllerBase
     }
 
     [HttpPost]
-    [Route("StartNew")]
     public async Task<IActionResult> StartNewWorkout()
     {
         var userId = IdentifyUser();
@@ -72,8 +71,7 @@ public class WorkoutController : ControllerBase
         return Ok(workout);
     }
 
-    [HttpPost]
-    [Route("Update")]
+    [HttpPut]
     public async Task<IActionResult> Update(WorkoutFormModel model)
     {
         var userId = IdentifyUser();
@@ -95,8 +93,7 @@ public class WorkoutController : ControllerBase
         return Ok(new { });
     }
 
-    [HttpPost]
-    [Route("Delete")]
+    [HttpDelete]
     public async Task<IActionResult> Delete(WorkoutDeleteModel model)
     {
         var userId = IdentifyUser();
@@ -116,18 +113,5 @@ public class WorkoutController : ControllerBase
         await _workoutService.DeleteWorkoutAsync(model.Id);
 
         return Ok(new { });
-    }
-
-    string? IdentifyUser()
-    {
-        var identity = HttpContext.User.Identity as ClaimsIdentity;
-        var userId = identity?.FindFirst("userId")?.Value;
-
-        if (identity == null || userId == null)
-        {
-            ModelState.AddModelError("User", "Failed to identify user!");
-        }
-
-        return userId;
     }
 }

@@ -1,8 +1,12 @@
 .FormContainer {
     position: relative;
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .Form {
+    flex: 1 0 auto;
     width: 25vw;
     margin: auto;
     background-color: var(--white);
@@ -22,6 +26,7 @@
     position: absolute;
     inset: 0;
     width: 100%;
+    height: 100%;
     z-index: -2;
     object-fit: cover;
 }

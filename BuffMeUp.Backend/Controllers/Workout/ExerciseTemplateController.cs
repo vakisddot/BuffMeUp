@@ -8,7 +8,7 @@ namespace BuffMeUp.Backend.Controllers.Workout;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ExerciseTemplateController : ControllerBase
+public class ExerciseTemplateController : BaseController
 {
     readonly IExerciseTemplateService _exerciseTemplateService;
 
@@ -18,7 +18,6 @@ public class ExerciseTemplateController : ControllerBase
     }
 
     [HttpGet]
-    [Route("Query")]
     public async Task<IActionResult> GetExerciseTemplates([FromQuery] string q)
     {
         var userId = IdentifyUser();
@@ -34,7 +33,6 @@ public class ExerciseTemplateController : ControllerBase
     }
 
     [HttpPost]
-    [Route("New")]
     public async Task<IActionResult> CreateExerciseTemplate(ExerciseTemplateFormModel model)
     {
         var userId = IdentifyUser();
@@ -52,18 +50,5 @@ public class ExerciseTemplateController : ControllerBase
         await _exerciseTemplateService.CreateExerciseTemplateAsync(model, Guid.Parse(userId!));
 
         return Ok(new { });
-    }
-
-    string? IdentifyUser()
-    {
-        var identity = HttpContext.User.Identity as ClaimsIdentity;
-        var userId = identity?.FindFirst("userId")?.Value;
-
-        if (identity == null || userId == null)
-        {
-            ModelState.AddModelError("User", "Failed to identify user!");
-        }
-
-        return userId;
     }
 }

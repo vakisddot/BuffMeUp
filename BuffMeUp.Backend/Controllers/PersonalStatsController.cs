@@ -9,7 +9,7 @@ namespace BuffMeUp.Backend.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class PersonalStatsController : ControllerBase
+public class PersonalStatsController : BaseController
 {
     readonly IPersonalStatsService _personalStatsService;
 
@@ -53,8 +53,7 @@ public class PersonalStatsController : ControllerBase
         return Ok(new {});
     }
 
-    [HttpPost]
-    [Route("UpdateWeight")]
+    [HttpPut]
     public async Task<IActionResult> UpdateWeight([FromBody] WeightUpdateFormModel model)
     {
         var userId = IdentifyUser();
@@ -72,18 +71,5 @@ public class PersonalStatsController : ControllerBase
         await _personalStatsService.UpdateWeightAsync(model.Weight, Guid.Parse(userId!));
 
         return Ok(new { });
-    }
-
-    string? IdentifyUser()
-    {
-        var identity = HttpContext.User.Identity as ClaimsIdentity;
-        var userId = identity?.FindFirst("userId")?.Value;
-
-        if (identity == null || userId == null)
-        {
-            ModelState.AddModelError("User", "Failed to identify user!");
-        }
-
-        return userId;
     }
 }

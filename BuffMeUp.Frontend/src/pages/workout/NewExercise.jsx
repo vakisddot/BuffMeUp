@@ -74,7 +74,7 @@ const NewExercise = () => {
             title="New exercise"
             modelName="ExerciseTemplate"
             fields={fields}
-            endpoint="/api/ExerciseTemplate/New"
+            endpoint="/api/ExerciseTemplate"
             redirect="/allworkouts"
             submitLabel="Create"
             bgSrc="/images/pexels-victor-freitas-841130.jpg"

@@ -112,8 +112,9 @@ function AllWorkouts() {
                         }}
                         onBack={() => hidePopup("delete-workout")}
                         authorize={true}
-                        endpoint="/api/Workout/Delete"
+                        endpoint="/api/Workout"
                         submitLabel="Delete"
+                        method="DELETE"
                     />
                 </div>
 

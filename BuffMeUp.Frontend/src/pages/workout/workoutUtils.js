@@ -2,7 +2,7 @@ export default function startNewWorkout() {
     return new Promise((resolve, reject) => {
         const token = localStorage.getItem("token");
 
-        fetch("/api/Workout/StartNew", {
+        fetch("/api/Workout", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

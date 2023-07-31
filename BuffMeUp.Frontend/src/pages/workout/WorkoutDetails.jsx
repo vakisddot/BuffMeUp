@@ -78,8 +78,8 @@ const WorkoutDetails = () => {
 
     const deleteSet = (set) => {
         fetchAuthenticated(
-            "/api/ExerciseSet/Delete",
-            "POST",
+            "/api/ExerciseSet",
+            "DELETE",
             JSON.stringify({
                 id: set.id,
             })
@@ -116,7 +116,7 @@ const WorkoutDetails = () => {
                         </a>
                     </div>
                     <SearchBar
-                        endpoint="/api/ExerciseTemplate/Query"
+                        endpoint="/api/ExerciseTemplate"
                         lookFor="name"
                         onResultSelect={(result) => {
                             setCurrTemplate(result);
@@ -176,8 +176,9 @@ const WorkoutDetails = () => {
                         }}
                         onBack={() => hidePopup("add-comment")}
                         authorize={true}
-                        endpoint="/api/Workout/Update"
+                        endpoint="/api/Workout"
                         submitLabel="Set"
+                        method="PUT"
                     />
                 </div>
 
@@ -209,8 +210,9 @@ const WorkoutDetails = () => {
                         }}
                         onBack={() => hidePopup("edit-set")}
                         authorize={true}
-                        endpoint="/api/ExerciseSet/Update"
+                        endpoint="/api/ExerciseSet"
                         submitLabel="Update"
+                        method="PUT"
                     />
                 </div>
             </header>
