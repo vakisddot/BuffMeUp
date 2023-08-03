@@ -3,7 +3,7 @@ import "./AllWorkouts.css";
 import "../../css/quickClasses.css";
 import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
-import { getClaims, getQueryString } from "../../utils";
+import { fetchAuthenticated, getClaims, getQueryString } from "../../utils";
 import startNewWorkout from "./workoutUtils";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,32 +12,17 @@ import { displayPopup, hidePopup } from "../../components/popupFormUtils";
 import PageBar from "../../components/PageBar";
 
 function AllWorkouts() {
-    const token = localStorage.getItem("token");
-
     const [searchParams] = useSearchParams();
 
     searchParams.get("page") || searchParams.set("page", 1);
     searchParams.get("resultCount") || searchParams.set("resultCount", 10);
-
-    console.log(
-        "Search params:",
-        "page:",
-        searchParams.get("page"),
-        "resultCount:",
-        searchParams.get("resultCount")
-    );
 
     const [workouts, setWorkouts] = useState([]);
     const [refreshWorkouts, setRefreshWorkouts] = useState(false);
     const [currId, setCurrId] = useState("");
 
     useEffect(() => {
-        fetch(`/api/Workout/All?${getQueryString(searchParams)}`, {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + token,
-            },
-        })
+        fetchAuthenticated(`/api/Workout/All?${getQueryString(searchParams)}`)
             .then((res) => res.json())
             .then((res) => {
                 setWorkouts(res);

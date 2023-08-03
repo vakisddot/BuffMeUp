@@ -11,7 +11,7 @@ public class UserConfig : IEntityTypeConfiguration<User>
     {
         builder.HasData(new User
         {
-            Id = Guid.Parse("41fc7ca7-c54c-4e7b-a68a-033f054b56d1"),
+            Id = ConfigUtils.AdminUserId,
             FirstName = "Admin",
             Username = "admin",
             Email = "admin@admin.admin",

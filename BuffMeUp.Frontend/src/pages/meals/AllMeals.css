@@ -1,107 +1,45 @@
-.All-meals-header {
-    color: var(--white);
-    position: relative;
-    overflow: hidden;
-    padding: 10em;
+.Meals-header {
+    padding: 3em;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    gap: 1em;
+    gap: 2em;
+    position: relative;
 }
 
-.All-meals-header::after {
-    z-index: -1;
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0),
-        rgba(0, 0, 0, 0.05),
-        rgba(0, 0, 0, 0.2),
-        var(--black)
-    );
+.Meals-header h1 {
+    color: white;
+    text-shadow: var(--black) 1px 0 10px;
 }
 
-.All-meals-header img {
+.Meals-header img {
     position: absolute;
     top: 0;
     left: 0;
     z-index: -2;
     object-fit: cover;
     width: 100%;
+    height: 100%;
+    opacity: 75%;
 }
 
-.All-meals-body {
-    color: var(--white);
-    background-color: var(--black);
-    flex: 1 0 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.meal-details {
-    background-color: var(--darkgray);
-    position: relative;
-    padding: 2em 3em;
-    margin: 1em 15em;
-    text-align: left;
+.meals-all {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 1em;
-    justify-content: space-between;
-    transition: 0.2s ease-in-out;
-    overflow: hidden;
-    border: 1px solid var(--black);
+    padding: 1em;
 }
 
-.meal-details > * {
-    z-index: 1;
-}
-
-.meal-details > svg {
-    position: absolute;
-    opacity: 50%;
-    top: 10%;
-}
-
-.meal-details:hover {
-    transform: scale(1.03);
-    border-color: var(--lightgray);
-}
-
-.set-circles {
-    margin-top: 0.5em;
-    display: flex;
-    justify-content: end;
-    gap: 0.25em;
-}
-
-.set-circle {
-    display: inline-block;
-    width: 0.5em;
-    height: 0.5em;
-    background-color: var(--white);
-    border: 1px solid var(--white);
-    border-radius: 50%;
-}
-
-.meal-details-end {
+.date {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    text-align: right;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
 }
 
-.meal-btns {
-    display: flex;
-    align-items: end;
-    gap: 0.25em;
-}
-
-@media screen and (max-width: 900px) {
-    .meal-details {
-        padding: 1em;
-        margin: 1em;
-    }
+.meals {
+    background-color: #eee;
+    border-radius: 0.5em;
 }

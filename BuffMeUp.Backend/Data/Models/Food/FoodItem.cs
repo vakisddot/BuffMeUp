@@ -12,10 +12,6 @@ public class FoodItem
 
 
     [Required]
-    [Range(QuantityMinValue, QuantityMaxValue)]
-    public int Quantity { get; set; }
-
-    [Required]
     [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
     public string Name { get; set; } = null!;
 

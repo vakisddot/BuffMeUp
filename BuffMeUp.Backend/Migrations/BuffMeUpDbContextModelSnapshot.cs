@@ -96,7 +96,7 @@ namespace BuffMeUp.Backend.Migrations
                             Id = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1"),
                             Email = "admin@admin.admin",
                             FirstName = "Admin",
-                            PasswordHash = "sfiPd/gT97ljx77CmIkTKw==;oQ2wf8+BIkgm3fDwIYj0dl+355CkyuYeTPXuCCfugA4=",
+                            PasswordHash = "ZiKzgbLDLMPY18CjiryE8g==;v52m5NUMPUwznKd9EBUD44iJaOLcI5IwCio/MGsHaZg=",
                             RoleId = 2,
                             Username = "admin"
                         });
@@ -127,9 +127,6 @@ namespace BuffMeUp.Backend.Migrations
                     b.Property<int>("Protein")
                         .HasColumnType("int");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
@@ -138,6 +135,468 @@ namespace BuffMeUp.Backend.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("FoodItems");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Carbs = 1,
+                            Fats = 10,
+                            IsGlobal = true,
+                            Name = "Eggs",
+                            Protein = 12,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Carbs = 0,
+                            Fats = 4,
+                            IsGlobal = true,
+                            Name = "Chicken breast",
+                            Protein = 31,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Carbs = 0,
+                            Fats = 13,
+                            IsGlobal = true,
+                            Name = "Salmon",
+                            Protein = 20,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Carbs = 0,
+                            Fats = 20,
+                            IsGlobal = true,
+                            Name = "Ground beef",
+                            Protein = 26,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Carbs = 0,
+                            Fats = 1,
+                            IsGlobal = true,
+                            Name = "Tuna",
+                            Protein = 30,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Carbs = 0,
+                            Fats = 21,
+                            IsGlobal = true,
+                            Name = "Pork chops",
+                            Protein = 25,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Carbs = 4,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Greek yogurt",
+                            Protein = 10,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Carbs = 4,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Cottage cheese",
+                            Protein = 11,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Carbs = 7,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Broccoli",
+                            Protein = 2,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Carbs = 20,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Sweet potato",
+                            Protein = 2,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Carbs = 24,
+                            Fats = 1,
+                            IsGlobal = true,
+                            Name = "Brown rice",
+                            Protein = 3,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Carbs = 22,
+                            Fats = 50,
+                            IsGlobal = true,
+                            Name = "Almonds",
+                            Protein = 21,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Carbs = 16,
+                            Fats = 49,
+                            IsGlobal = true,
+                            Name = "Peanuts",
+                            Protein = 25,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Carbs = 9,
+                            Fats = 15,
+                            IsGlobal = true,
+                            Name = "Avocado",
+                            Protein = 2,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Carbs = 23,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Banana",
+                            Protein = 1,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Carbs = 15,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Apple",
+                            Protein = 0,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Carbs = 4,
+                            Fats = 3,
+                            IsGlobal = true,
+                            Name = "Beef liver",
+                            Protein = 20,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Carbs = 20,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Lentils",
+                            Protein = 9,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Carbs = 27,
+                            Fats = 3,
+                            IsGlobal = true,
+                            Name = "Chickpeas",
+                            Protein = 9,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Carbs = 21,
+                            Fats = 2,
+                            IsGlobal = true,
+                            Name = "Quinoa",
+                            Protein = 4,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Carbs = 12,
+                            Fats = 1,
+                            IsGlobal = true,
+                            Name = "Oatmeal",
+                            Protein = 3,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Carbs = 20,
+                            Fats = 50,
+                            IsGlobal = true,
+                            Name = "Peanut butter",
+                            Protein = 25,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Carbs = 30,
+                            Fats = 44,
+                            IsGlobal = true,
+                            Name = "Cashews",
+                            Protein = 18,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Carbs = 4,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Spinach",
+                            Protein = 3,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Carbs = 11,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Carrots",
+                            Protein = 1,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Carbs = 4,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Tomatoes",
+                            Protein = 1,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Carbs = 28,
+                            Fats = 1,
+                            IsGlobal = true,
+                            Name = "White rice",
+                            Protein = 3,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Carbs = 50,
+                            Fats = 5,
+                            IsGlobal = true,
+                            Name = "Bread",
+                            Protein = 5,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Carbs = 35,
+                            Fats = 2,
+                            IsGlobal = true,
+                            Name = "Pasta",
+                            Protein = 7,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Carbs = 12,
+                            Fats = 3,
+                            IsGlobal = true,
+                            Name = "Milk",
+                            Protein = 8,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 31,
+                            Carbs = 1,
+                            Fats = 20,
+                            IsGlobal = true,
+                            Name = "Cheese",
+                            Protein = 10,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 32,
+                            Carbs = 4,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Cucumber",
+                            Protein = 1,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 33,
+                            Carbs = 50,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Mango",
+                            Protein = 1,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 34,
+                            Carbs = 50,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Pineapple",
+                            Protein = 1,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 35,
+                            Carbs = 8,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Strawberries",
+                            Protein = 1,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 36,
+                            Carbs = 14,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Blueberries",
+                            Protein = 1,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 37,
+                            Carbs = 12,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Oranges",
+                            Protein = 1,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 38,
+                            Carbs = 16,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Grapes",
+                            Protein = 1,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 39,
+                            Carbs = 8,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Watermelon",
+                            Protein = 1,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 40,
+                            Carbs = 82,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Honey",
+                            Protein = 0,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 41,
+                            Carbs = 68,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Maple syrup",
+                            Protein = 0,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 42,
+                            Carbs = 45,
+                            Fats = 30,
+                            IsGlobal = true,
+                            Name = "Chocolate",
+                            Protein = 5,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 43,
+                            Carbs = 5,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Cauliflower",
+                            Protein = 2,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 44,
+                            Carbs = 3,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Asparagus",
+                            Protein = 2,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 45,
+                            Carbs = 4,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Zucchini",
+                            Protein = 1,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        },
+                        new
+                        {
+                            Id = 46,
+                            Carbs = 3,
+                            Fats = 0,
+                            IsGlobal = true,
+                            Name = "Celery",
+                            Protein = 1,
+                            UserId = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1")
+                        });
                 });
 
             modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Food.JT_Meal_FoodItem", b =>
@@ -287,7 +746,7 @@ namespace BuffMeUp.Backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("cffceeee-840d-44b1-ba78-37f25c4808e5"),
+                            Id = new Guid("aaed5dcc-5713-4271-ab08-cd877ffa96b5"),
                             Description = "Lie on your back on a flat bench. Grip the bar with your hands slightly wider than shoulder-width apart. Lift the bar off the rack and position it above your chest with arms fully extended.",
                             ExerciseType = 1,
                             IsGlobal = true,
@@ -296,7 +755,7 @@ namespace BuffMeUp.Backend.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7423c92a-b60e-4439-b310-1ce945a07014"),
+                            Id = new Guid("fa302f3c-12ac-496e-8153-2258c315f233"),
                             Description = "Stand with your mid-foot under the barbell. Bend over and grab the bar with a shoulder-width grip. Bend your knees until your shins touch the bar. Lift your chest up and straighten your lower back.",
                             ExerciseType = 0,
                             IsGlobal = true,
@@ -305,7 +764,7 @@ namespace BuffMeUp.Backend.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a04301d5-a004-4a84-95bf-5c72982bc9cc"),
+                            Id = new Guid("aad56ab1-ae8e-45f8-93aa-b6875bdff9d8"),
                             Description = "Stand with your mid-foot under the barbell. Bend over and grab the bar with a shoulder-width grip. Bend your knees until your shins touch the bar. Lift your chest up and straighten your lower back.",
                             ExerciseType = 2,
                             IsGlobal = true,
@@ -314,7 +773,7 @@ namespace BuffMeUp.Backend.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ed30d261-c880-4a4c-a29d-ed858ac8cfab"),
+                            Id = new Guid("2eb1043a-bbc1-4b33-a358-eb243c9ae063"),
                             Description = "Stand with the bar on your front shoulders, and your hands next to your shoulders. Press the bar over your head, until it’s balanced over your shoulders and mid-foot.",
                             ExerciseType = 3,
                             IsGlobal = true,
@@ -323,7 +782,7 @@ namespace BuffMeUp.Backend.Migrations
                         },
                         new
                         {
-                            Id = new Guid("8eb38f00-f8fc-4a3c-8cc3-0d06ca8e0658"),
+                            Id = new Guid("4dba3512-77a3-40ce-8c79-44079b46b272"),
                             Description = "Grab the pull-up bar with your palms down (shoulder-width grip). Hang to the pull-up bar with straight arms and your legs off the floor. Pull yourself up by pulling your elbows down to the floor.",
                             ExerciseType = 0,
                             IsGlobal = true,
@@ -332,7 +791,7 @@ namespace BuffMeUp.Backend.Migrations
                         },
                         new
                         {
-                            Id = new Guid("65a45f26-77ba-4aa5-aadf-340698a0dd91"),
+                            Id = new Guid("c26cf98c-fc17-4910-b5da-1bf1ee9c1323"),
                             Description = "Stand up with your torso upright while holding a dumbbell on each hand being held at arms length. The elbows should be close to the torso. This will be your starting position.",
                             ExerciseType = 5,
                             IsGlobal = true,
@@ -341,7 +800,7 @@ namespace BuffMeUp.Backend.Migrations
                         },
                         new
                         {
-                            Id = new Guid("484d6c42-5e62-4821-85ba-f528da3ac598"),
+                            Id = new Guid("7437da1b-b399-47d5-83bb-016fb955e672"),
                             Description = "Attach a straight or angled bar to a high pulley and grab with an overhand grip at shoulder width. Standing upright with the torso straight and a very small inclination forward, bring the upper arms close to your body and perpendicular to the floor.",
                             ExerciseType = 4,
                             IsGlobal = true,
@@ -350,7 +809,7 @@ namespace BuffMeUp.Backend.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0ff467b8-3513-4907-92dd-6daa75c900e5"),
+                            Id = new Guid("88a6bb9c-d8aa-46a1-b060-17be6463158d"),
                             Description = "Lie on your back on the floor. Bend your legs and place feet firmly on the ground to stabilize your lower body. Cross your hands to opposite shoulders or place them behind your ears, without pulling on your neck.",
                             ExerciseType = 6,
                             IsGlobal = true,

@@ -29,7 +29,7 @@ public class ExerciseTemplateConfig : IEntityTypeConfiguration<ExerciseTemplate>
                 Description = "Lie on your back on a flat bench. Grip the bar with your hands slightly wider than shoulder-width apart. Lift the bar off the rack and position it above your chest with arms fully extended.",
                 IsGlobal = true,
                 ExerciseType = ExerciseType.Chest,
-                UserId = Guid.Parse("41fc7ca7-c54c-4e7b-a68a-033f054b56d1"),
+                UserId = ConfigUtils.AdminUserId,
             },
             new ExerciseTemplate
             {
@@ -37,8 +37,7 @@ public class ExerciseTemplateConfig : IEntityTypeConfiguration<ExerciseTemplate>
                 Description = "Stand with your mid-foot under the barbell. Bend over and grab the bar with a shoulder-width grip. Bend your knees until your shins touch the bar. Lift your chest up and straighten your lower back.",
                 IsGlobal = true,
                 ExerciseType = ExerciseType.Back,
-
-                UserId = Guid.Parse("41fc7ca7-c54c-4e7b-a68a-033f054b56d1"),
+                UserId = ConfigUtils.AdminUserId,
             },
             new ExerciseTemplate
             {
@@ -47,7 +46,7 @@ public class ExerciseTemplateConfig : IEntityTypeConfiguration<ExerciseTemplate>
                 IsGlobal = true,
                 ExerciseType = ExerciseType.Legs,
 
-                UserId = Guid.Parse("41fc7ca7-c54c-4e7b-a68a-033f054b56d1"),
+                UserId = ConfigUtils.AdminUserId,
             },
             new ExerciseTemplate
             {
@@ -56,7 +55,7 @@ public class ExerciseTemplateConfig : IEntityTypeConfiguration<ExerciseTemplate>
                 IsGlobal = true,
                 ExerciseType = ExerciseType.Shoulders,
 
-                UserId = Guid.Parse("41fc7ca7-c54c-4e7b-a68a-033f054b56d1"),
+                UserId = ConfigUtils.AdminUserId,
             },
             new ExerciseTemplate
             {
@@ -65,7 +64,7 @@ public class ExerciseTemplateConfig : IEntityTypeConfiguration<ExerciseTemplate>
                 IsGlobal = true,
                 ExerciseType = ExerciseType.Back,
 
-                UserId = Guid.Parse("41fc7ca7-c54c-4e7b-a68a-033f054b56d1"),
+                UserId = ConfigUtils.AdminUserId,    
             },
             new ExerciseTemplate
             {
@@ -74,7 +73,7 @@ public class ExerciseTemplateConfig : IEntityTypeConfiguration<ExerciseTemplate>
                 IsGlobal = true,
                 ExerciseType = ExerciseType.Biceps,
 
-                UserId = Guid.Parse("41fc7ca7-c54c-4e7b-a68a-033f054b56d1"),
+                UserId = ConfigUtils.AdminUserId,
             },
             new ExerciseTemplate
             {
@@ -83,7 +82,7 @@ public class ExerciseTemplateConfig : IEntityTypeConfiguration<ExerciseTemplate>
                 IsGlobal = true,
                 ExerciseType = ExerciseType.Triceps,
 
-                UserId = Guid.Parse("41fc7ca7-c54c-4e7b-a68a-033f054b56d1"),
+                UserId = ConfigUtils.AdminUserId,
             },
             new ExerciseTemplate
             {
@@ -92,7 +91,7 @@ public class ExerciseTemplateConfig : IEntityTypeConfiguration<ExerciseTemplate>
                 IsGlobal = true,
                 ExerciseType = ExerciseType.Core,
 
-                UserId = Guid.Parse("41fc7ca7-c54c-4e7b-a68a-033f054b56d1"),
+                UserId = ConfigUtils.AdminUserId,
             }
         };
     }
