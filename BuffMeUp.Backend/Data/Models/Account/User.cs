@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static BuffMeUp.Backend.Common.ValidationConstants.ForUser;
 
-namespace BuffMeUp.Backend.Data.Models.Auth;
+namespace BuffMeUp.Backend.Data.Models.Account;
 
 public class User
 {
@@ -32,6 +32,8 @@ public class User
 
     [Required]
     public string PasswordHash { get; set; } = null!;
+
+    public byte[]? Avatar { get; set; }
 
     [Required]
     [StringLength(FirstNameMaxLength, MinimumLength = FirstNameMinLength)]

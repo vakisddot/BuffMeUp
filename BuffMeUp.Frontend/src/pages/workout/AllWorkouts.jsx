@@ -3,7 +3,12 @@ import "./AllWorkouts.css";
 import "../../css/quickClasses.css";
 import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
-import { fetchAuthenticated, getClaims, getQueryString } from "../../utils";
+import {
+    fetchAuthenticated,
+    getClaims,
+    getQueryString,
+    setTitle,
+} from "../../utils";
 import startNewWorkout from "./workoutUtils";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,6 +17,8 @@ import { displayPopup, hidePopup } from "../../components/popupFormUtils";
 import PageBar from "../../components/PageBar";
 
 function AllWorkouts() {
+    useEffect(() => setTitle("Workouts"), []);
+
     const [searchParams] = useSearchParams();
 
     searchParams.get("page") || searchParams.set("page", 1);

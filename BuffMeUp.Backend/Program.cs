@@ -24,11 +24,16 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddScoped<IAccountService, AccountService>();
+        builder.Services.AddScoped<IRoleService, RoleService>();
         builder.Services.AddScoped<IPersonalStatsService, PersonalStatsService>();
 
         builder.Services.AddScoped<IWorkoutService, WorkoutService>();
         builder.Services.AddScoped<IExerciseTemplateService, ExerciseTemplateService>();
         builder.Services.AddScoped<IExerciseSetService, ExerciseSetService>();
+
+        builder.Services.AddScoped<IMealService, MealService>();
+        builder.Services.AddScoped<IFoodItemService, FoodItemService>();
+        builder.Services.AddScoped<IServingService, ServingService>();
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

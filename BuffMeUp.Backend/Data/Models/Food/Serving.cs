@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BuffMeUp.Backend.Data.Models.Food;
 
-public class JT_Meal_FoodItem
+public class Serving
 {
     [ForeignKey(nameof(Meal))]
     public Guid MealId { get; set; }

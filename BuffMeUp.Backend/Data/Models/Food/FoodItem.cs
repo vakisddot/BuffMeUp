@@ -1,4 +1,4 @@
-﻿using BuffMeUp.Backend.Data.Models.Auth;
+﻿using BuffMeUp.Backend.Data.Models.Account;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static BuffMeUp.Backend.Common.ValidationConstants.ForFoodItem;
@@ -7,6 +7,11 @@ namespace BuffMeUp.Backend.Data.Models.Food;
 
 public class FoodItem
 {
+    public FoodItem()
+    {
+        Servings = new HashSet<Serving>();
+    }
+
     [Key]
     public int Id { get; set; }
 
@@ -33,4 +38,6 @@ public class FoodItem
     [ForeignKey(nameof(User))]
     public Guid UserId { get; set; }
     public virtual User User { get; set; } = null!;
+
+    public virtual ICollection<Serving> Servings { get; set; }
 }

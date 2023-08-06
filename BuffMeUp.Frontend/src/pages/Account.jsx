@@ -6,7 +6,7 @@ import InputForm from "../components/InputForm";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { fetchAuthenticated, setTitle } from "../utils";
-import { displayPopup } from "../components/popupFormUtils";
+import { displayPopup, hidePopup } from "../components/popupFormUtils";
 
 const Account = ({ nutrients }) => {
     useEffect(() => setTitle("Account"), []);
@@ -59,6 +59,21 @@ const Account = ({ nutrients }) => {
     const [accStats, setAccStats] = useState({});
     const [weightChange, setWeightChange] = useState(0);
     const [weightChangeRemaining, setWeightChangeRemaining] = useState(0);
+
+    const [avatar, setAvatar] = useState("");
+
+    useEffect(() => {
+        fetchAuthenticated("/api/Account/Avatar")
+            .then((res) => res.json())
+            .then((res) => {
+                console.log("Got avatar:", res);
+
+                setAvatar(res);
+            })
+            .catch((err) =>
+                console.log("Error while trying to get user's avatar!", err)
+            );
+    }, []);
 
     useEffect(() => {
         setWeightChange(
@@ -118,8 +133,72 @@ const Account = ({ nutrients }) => {
             <header className="user-stats">
                 <div className="profile-info">
                     <div className="acc-info">
-                        <div className="profile-pic">
-                            <img src="/images/no_avatar.png" alt="" />
+                        <div className="profile-pic-wrapper">
+                            <div className="profile-pic">
+                                <img
+                                    src={
+                                        avatar
+                                            ? `data:image/png;base64,${avatar}`
+                                            : "/images/no_avatar.png"
+                                    }
+                                    alt=""
+                                />
+                            </div>
+                            <label
+                                className="Auth-btn"
+                                for="avatar"
+                                style={{ cursor: "pointer" }}
+                            >
+                                Upload avatar
+                            </label>
+                            <input
+                                style={{ display: "none" }}
+                                type="file"
+                                name="avatar"
+                                id="avatar"
+                                onChange={(event) => {
+                                    if (!event.target.files[0]) return;
+
+                                    const fileExtension =
+                                        event.target.files[0].name
+                                            .split(".")
+                                            .pop();
+
+                                    if (
+                                        !["png", "jpg", "jpeg"].includes(
+                                            fileExtension
+                                        )
+                                    )
+                                        return;
+
+                                    if (event.target.files[0].size > 500000)
+                                        return;
+
+                                    console.log(event.target.files[0]);
+
+                                    event.target.files[0]
+                                        .arrayBuffer()
+                                        .then((buffer) => {
+                                            const base64 = btoa(
+                                                String.fromCharCode(
+                                                    ...new Uint8Array(buffer)
+                                                )
+                                            );
+
+                                            setAvatar(base64);
+
+                                            console.log(base64);
+
+                                            fetchAuthenticated(
+                                                "/api/Account/Avatar",
+                                                "PUT",
+                                                JSON.stringify({
+                                                    avatar: base64,
+                                                })
+                                            );
+                                        });
+                                }}
+                            />
                         </div>
 
                         <div className="profile-text">
@@ -133,9 +212,12 @@ const Account = ({ nutrients }) => {
                                     @{claims?.username || "invalid"}
                                 </p>
 
-                                <Link to="#" className="Auth-btn">
-                                    Edit account
-                                </Link>
+                                <a
+                                    onClick={() => displayPopup("delete-acc")}
+                                    className="Auth-btn-red"
+                                >
+                                    Delete account
+                                </a>
                             </div>
 
                             <div className="acc-stats">
@@ -234,6 +316,26 @@ const Account = ({ nutrients }) => {
                 </div>
             </header>
 
+            <div className="popup-form delete-acc">
+                <InputForm
+                    title={"Are you sure?"}
+                    fields={{}}
+                    submitFields={{
+                        id: claims.userId,
+                    }}
+                    onSuccessfulSubmit={() => {
+                        localStorage.removeItem("token");
+                        window.location.href = "/login";
+                    }}
+                    onBack={() => hidePopup("delete-acc")}
+                    authorize={true}
+                    endpoint="/api/Account"
+                    submitLabel="Delete"
+                    method="DELETE"
+                    toastOnSubmit={true}
+                />
+            </div>
+
             <div className="update-weight popup-form">
                 <InputForm
                     title="Update weight"
@@ -264,8 +366,8 @@ const Account = ({ nutrients }) => {
             <footer className="user-footer">
                 <div className="footer-card">
                     <h3>MEALS</h3>
-                    <Link to="#" className="Auth-btn-outline">
-                        Add meals
+                    <Link to="/allmeals" className="Auth-btn-outline">
+                        Today
                     </Link>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

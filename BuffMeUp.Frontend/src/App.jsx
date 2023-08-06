@@ -17,6 +17,7 @@ import WorkoutDetails from "./pages/workout/WorkoutDetails";
 import OnRoute from "./components/OnRoute";
 import startNewWorkout from "./pages/workout/workoutUtils";
 import NewExercise from "./pages/workout/NewExercise";
+import MealDetails from "./pages/meals/MealDetails";
 
 function App() {
     return (
@@ -84,6 +85,14 @@ function App() {
                         element={
                             <AuthorizedOnly>
                                 <AllMeals></AllMeals>
+                            </AuthorizedOnly>
+                        }
+                    ></Route>
+                    <Route
+                        path="/mealdetails/:id"
+                        element={
+                            <AuthorizedOnly>
+                                <MealDetails></MealDetails>
                             </AuthorizedOnly>
                         }
                     ></Route>

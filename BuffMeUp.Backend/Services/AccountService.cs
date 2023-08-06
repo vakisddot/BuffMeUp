@@ -1,8 +1,9 @@
 ﻿using BuffMeUp.Backend.Core;
 using BuffMeUp.Backend.Data;
-using BuffMeUp.Backend.Data.Models.Auth;
+using BuffMeUp.Backend.Data.Configurations;
+using BuffMeUp.Backend.Data.Models.Account;
 using BuffMeUp.Backend.Services.Interfaces;
-using BuffMeUp.Backend.ViewModels.Auth;
+using BuffMeUp.Backend.ViewModels.Account;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -86,6 +87,68 @@ public class AccountService : IAccountService
         await _dbContext.SaveChangesAsync();
     }
 
+    public async Task<IEnumerable<UserViewModel>> GetAllUsersAsync()
+    {
+        var users = await _dbContext.Users
+            .Include(u => u.Role)
+            .Select(u => new UserViewModel
+            {
+                Id = u.Id,
+                Username = u.Username,
+                Email = u.Email,
+                Role = u.Role.Name,
+                Avatar = u.Avatar,
+            })
+            .ToListAsync();
+
+        return users;
+    }
+
+    public async Task UpdateUserRoleAsync(Guid userId, string roleName)
+    {
+        var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+        if (user == null) return;
+
+        var role = await _dbContext.Roles.FirstOrDefaultAsync(r => r.Name == roleName);
+
+        if (role == null) return;
+
+        user.RoleId = role.Id;
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<bool> IsAdminAccountAsync(Guid userId)
+    {
+        var user = await _dbContext.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == userId);
+
+        return user != null && user.Role.Name.ToLower() == "admin";
+    }
+
+    public async Task AddAvatarAsync(Guid userId, byte[] avatar)
+    {
+        var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+        if (user == null) return;
+
+        user.Avatar = avatar;
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<byte[]?> GetAvatarAsync(Guid userId)
+    {
+        var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+        if (user == null) return null;
+
+        return user.Avatar;
+    }
+
+    public bool IsOGAdmin(Guid userId)
+    {
+        return userId == ConfigUtils.AdminUserId;
+    }
+
     string GenerateToken(User user)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]!));
@@ -96,7 +159,7 @@ public class AccountService : IAccountService
             new Claim("userId", user.Id.ToString()),
             new Claim("username", user.Username),
             new Claim("firstName", user.FirstName),
-            new Claim("role", user.Role.Name)
+            new Claim("userRole", user.Role.Name)
         };
 
         var token = new JwtSecurityToken(_config["JwtSettings:Issuer"],

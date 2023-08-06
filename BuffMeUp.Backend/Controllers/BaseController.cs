@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BuffMeUp.Backend.Data.Models.Account;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -17,5 +18,13 @@ public class BaseController : ControllerBase
         }
 
         return userId;
+    }
+
+    protected bool IsAuthorizedAs(string role)
+    {
+        var identity = HttpContext.User.Identity as ClaimsIdentity;
+        var userRole = identity?.FindFirst("userRole")?.Value;
+
+        return userRole != null && userRole.ToLower() == role.ToLower();
     }
 }

@@ -1,7 +1,7 @@
 ﻿using static BuffMeUp.Backend.Common.ValidationConstants.ForRole;
 using System.ComponentModel.DataAnnotations;
 
-namespace BuffMeUp.Backend.Data.Models.Auth;
+namespace BuffMeUp.Backend.Data.Models.Account;
 
 public class Role
 {

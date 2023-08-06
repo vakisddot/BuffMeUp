@@ -1,4 +1,4 @@
-﻿using BuffMeUp.Backend.Data.Models.Auth;
+﻿using BuffMeUp.Backend.Data.Models.Account;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -12,7 +12,7 @@ public class Meal
     public Meal()
     {
         Id = Guid.NewGuid();
-        Meal_FoodItem = new HashSet<JT_Meal_FoodItem>();
+        Servings = new HashSet<Serving>();
     }
 
     [Key]
@@ -26,5 +26,5 @@ public class Meal
     public Guid UserId { get; set; }
     public User User { get; set; } = null!;
 
-    public virtual ICollection<JT_Meal_FoodItem> Meal_FoodItem { get; set; }
+    public virtual ICollection<Serving> Servings { get; set; }
 }

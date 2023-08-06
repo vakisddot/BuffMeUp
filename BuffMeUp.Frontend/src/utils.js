@@ -27,8 +27,8 @@ export function isAuthorized(role) {
 
     if (
         claims &&
-        claims.role &&
-        claims.role.toLowerCase() === role.toLowerCase()
+        claims.userRole &&
+        claims.userRole.toLowerCase() === role.toLowerCase()
     )
         return true;
 

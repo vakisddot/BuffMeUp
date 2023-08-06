@@ -31,4 +31,19 @@ public class FoodItemController : BaseController
 
         return Ok(new { });
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetFoodItems([FromQuery] string q)
+    {
+        var userId = IdentifyUser();
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(Utils.GetErrorsObject(ModelState));
+        }
+
+        var foodItems = await _foodItemService.GetFoodItemsAsync(Guid.Parse(userId!), q);
+
+        return Ok(foodItems);
+    }
 }

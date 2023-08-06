@@ -1,5 +1,5 @@
 ﻿using BuffMeUp.Backend.Core;
-using BuffMeUp.Backend.Data.Models.Auth;
+using BuffMeUp.Backend.Data.Models.Account;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

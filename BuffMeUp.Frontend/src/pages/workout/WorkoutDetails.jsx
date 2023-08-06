@@ -1,12 +1,14 @@
 import "./WorkoutDetails.css";
 import InputForm from "../../components/InputForm";
 import { useState, useEffect } from "react";
-import { fetchAuthenticated } from "../../utils";
+import { fetchAuthenticated, setTitle } from "../../utils";
 import SearchBar from "../../components/SearchBar";
 import { toast } from "react-toastify";
 import { displayPopup, hidePopup } from "../../components/popupFormUtils";
 
 const WorkoutDetails = () => {
+    useEffect(() => setTitle("Workout Details"), []);
+
     const [workout, setWorkout] = useState({});
     const [sets, setSets] = useState([]);
     let setIndex = 1;

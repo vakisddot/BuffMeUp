@@ -1,7 +1,7 @@
 .Meals-header {
     padding: 3em;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     justify-content: center;
     align-items: center;
     gap: 2em;
@@ -9,8 +9,9 @@
 }
 
 .Meals-header h1 {
+    position: relative;
     color: white;
-    text-shadow: var(--black) 1px 0 10px;
+    text-shadow: var(--black) 1px 0 5px;
 }
 
 .Meals-header img {
@@ -21,10 +22,25 @@
     object-fit: cover;
     width: 100%;
     height: 100%;
-    opacity: 75%;
+    opacity: 33%;
+}
+
+.Meals-header::after {
+    z-index: -1;
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0.05),
+        rgba(255, 255, 255, 0.2),
+        var(--white)
+    );
 }
 
 .meals-all {
+    font-size: 1.2rem;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1em;
@@ -40,6 +56,75 @@
 }
 
 .meals {
-    background-color: #eee;
-    border-radius: 0.5em;
+    padding: 1em;
+}
+
+.meal {
+    color: var(--black);
+    fill: var(--black);
+    background-color: var(--black);
+    margin: 0.1em 1em;
+    padding: 0.5em 1em;
+    border-radius: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+    background-image: linear-gradient(30deg, #eee 50%, transparent 50%);
+    background-size: 65vw;
+    background-repeat: no-repeat;
+    background-position: 0%;
+    transition: 300ms ease-in-out;
+    cursor: pointer;
+}
+
+.meal:hover {
+    background-position: 100%;
+    color: var(--white);
+    fill: var(--white);
+    transform: scale(105%);
+}
+
+.meal-right {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    justify-content: space-between;
+}
+
+.meal-right svg {
+    fill: inherit;
+}
+
+.meal-nutrients {
+    display: flex;
+    justify-content: space-between;
+    flex: 0 1 7em;
+    gap: 1em;
+}
+
+.totals {
+    border-radius: 1em;
+    text-align: right;
+    color: var(--white);
+    text-shadow: var(--black) 1px 0 5px;
+}
+
+.totals h2 {
+    padding: 0.5em 1.5em;
+}
+
+.totals h3 {
+    margin-bottom: 0.2em;
+    padding: 0 1em;
+}
+
+@media screen and (max-width: 800px) {
+    .meals-all {
+        grid-template-columns: 1fr;
+    }
+
+    .meal {
+        background-size: 190vw;
+    }
 }

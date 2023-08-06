@@ -1,4 +1,4 @@
-﻿using BuffMeUp.Backend.Data.Models.Auth;
+﻿using BuffMeUp.Backend.Data.Models.Account;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

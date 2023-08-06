@@ -14,7 +14,18 @@ const Header = () => {
             <nav>
                 {isAuthenticated() && (
                     <>
-                        <Link to="/about">MEALS</Link>
+                        <Link className="Dropdown-btn">
+                            MEALS
+                            <div className="Dropdown-menu">
+                                <Link to="/allmeals">Today</Link>
+                                <a href="#" className="Dropdown-btn">
+                                    Food
+                                    <div className="Dropdown-menu">
+                                        <Link to="/newexercise">New</Link>
+                                    </div>
+                                </a>
+                            </div>
+                        </Link>
                         <Link className="Dropdown-btn">
                             WORKOUTS
                             <div className="Dropdown-menu">
@@ -22,9 +33,7 @@ const Header = () => {
                                 <a href="#" className="Dropdown-btn">
                                     Exercises
                                     <div className="Dropdown-menu">
-                                        <Link to="/newexercise">
-                                            Create new
-                                        </Link>
+                                        <Link to="/newexercise">New</Link>
                                     </div>
                                 </a>
                             </div>

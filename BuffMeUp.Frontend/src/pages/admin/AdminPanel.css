@@ -1,0 +1,64 @@
+.admin-header {
+    padding: 2em;
+    margin: 2em 10em;
+    border-bottom: 1px solid var(--black);
+}
+
+.accounts {
+    font-size: 1.3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1em;
+    padding: 3em 8em;
+}
+
+.account {
+    display: flex;
+    gap: 3em;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #eee;
+    border-radius: 0.5em;
+    padding: 0.5em 1em;
+    transition: 0.1s ease-in-out;
+}
+
+.account img {
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+}
+
+.account-info {
+    flex: 1 1 auto;
+}
+
+.account-info,
+.column-headers {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    text-align: left;
+    align-items: center;
+    gap: 1em;
+}
+
+.account-info > *:not(.ud-buttons),
+.column-headers > * {
+    overflow: hidden;
+}
+
+.account:hover {
+    transform: scale(102%);
+    background-color: var(--black);
+    color: var(--white);
+}
+
+.column-headers {
+    padding: 0 1em;
+}
+
+@media screen and (max-width: 900px) {
+    .accounts {
+        padding: 1em;
+    }
+}

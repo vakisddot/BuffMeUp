@@ -25,6 +25,8 @@ const InputForm = ({
     const navigate = useNavigate();
     const [errorLabels, setErrorLabels] = useState([]);
 
+    const [generalErrors, setGeneralErrors] = useState([]);
+
     useEffect(() => {
         setErrorLabels(
             Array.from(document.querySelectorAll(".validation-error"))
@@ -34,8 +36,6 @@ const InputForm = ({
             if (field.default) field.value = field.default;
         }
     }, []);
-
-    const generalErrorLabel = document.querySelector(".general-error");
 
     const getErrorLabel = (fieldName) => {
         return errorLabels.find((el) => el.htmlFor === fieldName);
@@ -100,10 +100,9 @@ const InputForm = ({
 
     const submitForm = () => {
         if (modelName && !allFieldsAreValid()) {
-            generalErrorLabel &&
-                generalErrorLabel.setHTML(
-                    "Some fields are not valid! Cannot submit form yet!"
-                );
+            setGeneralErrors([
+                "Some fields are not valid! Cannot submit form yet!",
+            ]);
 
             return;
         }
@@ -148,10 +147,7 @@ const InputForm = ({
                         errors.push(...response.errors[prop]);
                     }
 
-                    generalErrorLabel &&
-                        generalErrorLabel.setHTML(
-                            errors.map((e) => `<p>${e}</p>`).join("")
-                        );
+                    setGeneralErrors(errors);
 
                     toastOnSubmit &&
                         toast.update(toastId, {
@@ -229,7 +225,11 @@ const InputForm = ({
 
                 <p>{description}</p>
 
-                <label className="red general-error"></label>
+                <label className="red general-error">
+                    {generalErrors.map((e) => (
+                        <p>{e}</p>
+                    ))}
+                </label>
 
                 {Object.entries(fields).map(([id, data]) => {
                     return data.type !== "radio" ? (
@@ -312,7 +312,7 @@ const InputForm = ({
                             submitForm();
 
                             try {
-                                generalErrorLabel.setHTML("");
+                                setGeneralErrors([]);
                             } catch {}
 
                             resetOnSubmit &&

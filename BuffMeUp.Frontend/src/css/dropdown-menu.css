@@ -13,7 +13,7 @@
 .Dropdown-menu {
     position: absolute;
     width: 100%;
-    top: 103%;
+    top: 102%;
     left: -1px;
     display: none;
     flex-direction: column;

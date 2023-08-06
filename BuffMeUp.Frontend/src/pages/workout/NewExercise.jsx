@@ -1,6 +1,10 @@
+import { useEffect } from "react";
 import InputForm from "../../components/InputForm";
+import { setTitle } from "../../utils";
 
 const NewExercise = () => {
+    useEffect(() => setTitle("New Exercise"), []);
+
     const fields = {
         name: {
             label: "Name",
