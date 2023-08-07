@@ -168,11 +168,17 @@ const Account = ({ nutrients }) => {
                                         !["png", "jpg", "jpeg"].includes(
                                             fileExtension
                                         )
-                                    )
+                                    ) {
+                                        toast.error(
+                                            "This type of file is not supported!"
+                                        );
                                         return;
+                                    }
 
-                                    if (event.target.files[0].size > 500000)
+                                    if (event.target.files[0].size > 500000) {
+                                        toast.error("File is too big!");
                                         return;
+                                    }
 
                                     console.log(event.target.files[0]);
 
