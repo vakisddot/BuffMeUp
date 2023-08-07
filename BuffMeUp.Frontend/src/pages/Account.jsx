@@ -95,7 +95,7 @@ const Account = ({ nutrients }) => {
             Weight: getWeightString(personalStats?.currentWeight || 0),
             BMI: getBmiString(bmi || 0),
         });
-    }, [personalStats]);
+    }, [personalStats, bmi]);
 
     const nutrientGoals = {
         Calories: [
@@ -347,15 +347,11 @@ const Account = ({ nutrients }) => {
                         },
                     }}
                     onSuccessfulSubmit={() => {
-                        document.querySelector(".popup-form").style.display =
-                            "none";
+                        hidePopup("update-weight");
 
                         window.location.reload(false);
                     }}
-                    onBack={() =>
-                        (document.querySelector(".popup-form").style.display =
-                            "none")
-                    }
+                    onBack={() => hidePopup("update-weight")}
                     authorize={true}
                     endpoint="/api/PersonalStats"
                     method="PUT"

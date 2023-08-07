@@ -160,8 +160,19 @@ function AllMeals() {
         <>
             <header className="Meals-header">
                 <div className="date">
-                    <input type="date" />
-                    <a href="#" className="Auth-btn-fill">
+                    <input
+                        type="date"
+                        onChange={(e) => {
+                            searchParams.set("date", e.target.value);
+                        }}
+                    />
+                    <a
+                        onClick={() => {
+                            const date = searchParams.get("date");
+                            document.location.href = `?date=${date}`;
+                        }}
+                        className="Auth-btn-fill"
+                    >
                         Go to date
                     </a>
                 </div>
