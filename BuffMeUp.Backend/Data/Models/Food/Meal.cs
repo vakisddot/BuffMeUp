@@ -12,7 +12,7 @@ public class Meal
     public Meal()
     {
         Id = Guid.NewGuid();
-        Servings = new HashSet<Serving>();
+        Portions = new HashSet<Portion>();
     }
 
     [Key]
@@ -26,5 +26,5 @@ public class Meal
     public Guid UserId { get; set; }
     public User User { get; set; } = null!;
 
-    public virtual ICollection<Serving> Servings { get; set; }
+    public virtual ICollection<Portion> Portions { get; set; }
 }

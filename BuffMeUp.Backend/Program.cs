@@ -33,7 +33,7 @@ public class Program
 
         builder.Services.AddScoped<IMealService, MealService>();
         builder.Services.AddScoped<IFoodItemService, FoodItemService>();
-        builder.Services.AddScoped<IServingService, ServingService>();
+        builder.Services.AddScoped<IPortionService, PortionService>();
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

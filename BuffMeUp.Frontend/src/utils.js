@@ -63,3 +63,7 @@ export function getQueryString(searchParams) {
 export function setTitle(title) {
     document.title = `${title} - BuffMeUp`;
 }
+
+export function getIdFromUrl() {
+    return window.location.pathname.split("/").slice(-1);
+}

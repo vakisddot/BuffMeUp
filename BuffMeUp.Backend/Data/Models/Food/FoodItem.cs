@@ -9,7 +9,7 @@ public class FoodItem
 {
     public FoodItem()
     {
-        Servings = new HashSet<Serving>();
+        Portions = new HashSet<Portion>();
     }
 
     [Key]
@@ -39,5 +39,5 @@ public class FoodItem
     public Guid UserId { get; set; }
     public virtual User User { get; set; } = null!;
 
-    public virtual ICollection<Serving> Servings { get; set; }
+    public virtual ICollection<Portion> Portions { get; set; }
 }

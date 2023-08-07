@@ -1,11 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./MealDetails.css";
 import { calculateCalories } from "./mealUtils";
 import SearchBar from "../../components/SearchBar";
-import { setTitle } from "../../utils";
+import { fetchAuthenticated, getIdFromUrl, setTitle } from "../../utils";
+import { displayPopup, hidePopup } from "../../components/popupFormUtils";
+import InputForm from "../../components/InputForm";
 
 function MealDetails() {
     useEffect(() => setTitle("Meal Details"), []);
+
+    const [meal, setMeal] = useState({});
+    const [currFoodItem, setCurrFoodItem] = useState({});
+    const [portions, setPortions] = useState([]);
+
+    useEffect(() => {
+        fetchAuthenticated(`/api/Portion?id=${getIdFromUrl()[0]}`)
+            .then((res) => res.json())
+            .then((res) => {
+                console.log(res);
+                setPortions(res);
+            })
+            .catch((err) => console.log(err));
+    }, []);
 
     const servings = [
         {
@@ -45,12 +61,38 @@ function MealDetails() {
                     endpoint="/api/FoodItem"
                     lookFor="name"
                     onResultSelect={(result) => {
+                        setCurrFoodItem(result);
                         console.log(result);
+                        displayPopup("new-portion");
                     }}
                 />
+                <div className="popup-form new-portion">
+                    <InputForm
+                        title={currFoodItem.name}
+                        fields={{
+                            grams: {
+                                label: "Grams",
+                                type: "number",
+                            },
+                        }}
+                        submitFields={{
+                            foodItemId: currFoodItem.id,
+                            mealId: getIdFromUrl()[0],
+                        }}
+                        onSuccessfulSubmit={(response, submitObject) => {
+                            // onNewCreatedSet(response, submitObject);
+                            hidePopup("new-portion");
+                        }}
+                        onBack={() => hidePopup("new-portion")}
+                        authorize={true}
+                        endpoint="/api/Portion"
+                        submitLabel="Add"
+                        resetOnSubmit={true}
+                    />
+                </div>
             </header>
             <main className="Meal-details-main">
-                {servings
+                {portions
                     .map((serving) => {
                         const percentage = serving.grams / 100;
 

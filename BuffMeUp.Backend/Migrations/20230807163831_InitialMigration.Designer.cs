@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuffMeUp.Backend.Migrations
 {
     [DbContext(typeof(BuffMeUpDbContext))]
-    [Migration("20230803161755_FoodItemUpdate")]
-    partial class FoodItemUpdate
+    [Migration("20230807163831_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace BuffMeUp.Backend.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Auth.Role", b =>
+            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Account.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -55,11 +55,14 @@ namespace BuffMeUp.Backend.Migrations
                         });
                 });
 
-            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Auth.User", b =>
+            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Account.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<byte[]>("Avatar")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -99,7 +102,7 @@ namespace BuffMeUp.Backend.Migrations
                             Id = new Guid("41fc7ca7-c54c-4e7b-a68a-033f054b56d1"),
                             Email = "admin@admin.admin",
                             FirstName = "Admin",
-                            PasswordHash = "ZiKzgbLDLMPY18CjiryE8g==;v52m5NUMPUwznKd9EBUD44iJaOLcI5IwCio/MGsHaZg=",
+                            PasswordHash = "6UH6DpmEoJVxfcjLop+Z9g==;FlPtEPCtJhewB/rxyA3Ib8h+ihtG4dyFECWdjk2Kapg=",
                             RoleId = 2,
                             Username = "admin"
                         });
@@ -602,24 +605,6 @@ namespace BuffMeUp.Backend.Migrations
                         });
                 });
 
-            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Food.JT_Meal_FoodItem", b =>
-                {
-                    b.Property<Guid>("MealId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("FoodItemId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Grams")
-                        .HasColumnType("int");
-
-                    b.HasKey("MealId", "FoodItemId");
-
-                    b.HasIndex("FoodItemId");
-
-                    b.ToTable("JT_Meal_FoodItem");
-                });
-
             modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Food.Meal", b =>
                 {
                     b.Property<Guid>("Id")
@@ -637,6 +622,24 @@ namespace BuffMeUp.Backend.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Meals");
+                });
+
+            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Food.Portion", b =>
+                {
+                    b.Property<Guid>("MealId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("FoodItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Grams")
+                        .HasColumnType("int");
+
+                    b.HasKey("MealId", "FoodItemId");
+
+                    b.HasIndex("FoodItemId");
+
+                    b.ToTable("Portions");
                 });
 
             modelBuilder.Entity("BuffMeUp.Backend.Data.Models.PersonalStats", b =>
@@ -749,7 +752,7 @@ namespace BuffMeUp.Backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("aaed5dcc-5713-4271-ab08-cd877ffa96b5"),
+                            Id = new Guid("b6bcf17b-8fb3-4645-b606-3b92cac603c3"),
                             Description = "Lie on your back on a flat bench. Grip the bar with your hands slightly wider than shoulder-width apart. Lift the bar off the rack and position it above your chest with arms fully extended.",
                             ExerciseType = 1,
                             IsGlobal = true,
@@ -758,7 +761,7 @@ namespace BuffMeUp.Backend.Migrations
                         },
                         new
                         {
-                            Id = new Guid("fa302f3c-12ac-496e-8153-2258c315f233"),
+                            Id = new Guid("b152a663-5ce4-4629-900c-cf0018bba49b"),
                             Description = "Stand with your mid-foot under the barbell. Bend over and grab the bar with a shoulder-width grip. Bend your knees until your shins touch the bar. Lift your chest up and straighten your lower back.",
                             ExerciseType = 0,
                             IsGlobal = true,
@@ -767,7 +770,7 @@ namespace BuffMeUp.Backend.Migrations
                         },
                         new
                         {
-                            Id = new Guid("aad56ab1-ae8e-45f8-93aa-b6875bdff9d8"),
+                            Id = new Guid("14332b57-99f0-43c1-be74-39bebe5dfa6b"),
                             Description = "Stand with your mid-foot under the barbell. Bend over and grab the bar with a shoulder-width grip. Bend your knees until your shins touch the bar. Lift your chest up and straighten your lower back.",
                             ExerciseType = 2,
                             IsGlobal = true,
@@ -776,7 +779,7 @@ namespace BuffMeUp.Backend.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2eb1043a-bbc1-4b33-a358-eb243c9ae063"),
+                            Id = new Guid("5a8b0a2e-0078-409d-91b4-2e23272386fb"),
                             Description = "Stand with the bar on your front shoulders, and your hands next to your shoulders. Press the bar over your head, until it’s balanced over your shoulders and mid-foot.",
                             ExerciseType = 3,
                             IsGlobal = true,
@@ -785,7 +788,7 @@ namespace BuffMeUp.Backend.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4dba3512-77a3-40ce-8c79-44079b46b272"),
+                            Id = new Guid("7534b175-3b6c-48bf-8a72-58091c173449"),
                             Description = "Grab the pull-up bar with your palms down (shoulder-width grip). Hang to the pull-up bar with straight arms and your legs off the floor. Pull yourself up by pulling your elbows down to the floor.",
                             ExerciseType = 0,
                             IsGlobal = true,
@@ -794,7 +797,7 @@ namespace BuffMeUp.Backend.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c26cf98c-fc17-4910-b5da-1bf1ee9c1323"),
+                            Id = new Guid("a1e2d962-6a9b-4239-89ba-b04d0f6f8c65"),
                             Description = "Stand up with your torso upright while holding a dumbbell on each hand being held at arms length. The elbows should be close to the torso. This will be your starting position.",
                             ExerciseType = 5,
                             IsGlobal = true,
@@ -803,7 +806,7 @@ namespace BuffMeUp.Backend.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7437da1b-b399-47d5-83bb-016fb955e672"),
+                            Id = new Guid("e5290463-eda2-4125-849e-624ef33f5d40"),
                             Description = "Attach a straight or angled bar to a high pulley and grab with an overhand grip at shoulder width. Standing upright with the torso straight and a very small inclination forward, bring the upper arms close to your body and perpendicular to the floor.",
                             ExerciseType = 4,
                             IsGlobal = true,
@@ -812,7 +815,7 @@ namespace BuffMeUp.Backend.Migrations
                         },
                         new
                         {
-                            Id = new Guid("88a6bb9c-d8aa-46a1-b060-17be6463158d"),
+                            Id = new Guid("300ee550-f97b-4948-868f-bd3672d1c435"),
                             Description = "Lie on your back on the floor. Bend your legs and place feet firmly on the ground to stabilize your lower body. Cross your hands to opposite shoulders or place them behind your ears, without pulling on your neck.",
                             ExerciseType = 6,
                             IsGlobal = true,
@@ -847,13 +850,13 @@ namespace BuffMeUp.Backend.Migrations
                     b.ToTable("Workouts");
                 });
 
-            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Auth.User", b =>
+            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Account.User", b =>
                 {
                     b.HasOne("BuffMeUp.Backend.Data.Models.PersonalStats", "PersonalStats")
                         .WithMany()
                         .HasForeignKey("PersonalStatsId");
 
-                    b.HasOne("BuffMeUp.Backend.Data.Models.Auth.Role", "Role")
+                    b.HasOne("BuffMeUp.Backend.Data.Models.Account.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -866,7 +869,7 @@ namespace BuffMeUp.Backend.Migrations
 
             modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Food.FoodItem", b =>
                 {
-                    b.HasOne("BuffMeUp.Backend.Data.Models.Auth.User", "User")
+                    b.HasOne("BuffMeUp.Backend.Data.Models.Account.User", "User")
                         .WithMany("FoodItems")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -875,16 +878,27 @@ namespace BuffMeUp.Backend.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Food.JT_Meal_FoodItem", b =>
+            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Food.Meal", b =>
+                {
+                    b.HasOne("BuffMeUp.Backend.Data.Models.Account.User", "User")
+                        .WithMany("Meals")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Food.Portion", b =>
                 {
                     b.HasOne("BuffMeUp.Backend.Data.Models.Food.FoodItem", "FoodItem")
-                        .WithMany()
+                        .WithMany("Portions")
                         .HasForeignKey("FoodItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BuffMeUp.Backend.Data.Models.Food.Meal", "Meal")
-                        .WithMany("Meal_FoodItem")
+                        .WithMany("Portions")
                         .HasForeignKey("MealId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -894,20 +908,9 @@ namespace BuffMeUp.Backend.Migrations
                     b.Navigation("Meal");
                 });
 
-            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Food.Meal", b =>
-                {
-                    b.HasOne("BuffMeUp.Backend.Data.Models.Auth.User", "User")
-                        .WithMany("Meals")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("BuffMeUp.Backend.Data.Models.PersonalStats", b =>
                 {
-                    b.HasOne("BuffMeUp.Backend.Data.Models.Auth.User", "User")
+                    b.HasOne("BuffMeUp.Backend.Data.Models.Account.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -937,7 +940,7 @@ namespace BuffMeUp.Backend.Migrations
 
             modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Workouts.ExerciseTemplate", b =>
                 {
-                    b.HasOne("BuffMeUp.Backend.Data.Models.Auth.User", "User")
+                    b.HasOne("BuffMeUp.Backend.Data.Models.Account.User", "User")
                         .WithMany("ExerciseTemplates")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -948,7 +951,7 @@ namespace BuffMeUp.Backend.Migrations
 
             modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Workouts.Workout", b =>
                 {
-                    b.HasOne("BuffMeUp.Backend.Data.Models.Auth.User", "User")
+                    b.HasOne("BuffMeUp.Backend.Data.Models.Account.User", "User")
                         .WithMany("Workouts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -957,12 +960,12 @@ namespace BuffMeUp.Backend.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Auth.Role", b =>
+            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Account.Role", b =>
                 {
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Auth.User", b =>
+            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Account.User", b =>
                 {
                     b.Navigation("ExerciseTemplates");
 
@@ -973,9 +976,14 @@ namespace BuffMeUp.Backend.Migrations
                     b.Navigation("Workouts");
                 });
 
+            modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Food.FoodItem", b =>
+                {
+                    b.Navigation("Portions");
+                });
+
             modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Food.Meal", b =>
                 {
-                    b.Navigation("Meal_FoodItem");
+                    b.Navigation("Portions");
                 });
 
             modelBuilder.Entity("BuffMeUp.Backend.Data.Models.Workouts.Workout", b =>

@@ -98,8 +98,7 @@ function AllMeals() {
 
     const generateMealList = (meals) => {
         return meals
-            .sort((a, b) => b.hour - a.hour)
-            .sort((a, b) => b.minute - a.minute)
+            .sort((a, b) => b.hour - a.hour || b.minute - a.minute)
             .map((meal) => {
                 return (
                     <Link to={`/mealdetails/${meal.id}`} className="meal">

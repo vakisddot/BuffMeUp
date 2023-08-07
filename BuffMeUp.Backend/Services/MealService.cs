@@ -18,7 +18,7 @@ public class MealService : IMealService
     public async Task<IEnumerable<MealDisplayModel>> GetMealsByDateAsync(DateTime date, Guid userId)
     {
         var meals = await _dbContext.Meals
-            .Include(m => m.Servings)
+            .Include(m => m.Portions)
             .Where(m => 
                 m.UserId == userId &&
                 m.Date.Year == date.Year && 
@@ -29,9 +29,9 @@ public class MealService : IMealService
                 Id = m.Id,
                 Hour = m.Date.Hour,
                 Minute = m.Date.Minute,
-                Protein = m.Servings.ToList().Select(s => s.FoodItem.Protein * (s.Grams / 100)).Sum(),
-                Fats = m.Servings.ToList().Select(s => s.FoodItem.Fats * (s.Grams / 100)).Sum(),
-                Carbs = m.Servings.ToList().Select(s => s.FoodItem.Carbs * (s.Grams / 100)).Sum()
+                Protein = m.Portions.ToList().Select(s => (int)Math.Round(s.FoodItem.Protein * s.Grams / 100f)).Sum(),
+                Fats = m.Portions.ToList().Select(s => (int)Math.Round(s.FoodItem.Fats * s.Grams / 100f)).Sum(),
+                Carbs = m.Portions.ToList().Select(s => (int)Math.Round(s.FoodItem.Carbs * s.Grams / 100f)).Sum()
             })
             .ToListAsync();
 
@@ -58,5 +58,17 @@ public class MealService : IMealService
 
         _dbContext.Remove(meal);
         await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<bool> MealIsByUserIdAsync(Guid id)
+    {
+        return await _dbContext.Meals.AnyAsync(m => m.Id == id);
+    }
+
+    public async Task<bool> MealIsByUserIdAsync(Guid mealId, Guid userId)
+    {
+        var meal = await _dbContext.Meals.FirstOrDefaultAsync(m => m.Id == mealId);
+
+        return meal != null && meal.UserId == userId;
     }
 }

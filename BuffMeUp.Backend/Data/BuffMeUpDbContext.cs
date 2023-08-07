@@ -24,7 +24,7 @@ public class BuffMeUpDbContext : DbContext
 
     public DbSet<FoodItem> FoodItems { get; set; } = null!;
     public DbSet<Meal> Meals { get; set; } = null!;
-    public DbSet<Serving> Servings { get; set; } = null!;
+    public DbSet<Portion> Portions { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

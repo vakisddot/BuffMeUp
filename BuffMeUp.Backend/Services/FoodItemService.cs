@@ -19,6 +19,11 @@ public class FoodItemService : IFoodItemService
         throw new NotImplementedException();
     }
 
+    public async Task<bool> FoodItemExistsByIdAsync(int id)
+    {
+        return await _dbContext.FoodItems.AnyAsync(fi => fi.Id == id);
+    }
+
     public async Task<IEnumerable<FoodItemDisplayModel>> GetFoodItemsAsync(Guid userId, string query)
     {
         var foodItems = await _dbContext.FoodItems

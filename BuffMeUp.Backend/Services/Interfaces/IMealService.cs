@@ -6,6 +6,8 @@ public interface IMealService
 {
     Task<IEnumerable<MealDisplayModel>> GetMealsByDateAsync(DateTime date, Guid userId);
 
+    Task<bool> MealIsByUserIdAsync(Guid mealId, Guid userId);
+
     Task AddNewMealAsync(Guid userId);
 
     Task DeleteMealAsync(Guid mealId);
