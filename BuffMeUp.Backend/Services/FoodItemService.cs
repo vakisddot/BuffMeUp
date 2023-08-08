@@ -1,4 +1,5 @@
 ﻿using BuffMeUp.Backend.Data;
+using BuffMeUp.Backend.Data.Models.Food;
 using BuffMeUp.Backend.Services.Interfaces;
 using BuffMeUp.Backend.ViewModels.Food;
 using Microsoft.EntityFrameworkCore;
@@ -16,12 +17,27 @@ public class FoodItemService : IFoodItemService
 
     public async Task AddNewFoodItemAsync(FoodItemFormModel model, Guid userId)
     {
-        throw new NotImplementedException();
+        var foodItem = new FoodItem
+        {
+            Name = model.Name,
+            Protein = model.Protein,
+            Fats = model.Fats,
+            Carbs = model.Carbs,
+            UserId = userId,
+        };
+
+        await _dbContext.FoodItems.AddAsync(foodItem);
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task<bool> FoodItemExistsByIdAsync(int id)
     {
         return await _dbContext.FoodItems.AnyAsync(fi => fi.Id == id);
+    }
+
+    public async Task<bool> FoodItemExistsByNameAsync(string name)
+    {
+        return await _dbContext.FoodItems.AnyAsync(fi => fi.Name == name);
     }
 
     public async Task<IEnumerable<FoodItemDisplayModel>> GetFoodItemsAsync(Guid userId, string query)

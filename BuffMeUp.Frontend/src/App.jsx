@@ -18,6 +18,7 @@ import OnRoute from "./components/OnRoute";
 import startNewWorkout from "./pages/workout/workoutUtils";
 import NewExercise from "./pages/workout/NewExercise";
 import MealDetails from "./pages/meals/MealDetails";
+import NewFood from "./pages/meals/NewFood";
 
 function App() {
     return (
@@ -93,6 +94,14 @@ function App() {
                         element={
                             <AuthorizedOnly>
                                 <MealDetails></MealDetails>
+                            </AuthorizedOnly>
+                        }
+                    ></Route>
+                    <Route
+                        path="/newfood"
+                        element={
+                            <AuthorizedOnly>
+                                <NewFood></NewFood>
                             </AuthorizedOnly>
                         }
                     ></Route>

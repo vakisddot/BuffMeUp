@@ -21,8 +21,6 @@ function AllMeals() {
 
     const today = new Date().toISOString().split("T")[0];
 
-    const [dateChanged, setDateChanged] = useState(false);
-
     searchParams.get("date") || searchParams.set("date", today);
 
     useEffect(() => {

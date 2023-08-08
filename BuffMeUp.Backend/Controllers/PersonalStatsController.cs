@@ -48,12 +48,33 @@ public class PersonalStatsController : BaseController
             return BadRequest(Utils.GetErrorsObject(ModelState));
         }
 
-        await _personalStatsService.CreatePersonalStatsAsync(model, Guid.Parse(userId));
+        await _personalStatsService.CreatePersonalStatsAsync(model, Guid.Parse(userId!));
 
         return Ok(new {});
     }
 
     [HttpPut]
+    public async Task<IActionResult> UpdateStats([FromBody] PersonalStatsFormModel model)
+    {
+        var userId = IdentifyUser();
+
+        if (userId != null && !await _personalStatsService.PersonalStatsExistAsync(Guid.Parse(userId)))
+        {
+            ModelState.AddModelError("PersonalStats", "User does not have personal stats!");
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(Utils.GetErrorsObject(ModelState));
+        }
+
+        await _personalStatsService.UpdateStatsAsync(model, Guid.Parse(userId!));
+
+        return Ok(new { });
+    }
+
+    [HttpPut]
+    [Route("/Weight")]
     public async Task<IActionResult> UpdateWeight([FromBody] WeightUpdateFormModel model)
     {
         var userId = IdentifyUser();

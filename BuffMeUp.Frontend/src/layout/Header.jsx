@@ -21,7 +21,7 @@ const Header = () => {
                                 <a href="#" className="Dropdown-btn">
                                     Food
                                     <div className="Dropdown-menu">
-                                        <Link to="/newexercise">New</Link>
+                                        <Link to="/newfood">New</Link>
                                     </div>
                                 </a>
                             </div>

@@ -1,4 +1,5 @@
 ﻿using BuffMeUp.Backend.Common;
+using BuffMeUp.Backend.Services;
 using BuffMeUp.Backend.Services.Interfaces;
 using BuffMeUp.Backend.ViewModels.Food;
 using Microsoft.AspNetCore.Http;
@@ -21,6 +22,11 @@ public class FoodItemController : BaseController
     public async Task<IActionResult> AddNewFoodItem(FoodItemFormModel model)
     {
         var userId = IdentifyUser();
+
+        if (await _foodItemService.FoodItemExistsByNameAsync(model.Name))
+        {
+            ModelState.AddModelError("FoodItem", "Food already exists!");
+        }
 
         if (!ModelState.IsValid)
         {

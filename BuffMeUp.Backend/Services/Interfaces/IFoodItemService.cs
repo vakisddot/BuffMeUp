@@ -9,4 +9,6 @@ public interface IFoodItemService
     Task<IEnumerable<FoodItemDisplayModel>> GetFoodItemsAsync(Guid userId, string query);
 
     Task<bool> FoodItemExistsByIdAsync(int id);
+
+    Task<bool> FoodItemExistsByNameAsync(string name);
 }

@@ -14,6 +14,7 @@ public class ValidationConstantsController : ControllerBase
             "PersonalStats" => Ok(Common.ValidationConstants.ForPersonalStats.Serialized),
             "ExerciseSet" => Ok(Common.ValidationConstants.ForExerciseSet.Serialized),
             "ExerciseTemplate" => Ok(Common.ValidationConstants.ForExerciseTemplate.Serialized),
+            "FoodItem" => Ok(Common.ValidationConstants.ForFoodItem.Serialized),
 
             _ => NotFound(new { })
         };

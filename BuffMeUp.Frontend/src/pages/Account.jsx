@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { fetchAuthenticated, setTitle } from "../utils";
 import { displayPopup, hidePopup } from "../components/popupFormUtils";
+import { calculateCalories } from "./meals/mealUtils";
 
 const Account = () => {
     useEffect(() => setTitle("Account"), []);
@@ -27,17 +28,7 @@ const Account = () => {
             .catch((err) => console.log(err));
     }, []);
 
-    // TODO
-    const nutrients = {
-        currentCalories: 1000,
-        goalCalories: 2500,
-        currentProtein: 250,
-        goalProtein: 300,
-        currentFats: 50,
-        goalFats: 100,
-        currentCarbs: 300,
-        goalCarbs: 400,
-    };
+    const [nutrients, setNutrients] = useState({});
 
     const cmToInches = (cm) => cm / 2.54;
 
@@ -73,6 +64,75 @@ const Account = () => {
     const [weightChangeRemaining, setWeightChangeRemaining] = useState(0);
 
     const [avatar, setAvatar] = useState("");
+
+    const calculateCurrentNutrients = (meals) => {
+        const currentCalories = meals.reduce((acc, curr) => {
+            return acc + calculateCalories(curr.protein, curr.fats, curr.carbs);
+        }, 0);
+
+        const currentProtein = meals.reduce((acc, curr) => {
+            return acc + curr.protein;
+        }, 0);
+
+        const currentFats = meals.reduce((acc, curr) => {
+            return acc + curr.fats;
+        }, 0);
+
+        const currentCarbs = meals.reduce((acc, curr) => {
+            return acc + curr.carbs;
+        }, 0);
+
+        return { currentCalories, currentProtein, currentFats, currentCarbs };
+    };
+
+    const calculateGoalNutrients = (
+        currentWeightKg,
+        goalWeightKg,
+        heightCm,
+        age,
+        gender
+    ) => {
+        let goalCalories =
+            (10 * goalWeightKg + 6.25 * heightCm - 5 * age) * 1.7 +
+            (gender ? 5 : -161);
+
+        let goalProtein = (goalCalories * 0.2) / 4;
+
+        let goalFats = (goalCalories * 0.3) / 9;
+
+        let goalCarbs = (goalCalories * 0.5) / 4;
+
+        goalCalories = Math.round(goalCalories);
+        goalProtein = Math.round(goalProtein);
+        goalFats = Math.round(goalFats);
+        goalCarbs = Math.round(goalCarbs);
+
+        return { goalCalories, goalProtein, goalFats, goalCarbs };
+    };
+
+    useEffect(() => {
+        fetchAuthenticated(
+            `/api/Meal?date=${new Date().toISOString().split("T")[0]}`
+        )
+            .then((res) => res.json())
+            .then((res) => {
+                const currentNutrients = calculateCurrentNutrients(res);
+
+                const goalNutrients = calculateGoalNutrients(
+                    personalStats?.currentWeight,
+                    personalStats?.goalWeight,
+                    personalStats?.height,
+                    personalStats?.age,
+                    personalStats?.gender
+                );
+
+                setNutrients({
+                    ...currentNutrients,
+                    ...goalNutrients,
+                });
+            })
+            .catch((err) => console.log("Failed to get meals!", err));
+    }, [bmi]);
 
     useEffect(() => {
         fetchAuthenticated("/api/Account/Avatar")
@@ -247,9 +307,14 @@ const Account = () => {
                                     )
                                 )}
 
-                                <Link to="#" className="Auth-btn">
-                                    Update info
-                                </Link>
+                                <a
+                                    onClick={() => {
+                                        displayPopup("update-stats");
+                                    }}
+                                    className="Auth-btn"
+                                >
+                                    Update stats
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -322,9 +387,21 @@ const Account = () => {
                                         }}
                                         variant="determinate"
                                         value={
-                                            (nutrients[`current${key}`] /
-                                                nutrients[`goal${key}`]) *
-                                            100
+                                            // Malee
+                                            nutrients[`current${key}`]
+                                                ? (nutrients[`current${key}`] /
+                                                      nutrients[`goal${key}`]) *
+                                                      100 >
+                                                  100
+                                                    ? 100
+                                                    : (nutrients[
+                                                          `current${key}`
+                                                      ] /
+                                                          nutrients[
+                                                              `goal${key}`
+                                                          ]) *
+                                                      100
+                                                : 0
                                         }
                                     />
                                 </div>
@@ -374,6 +451,65 @@ const Account = () => {
                         window.location.reload(false);
                     }}
                     onBack={() => hidePopup("update-weight")}
+                    authorize={true}
+                    endpoint="/api/PersonalStats/Weight"
+                    method="PUT"
+                    submitLabel="Update"
+                />
+            </div>
+
+            <div className="update-stats popup-form">
+                <InputForm
+                    title="Update personal stats"
+                    fields={{
+                        gender: {
+                            label: "Gender",
+                            type: "radio",
+                            values: [
+                                {
+                                    name: "Male",
+                                    value: true,
+                                    checked: true,
+                                },
+                                {
+                                    name: "Female",
+                                    value: false,
+                                },
+                            ],
+                            value: personalStats.gender,
+                        },
+
+                        age: {
+                            label: "Age",
+                            type: "number",
+                            value: personalStats.age,
+                        },
+
+                        height: {
+                            label: "Height (cm)",
+                            type: "number",
+                            value: personalStats.height,
+                        },
+
+                        weight: {
+                            label: "Weight (kg)",
+                            type: "number",
+                            value: personalStats.currentWeight,
+                        },
+
+                        goalWeight: {
+                            label: "Goal Weight (kg)",
+                            type: "number",
+                            value: personalStats.goalWeight,
+                        },
+                    }}
+                    modelName="PersonalStats"
+                    onSuccessfulSubmit={() => {
+                        hidePopup("update-stats");
+
+                        window.location.reload(false);
+                    }}
+                    onBack={() => hidePopup("update-stats")}
                     authorize={true}
                     endpoint="/api/PersonalStats"
                     method="PUT"
