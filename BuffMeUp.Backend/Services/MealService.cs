@@ -52,7 +52,7 @@ public class MealService : IMealService
 
     public async Task DeleteMealAsync(Guid mealId)
     {
-        var meal = _dbContext.Meals.FirstOrDefaultAsync(m => m.Id == mealId);
+        var meal = await _dbContext.Meals.FirstOrDefaultAsync(m => m.Id == mealId);
 
         if (meal == null) return;
 

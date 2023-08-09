@@ -462,23 +462,6 @@ const Account = () => {
                 <InputForm
                     title="Update personal stats"
                     fields={{
-                        gender: {
-                            label: "Gender",
-                            type: "radio",
-                            values: [
-                                {
-                                    name: "Male",
-                                    value: true,
-                                    checked: true,
-                                },
-                                {
-                                    name: "Female",
-                                    value: false,
-                                },
-                            ],
-                            value: personalStats.gender,
-                        },
-
                         age: {
                             label: "Age",
                             type: "number",
@@ -489,12 +472,6 @@ const Account = () => {
                             label: "Height (cm)",
                             type: "number",
                             value: personalStats.height,
-                        },
-
-                        weight: {
-                            label: "Weight (kg)",
-                            type: "number",
-                            value: personalStats.currentWeight,
                         },
 
                         goalWeight: {
@@ -512,8 +489,8 @@ const Account = () => {
                     onBack={() => hidePopup("update-stats")}
                     authorize={true}
                     endpoint="/api/PersonalStats"
-                    method="PUT"
                     submitLabel="Update"
+                    method="PUT"
                 />
             </div>
 

@@ -57,7 +57,7 @@ public class PersonalStatsService : IPersonalStatsService
         return await _dbContext.PersonalStats.AnyAsync(u => u.UserId == userId);
     }
 
-    public async Task UpdateStatsAsync(PersonalStatsFormModel model, Guid userId)
+    public async Task UpdateStatsAsync(PersonalStatsUpdateModel model, Guid userId)
     {
         var stats = await _dbContext.PersonalStats.FirstOrDefaultAsync(u => u.UserId == userId);
 
@@ -67,9 +67,7 @@ public class PersonalStatsService : IPersonalStatsService
         }
 
         stats.Age = model.Age;
-        stats.Gender = model.Gender;
         stats.Height = model.Height;
-        stats.CurrentWeight = model.Weight;
         stats.GoalWeight = model.GoalWeight;
 
         await _dbContext.SaveChangesAsync();

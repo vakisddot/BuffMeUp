@@ -30,6 +30,7 @@ function AllMeals() {
 
     const [meals, setMeals] = useState([]);
     const [refreshMeals, setRefreshMeals] = useState(false);
+    const [currId, setCurrId] = useState("");
 
     useEffect(() => {
         fetchAuthenticated(`/api/Meal?${getQueryString(searchParams)}`)
@@ -138,7 +139,14 @@ function AllMeals() {
                                 {meal.minute.toString().padStart(2, "0")}
                             </p>
 
-                            <a className="Delete-btn">
+                            <a
+                                className="Delete-btn"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setCurrId(meal.id);
+                                    displayPopup("delete-meal");
+                                }}
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     height="1em"
@@ -241,6 +249,26 @@ function AllMeals() {
                 <img src="/images/pexels-alexy-almond-3758133.jpg" alt="" />
             </header>
             <main className="meals-all">
+                <div className="popup-form delete-meal">
+                    <InputForm
+                        title={"Are you sure?"}
+                        fields={{}}
+                        submitFields={{
+                            id: currId,
+                        }}
+                        onSuccessfulSubmit={(response, submitObject) => {
+                            hidePopup("delete-meal");
+
+                            setMeals(meals.filter((w) => w.id !== currId));
+                        }}
+                        onBack={() => hidePopup("delete-meal")}
+                        authorize={true}
+                        endpoint="/api/Meal"
+                        submitLabel="Delete"
+                        method="DELETE"
+                    />
+                </div>
+
                 <section className="meals breakfast">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

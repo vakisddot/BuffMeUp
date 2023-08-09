@@ -54,7 +54,7 @@ public class PersonalStatsController : BaseController
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateStats([FromBody] PersonalStatsFormModel model)
+    public async Task<IActionResult> UpdateStats([FromBody] PersonalStatsUpdateModel model)
     {
         var userId = IdentifyUser();
 

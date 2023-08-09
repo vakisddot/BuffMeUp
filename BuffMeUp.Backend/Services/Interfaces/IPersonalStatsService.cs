@@ -12,5 +12,5 @@ public interface IPersonalStatsService
 
     Task UpdateWeightAsync(int newWeight, Guid id);
 
-    Task UpdateStatsAsync(PersonalStatsFormModel model, Guid userId);
+    Task UpdateStatsAsync(PersonalStatsUpdateModel model, Guid userId);
 }

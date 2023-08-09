@@ -1,8 +1,7 @@
 ﻿using BuffMeUp.Backend.Common;
 using BuffMeUp.Backend.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
+using BuffMeUp.Backend.ViewModels.Food;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
 using System.Globalization;
 
 namespace BuffMeUp.Backend.Controllers.Food;
@@ -56,8 +55,22 @@ public class MealController : BaseController
     }
 
     [HttpDelete]
-    public async Task<IActionResult> DeleteMeal(string id)
+    public async Task<IActionResult> DeleteMeal(MealDeleteModel model)
     {
-        throw new NotImplementedException();
+        var userId = IdentifyUser();
+
+        if (userId != null && !await _mealService.MealIsByUserIdAsync(model.Id, Guid.Parse(userId!)))
+        {
+            ModelState.AddModelError("Meal", "You can't delete this meal!");
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(Utils.GetErrorsObject(ModelState));
+        }
+
+        await _mealService.DeleteMealAsync(model.Id);
+
+        return Ok(new { });
     }
 }
