@@ -6,7 +6,7 @@ public interface IPortionService
 {
     Task<IEnumerable<PortionDisplayModel>> GetPortionsByMealIdAsync(Guid mealId);
 
-    Task DeletePortionAsync(Guid mealId, int foodItemId);
+    Task DeletePortionAsync(Guid id);
 
     Task<Guid> CreatePortionAsync(PortionFormModel model);
 }

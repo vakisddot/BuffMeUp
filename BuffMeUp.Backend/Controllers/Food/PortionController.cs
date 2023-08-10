@@ -72,7 +72,22 @@ public class PortionController : BaseController
             return BadRequest(Utils.GetErrorsObject(ModelState));
         }
 
-        await _portionService.CreatePortionAsync(model);
+        var id = await _portionService.CreatePortionAsync(model);
+
+        return Ok(new { Id = id });
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> DeletePortion(PortionDeleteModel model)
+    {
+        IdentifyUser();
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(Utils.GetErrorsObject(ModelState));
+        }
+
+        await _portionService.DeletePortionAsync(model.Id);
 
         return Ok(new { });
     }

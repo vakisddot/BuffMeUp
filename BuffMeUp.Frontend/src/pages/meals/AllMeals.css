@@ -78,6 +78,10 @@
     cursor: pointer;
 }
 
+.meal:not(:hover) .meal-right > * {
+    fill: var(--black);
+}
+
 .meal:hover {
     background-position: 100%;
     color: var(--white);

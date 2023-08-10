@@ -86,7 +86,7 @@ const WorkoutDetails = () => {
                 id: set.id,
             })
         ).then(() => {
-            setSets([...sets.filter((s) => s.id != set.id)]);
+            setSets([...sets.filter((s) => s.id !== set.id)]);
 
             toast.success("Removed set!");
         });

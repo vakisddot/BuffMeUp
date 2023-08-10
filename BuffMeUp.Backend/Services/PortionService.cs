@@ -30,10 +30,10 @@ public class PortionService : IPortionService
         return portion.Id;
     }
 
-    public async Task DeletePortionAsync(Guid mealId, int foodItemId)
+    public async Task DeletePortionAsync(Guid id)
     {
         var serving = await _dbContext.Portions
-            .FirstOrDefaultAsync(s => s.MealId == mealId && s.FoodItemId == foodItemId);
+            .FirstOrDefaultAsync(s => s.Id == id);
 
         if (serving == null) return;
 
@@ -48,6 +48,7 @@ public class PortionService : IPortionService
             .Where(s => s.MealId == mealId)
             .Select(s => new PortionDisplayModel
             {
+                Id = s.Id,
                 FoodItem = new FoodItemDisplayModel
                 {
                     Id = s.FoodItemId,

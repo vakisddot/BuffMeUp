@@ -1,17 +1,62 @@
+.meal-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.meal-details-header {
+    padding: 2em 5em;
+    background-color: var(--darkgray);
+    color: var(--white);
+    display: flex;
+    gap: 2em;
+    align-items: center;
+}
+
 .Meal-details-main {
     display: flex;
     flex-direction: column;
-    gap: 0.5em;
+    gap: 0.25em;
     align-items: center;
     padding: 2em 5em;
 }
 
 .serving {
-    width: 100%;
     background-color: #eee;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 0.3fr 1fr 0.1fr;
+    gap: 1em;
+    padding: 0.5em 1em;
+    align-items: center;
+    border-radius: 1em;
+    transition: 0.1s ease-in-out;
+}
+
+.serving:hover {
+    background-color: var(--black);
+    color: var(--white);
+    transform: scale(103%);
+}
+
+.serving:not(:hover) .ud-buttons > * {
+    fill: var(--black);
+}
+
+.serving > *:not(.ud-buttons) {
+    overflow: hidden;
+}
+
+.serving-title {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.serving-macros {
     display: flex;
     gap: 1em;
-    padding: 0 1em;
-    align-items: center;
-    justify-content: space-between;
+}
+
+.serving-grams {
+    font-size: 0.9em;
 }
