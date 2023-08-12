@@ -1,8 +1,6 @@
 ﻿using BuffMeUp.Backend.Common;
-using BuffMeUp.Backend.Services;
 using BuffMeUp.Backend.Services.Interfaces;
 using BuffMeUp.Backend.ViewModels.Food;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BuffMeUp.Backend.Controllers.Food;
@@ -35,7 +33,7 @@ public class FoodItemController : BaseController
 
         await _foodItemService.AddNewFoodItemAsync(model, Guid.Parse(userId!));
 
-        return Ok(new { });
+        return Ok();
     }
 
     [HttpGet]

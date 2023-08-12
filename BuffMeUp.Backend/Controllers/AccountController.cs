@@ -127,7 +127,7 @@ public class AccountController : BaseController
 
         await _accountService.UpdateUserRoleAsync(userId, model.Role);
 
-        return Ok(new { });
+        return Ok();
     }
 
     [HttpPut]
@@ -142,7 +142,7 @@ public class AccountController : BaseController
         }
 
         await _accountService.AddAvatarAsync(Guid.Parse(userId!), Convert.FromBase64String(model.Avatar));
-        return Ok(new { });
+        return Ok();
     }
 
     [HttpDelete]
@@ -164,6 +164,6 @@ public class AccountController : BaseController
 
         await _accountService.DeleteUserAsync(userId);
 
-        return Ok(new { });
+        return Ok();
     }
 }

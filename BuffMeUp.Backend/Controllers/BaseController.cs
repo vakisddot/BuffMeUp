@@ -1,6 +1,4 @@
-﻿using BuffMeUp.Backend.Data.Models.Account;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace BuffMeUp.Backend.Controllers;

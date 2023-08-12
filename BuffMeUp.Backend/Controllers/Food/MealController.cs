@@ -51,7 +51,7 @@ public class MealController : BaseController
 
         await _mealService.AddNewMealAsync(Guid.Parse(userId!));
 
-        return Ok(new { });
+        return Ok();
     }
 
     [HttpDelete]
@@ -71,6 +71,6 @@ public class MealController : BaseController
 
         await _mealService.DeleteMealAsync(model.Id);
 
-        return Ok(new { });
+        return Ok();
     }
 }

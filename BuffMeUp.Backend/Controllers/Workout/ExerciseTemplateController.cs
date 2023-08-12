@@ -2,7 +2,6 @@
 using BuffMeUp.Backend.Services.Interfaces;
 using BuffMeUp.Backend.ViewModels.Workouts;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace BuffMeUp.Backend.Controllers.Workout;
 
@@ -49,6 +48,6 @@ public class ExerciseTemplateController : BaseController
 
         await _exerciseTemplateService.CreateExerciseTemplateAsync(model, Guid.Parse(userId!));
 
-        return Ok(new { });
+        return Ok();
     }
 }

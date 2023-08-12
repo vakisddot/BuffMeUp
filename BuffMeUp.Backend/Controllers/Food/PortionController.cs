@@ -89,6 +89,6 @@ public class PortionController : BaseController
 
         await _portionService.DeletePortionAsync(model.Id);
 
-        return Ok(new { });
+        return Ok();
     }
 }

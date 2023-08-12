@@ -1,9 +1,7 @@
 ﻿using BuffMeUp.Backend.Common;
 using BuffMeUp.Backend.Services.Interfaces;
 using BuffMeUp.Backend.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace BuffMeUp.Backend.Controllers;
 
@@ -50,10 +48,11 @@ public class PersonalStatsController : BaseController
 
         await _personalStatsService.CreatePersonalStatsAsync(model, Guid.Parse(userId!));
 
-        return Ok(new {});
+        return Ok();
     }
 
     [HttpPut]
+    [Route("Stats")]
     public async Task<IActionResult> UpdateStats([FromBody] PersonalStatsUpdateModel model)
     {
         var userId = IdentifyUser();
@@ -70,11 +69,11 @@ public class PersonalStatsController : BaseController
 
         await _personalStatsService.UpdateStatsAsync(model, Guid.Parse(userId!));
 
-        return Ok(new { });
+        return Ok();
     }
 
     [HttpPut]
-    [Route("/Weight")]
+    [Route("Weight")]
     public async Task<IActionResult> UpdateWeight([FromBody] WeightUpdateFormModel model)
     {
         var userId = IdentifyUser();
@@ -91,6 +90,6 @@ public class PersonalStatsController : BaseController
 
         await _personalStatsService.UpdateWeightAsync(model.Weight, Guid.Parse(userId!));
 
-        return Ok(new { });
+        return Ok();
     }
 }

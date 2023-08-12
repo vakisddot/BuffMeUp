@@ -2,7 +2,6 @@
 using BuffMeUp.Backend.Services.Interfaces;
 using BuffMeUp.Backend.ViewModels.Workouts;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace BuffMeUp.Backend.Controllers.Workout;
 
@@ -47,7 +46,7 @@ public class WorkoutController : BaseController
 
         await _workoutService.StartNewWorkoutAsync(Guid.Parse(userId!));
 
-        return Ok(new { });
+        return Ok();
     }
 
     [HttpGet]
@@ -90,7 +89,7 @@ public class WorkoutController : BaseController
 
         await _workoutService.UpdateWorkoutAsync(model);
 
-        return Ok(new { });
+        return Ok();
     }
 
     [HttpDelete]
@@ -112,6 +111,6 @@ public class WorkoutController : BaseController
 
         await _workoutService.DeleteWorkoutAsync(model.Id);
 
-        return Ok(new { });
+        return Ok();
     }
 }

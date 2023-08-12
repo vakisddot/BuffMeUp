@@ -2,7 +2,6 @@
 using BuffMeUp.Backend.Services.Interfaces;
 using BuffMeUp.Backend.ViewModels.Workouts;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace BuffMeUp.Backend.Controllers.Workout;
 
@@ -63,7 +62,7 @@ public class ExerciseSetController : BaseController
 
         await _exerciseSetService.DeleteExerciseSetAsync(model.Id);
 
-        return Ok(new { });
+        return Ok();
     }
 
     [HttpPost]
@@ -139,7 +138,6 @@ public class ExerciseSetController : BaseController
 
         // TODO: We might need to check if the workout exists and if the user owns it
 
-
         if (set == null)
         {
             ModelState.AddModelError("ExerciseSet", "Exercise set not found!");
@@ -152,6 +150,6 @@ public class ExerciseSetController : BaseController
 
         await _exerciseSetService.UpdateExerciseSetAsync(model);
 
-        return Ok(new { });
+        return Ok();
     }
 }

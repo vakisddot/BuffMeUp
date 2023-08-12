@@ -488,7 +488,7 @@ const Account = () => {
                     }}
                     onBack={() => hidePopup("update-stats")}
                     authorize={true}
-                    endpoint="/api/PersonalStats"
+                    endpoint="/api/PersonalStats/Stats"
                     submitLabel="Update"
                     method="PUT"
                 />
