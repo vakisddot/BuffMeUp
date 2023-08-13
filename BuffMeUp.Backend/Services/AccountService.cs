@@ -107,13 +107,9 @@ public class AccountService : IAccountService
     public async Task UpdateUserRoleAsync(Guid userId, string roleName)
     {
         var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
-
         if (user == null) return;
-
         var role = await _dbContext.Roles.FirstOrDefaultAsync(r => r.Name == roleName);
-
         if (role == null) return;
-
         user.RoleId = role.Id;
         await _dbContext.SaveChangesAsync();
     }
@@ -121,16 +117,13 @@ public class AccountService : IAccountService
     public async Task<bool> IsAdminAccountAsync(Guid userId)
     {
         var user = await _dbContext.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == userId);
-
         return user != null && user.Role.Name.ToLower() == "admin";
     }
 
     public async Task AddAvatarAsync(Guid userId, byte[] avatar)
     {
         var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
-
         if (user == null) return;
-
         user.Avatar = avatar;
         await _dbContext.SaveChangesAsync();
     }
@@ -138,9 +131,7 @@ public class AccountService : IAccountService
     public async Task<byte[]?> GetAvatarAsync(Guid userId)
     {
         var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
-
         if (user == null) return null;
-
         return user.Avatar;
     }
 

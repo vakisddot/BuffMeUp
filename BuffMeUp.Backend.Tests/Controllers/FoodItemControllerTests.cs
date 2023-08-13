@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace BuffMeUp.Backend.Tests;
+namespace BuffMeUp.Backend.Tests.Controllers;
 
 [TestFixture]
 public class FoodItemControllerTests
