@@ -131,4 +131,12 @@
     .meal {
         background-size: 190vw;
     }
+
+    .Meals-header {
+        grid-template-columns: 1fr;
+    }
+
+    .totals {
+        text-align: center;
+    }
 }

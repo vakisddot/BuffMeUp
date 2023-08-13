@@ -60,3 +60,9 @@
 .serving-grams {
     font-size: 0.9em;
 }
+
+@media screen and (max-width: 800px) {
+    .Meal-details-main {
+        padding: 1em;
+    }
+}
